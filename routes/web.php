@@ -9,9 +9,24 @@ Route::get('/', function () {
     ]);
 });
 
+
+
+
+
 Route::get('/instructions', function () {
-    return view("instructions");
+    return view("instructions.index");
+})->name('instructions.index');
+
+Route::get('/instructions/setup', function () {
+    return view("instructions.setup");
 });
+
+
+Route::get('/instructions/requirements', function () {
+    return view("instructions.requirements");
+});
+
+
 
 
 Route::get('/dashboard', function () {
