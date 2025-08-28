@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/esyot/freecon@6c5197e/freecon.css">
 
     @viteReactRefresh
     @vite(['resources/css/app.css', 'resources/js/app.tsx'])

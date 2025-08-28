@@ -17,20 +17,20 @@
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Quickstart</h2>
             <p class="text-gray-700 mb-4">Clone the repository and install the dependencies:</p>
             <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto"><code>
-                                            git clone --branch staging https://github.com/esyot/laravel-inertia-react-shadcn.git
-                                            cd laravel-inertia-react-shadcn
-                                            npm install
-                                            composer install
-                                                        </code></pre>
+                                                        git clone --branch staging https://github.com/esyot/laravel-inertia-react-shadcn.git
+                                                        cd laravel-inertia-react-shadcn
+                                                        npm install
+                                                        composer install
+                                                                    </code></pre>
         </section>
 
         <section class="mb-10">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Getting Started</h2>
             <p class="text-gray-700 mb-4">Start the development servers:</p>
             <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto"><code>
-                                            npm run dev
-                                            php artisan serve
-                                                        </code></pre>
+                                                        npm run dev
+                                                        php artisan serve
+                                                                    </code></pre>
         </section>
 
         <section class="mb-10">
@@ -40,14 +40,14 @@
                     From the <code class="bg-gray-200 px-1 py-0.5 rounded text-sm">main</code> branch, create a <code
                         class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</code> branch:
                     <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                            git checkout -b staging
-                                                                </code></pre>
+                                                        git checkout -b staging
+                                                                            </code></pre>
                 </li>
                 <li>
                     Pull the latest changes from <code class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</code>:
                     <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                            git pull origin staging
-                                                                </code></pre>
+                                                        git pull origin staging
+                                                                            </code></pre>
                 </li>
             </ol>
         </section>
@@ -58,8 +58,8 @@
                 <li>
                     Create a branch from <code class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</code>:
                     <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                            git checkout -b &lt;username&gt;/feature/login
-                                                                </code></pre>
+                                                        git checkout -b &lt;username&gt;/feature/login
+                                                                            </code></pre>
                 </li>
             </ol>
         </section>
@@ -70,8 +70,8 @@
                 <li>
                     Create a branch from <code class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</code>:
                     <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                            git checkout -b &lt;username&gt;/fix/login
-                                                                </code></pre>
+                                                        git checkout -b &lt;username&gt;/fix/login
+                                                                            </code></pre>
                 </li>
             </ol>
         </section>
@@ -83,14 +83,14 @@
 
                 <li>Add changes:
                     <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                                git add .
-                                                      </code></pre>
+                                                            git add .
+                                                                  </code></pre>
                 </li>
 
                 <li>Commit using <strong>Conventional Commit</strong> format:
                     <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                                git commit -m "type(scope): short description"
-                                                      </code></pre>
+                                                            git commit -m "type(scope): short description"
+                                                                  </code></pre>
 
                     <p class="text-sm text-gray-600 mt-2">
                         Use the format <code
@@ -147,8 +147,8 @@
 
                 <li>Push:
                     <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                                git push origin head
-                                                      </code></pre>
+                                                            git push origin head
+                                                                  </code></pre>
                 </li>
 
                 <li>Create a pull request to <code class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</code> and
@@ -184,13 +184,13 @@
             <ol class="list-decimal pl-6 text-gray-700 space-y-4">
                 <li>Switch to <code class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</code>:
                     <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                            git checkout staging
-                                                                </code></pre>
+                                                        git checkout staging
+                                                                            </code></pre>
                 </li>
                 <li>Pull latest changes:
                     <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                            git pull origin staging
-                                                                </code></pre>
+                                                        git pull origin staging
+                                                                            </code></pre>
                 </li>
                 <li>Create a feature or fix branch.</li>
                 <li>Repeat commit/push steps.</li>

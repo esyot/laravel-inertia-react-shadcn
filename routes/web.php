@@ -34,3 +34,8 @@ Route::get('/login', function() {
         
     ]);
 });
+
+Route::get('/manage-user', function() {
+    return inertia('manage-user/page', [
+    ]);
+});
