@@ -8,8 +8,8 @@ createInertiaApp({
         resolvePageComponent(
             `./Pages/${name}.tsx`,
             import.meta.glob<Parameters<typeof resolvePageComponent>[1][""]>(
-                "./Pages/**/*.tsx"
-            )
+                "./Pages/**/*.tsx",
+            ),
         ),
     setup({ el, App, props }) {
         createRoot(el).render(<App {...props} />);

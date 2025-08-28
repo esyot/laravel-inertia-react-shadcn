@@ -57,7 +57,7 @@ export default function Layout({ children }: PageProps) {
                                             <BreadcrumbLink href={url}>
                                                 <BreadcrumbPage>
                                                     {formatFirstLetterToUpperCase(
-                                                        child
+                                                        child,
                                                     )}
                                                 </BreadcrumbPage>
                                             </BreadcrumbLink>
