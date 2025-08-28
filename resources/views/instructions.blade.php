@@ -21,7 +21,7 @@
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Quickstart</h2>
             <p class="text-gray-700 mb-4">Clone the repository and install the dependencies:</p>
             <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto"><code>
-git clone https://github.com/esyot/laravel-inertia-react-shadcn
+git clone --branch staging https://github.com/esyot/laravel-inertia-react-shadcn.git
 cd laravel-inertia-react-shadcn
 npm install
 composer install
