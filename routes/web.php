@@ -9,10 +9,6 @@ Route::get('/', function () {
     ]);
 });
 
-
-
-
-
 Route::get('/instructions', function () {
     return view("instructions.index");
 })->name('instructions.index');
@@ -26,11 +22,14 @@ Route::get('/instructions/requirements', function () {
     return view("instructions.requirements");
 });
 
-
-
-
 Route::get('/dashboard', function () {
     return inertia('dashboard/index', [
 
+    ]);
+});
+
+Route::get('/login', function() {
+    return inertia('login/page', [
+        
     ]);
 });
