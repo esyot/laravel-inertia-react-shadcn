@@ -6,9 +6,9 @@ import "../css/app.css";
 createInertiaApp({
     resolve: (name) =>
         resolvePageComponent(
-            `./pages/${name}.tsx`,
+            `./Pages/${name}.tsx`,
             import.meta.glob<Parameters<typeof resolvePageComponent>[1][""]>(
-                "./pages/**/*.tsx",
+                "./Pages/**/*.tsx",
             ),
         ),
     setup({ el, App, props }) {
