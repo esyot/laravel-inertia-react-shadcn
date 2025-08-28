@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-
+//Landing Page
 Route::get('/', function () {
-    return inertia('dashboard/index', [
+    return inertia('landing/index', [
 
     ]);
 });
@@ -27,6 +27,7 @@ Route::get('/dashboard', function () {
 
     ]);
 });
+
 
 Route::get('/login', function() {
     return inertia('login/page', [
