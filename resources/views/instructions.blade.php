@@ -84,25 +84,83 @@ git checkout -b &lt;username&gt;/fix/login
             <h3 class="text-xl font-semibold text-gray-800 mb-4">Committing Changes</h3>
             <ol class="list-decimal pl-6 text-gray-700 space-y-4">
                 <li>Make code changes.</li>
+
                 <li>Add changes:
                     <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-git add .
-                    </code></pre>
+    git add .
+          </code></pre>
                 </li>
-                <li>Commit:
+
+                <li>Commit using <strong>Conventional Commit</strong> format:
                     <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-git commit -m "your commit message"
-                    </code></pre>
+    git commit -m "type(scope): short description"
+          </code></pre>
+
+                    <p class="text-sm text-gray-600 mt-2">
+                        Use the format <code
+                            class="bg-gray-200 px-1 py-0.5 rounded text-sm">type(scope): description</code>.
+                        The <strong>scope</strong> is optional but recommended. It indicates what part of the app the
+                        change
+                        affects (e.g., a page, feature, or component).
+                    </p>
+
+                    <p class="text-sm text-gray-700 font-medium mt-3">Examples:</p>
+                    <ul class="list-disc pl-6 text-sm text-gray-700 space-y-1">
+                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">feat(login): add login form</code>
+                        </li>
+                        <li><code
+                                class="bg-gray-200 px-1 py-0.5 rounded text-sm">fix(profile): handle avatar upload bug</code>
+                        </li>
+                        <li><code
+                                class="bg-gray-200 px-1 py-0.5 rounded text-sm">docs(readme): update contribution guidelines</code>
+                        </li>
+                    </ul>
+
+                    <p class="text-sm text-gray-700 mt-4 font-medium">Allowed commit types:</p>
+                    <ul class="list-disc pl-6 text-sm text-gray-700 space-y-1">
+                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">feat</code>: A new feature</li>
+                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">fix</code>: A bug fix</li>
+                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">docs</code>: Documentation only
+                            changes</li>
+                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">style</code>: Formatting only (no code
+                            changes)</li>
+                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">refactor</code>: Code changes that
+                            neither fix
+                            a bug nor add a feature</li>
+                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">perf</code>: Performance improvements
+                        </li>
+                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">test</code>: Adding or updating tests
+                        </li>
+                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">build</code>: Build system or
+                            dependency
+                            changes</li>
+                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">ci</code>: CI/CD configuration changes
+                        </li>
+                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">chore</code>: Other changes that don’t
+                            affect
+                            source or tests</li>
+                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">revert</code>: Reverting a previous
+                            commit
+                        </li>
+                    </ul>
+
+                    <p class="text-sm text-red-600 mt-4">
+                        ⚠️ Husky will block commits that don’t follow this format.
+                    </p>
                 </li>
+
                 <li>Push:
                     <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-git push origin head
-                    </code></pre>
+    git push origin head
+          </code></pre>
                 </li>
+
                 <li>Create a pull request to <code class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</code> and
-                    request review.</li>
+                    request
+                    review.</li>
             </ol>
         </section>
+
 
         <section class="mb-10">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Creating Pull Requests and Adding Reviewers</h2>
