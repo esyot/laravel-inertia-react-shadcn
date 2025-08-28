@@ -81,7 +81,7 @@ git checkout -b &lt;username&gt;/fix/login
             </ol>
         </section>
 
-        <!-- Committing -->
+
         <section class="mb-10">
             <h3 class="text-xl font-semibold text-gray-800 mb-4">Committing Changes</h3>
             <ol class="list-decimal pl-6 text-gray-700 space-y-4">
