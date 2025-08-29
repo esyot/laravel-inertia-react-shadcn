@@ -1,5 +1,5 @@
 import Layout from "../layout";
-import { users } from "../manage-user/data/users";
+import { users } from "../users/data/users";
 import SectionContent from "../components/section-content";
 import { TransactionTable } from "./components/transactionHistoryTable";
 import { useState } from "react";
@@ -12,7 +12,9 @@ export default function Transaction() {
         <Layout>
             <SectionContent header={false}>
                 <div className="flex items-center justify-between mb-4">
-                    <div className="text-2xl font-bold">Transaction Page</div>
+                    <div className="text-xl font-semibold">
+                        Transaction Page
+                    </div>
 
                     {/* Simple tab buttons */}
                     <div className="flex gap-2">
