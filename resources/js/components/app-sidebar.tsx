@@ -21,6 +21,7 @@ import {
     SidebarHeader,
     SidebarRail,
 } from "@/components/ui/sidebar";
+import { Link } from "@inertiajs/react";
 
 const data = {
     user: {
@@ -162,12 +163,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <ul className="mt-4 px-4 space-y-4">
                     <li className="flex items-center gap-2 pl-6 hover:bg-white rounded-3xl p-2 cursor-pointer">
                         <i className="freecon icon-home icon-lg icon-gray-500"></i>
-                        <a href="/dashboard">Home</a>
+                        <Link href="/dashboard">Dashboard</Link>
                     </li>
 
                     <li className="flex items-center gap-2 pl-6 hover:bg-white rounded-3xl p-2 cursor-pointer">
                         <i className="freecon icon-people icon-lg icon-gray-500"></i>
-                        <a href="/manage-user">Users</a>
+                        <Link href="/manage-user">Users</Link>
                     </li>
                 </ul>
             </SidebarContent>
