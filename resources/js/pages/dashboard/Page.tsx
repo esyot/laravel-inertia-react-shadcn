@@ -12,13 +12,18 @@ import Layout from "../layout";
 import { ChevronRight, TriangleAlert, TriangleAlertIcon } from "lucide-react";
 import { Link } from "@inertiajs/react";
 
+import SectionHeader from "../components/section-header";
+import SectionContent from "../components/section-content";
+
 export default function Page() {
     return (
         <main>
             <Layout>
-                <section className="p-6">
-                    <h2 className="text-2xl font-bold mb-6">Dashboard</h2>
-                    {/* Top Row Cards */}
+                <SectionHeader>
+                    <h1 className="text-xl font-bold">Dashboard</h1>
+                </SectionHeader>
+
+                <SectionContent>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                         {/* Account Summary */}
                         <Card className="shadow-md rounded-2xl">
@@ -180,7 +185,7 @@ export default function Page() {
                     <div className="mt-6">
                         <ChartAreaInteractive />
                     </div>
-                </section>
+                </SectionContent>
             </Layout>
         </main>
     );

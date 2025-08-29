@@ -35,42 +35,46 @@ export default function Layout({ children }: PageProps) {
     return (
         <SidebarProvider>
             <AppSidebar />
-            <SidebarInset className="bg-sand">
-                <header className="bg-none  flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear bg-sand">
-                    <div className="flex items-center gap-2 px-4">
-                        <SidebarTrigger className="-ml-1" />
-                        <Separator
-                            orientation="vertical"
-                            className="mr-2 data-[orientation=vertical]:h-4"
-                        />
-                        <Breadcrumb>
-                            <BreadcrumbList>
-                                <BreadcrumbItem className="hidden md:block">
-                                    <BreadcrumbLink href={parent}>
-                                        {formatFirstLetterToUpperCase(parent)}
-                                    </BreadcrumbLink>
-                                </BreadcrumbItem>
-                                {child !== "index" && (
-                                    <>
-                                        <BreadcrumbSeparator className="hidden md:block" />
-                                        <BreadcrumbItem>
-                                            <BreadcrumbLink href={url}>
-                                                <BreadcrumbPage>
-                                                    {formatFirstLetterToUpperCase(
-                                                        child,
-                                                    )}
-                                                </BreadcrumbPage>
-                                            </BreadcrumbLink>
-                                        </BreadcrumbItem>
-                                    </>
-                                )}
-                            </BreadcrumbList>
-                        </Breadcrumb>
-                    </div>
-                </header>
-                <section className="bg-white rounded-tl-3xl p-4 h-full shadow-md">
-                    {children}
-                </section>
+            <SidebarInset className="bg-sand ">
+                <main className="h-screen overflow-y-hidden">
+                    <header className="bg-none  flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear bg-sand">
+                        <div className="flex items-center gap-2 px-4">
+                            <SidebarTrigger className="-ml-1" />
+                            <Separator
+                                orientation="vertical"
+                                className="mr-2 data-[orientation=vertical]:h-4"
+                            />
+                            <Breadcrumb>
+                                <BreadcrumbList>
+                                    <BreadcrumbItem className="hidden md:block">
+                                        <BreadcrumbLink href={parent}>
+                                            {formatFirstLetterToUpperCase(
+                                                parent,
+                                            )}
+                                        </BreadcrumbLink>
+                                    </BreadcrumbItem>
+                                    {child !== "page" && (
+                                        <>
+                                            <BreadcrumbSeparator className="hidden md:block" />
+                                            <BreadcrumbItem>
+                                                <BreadcrumbLink href={url}>
+                                                    <BreadcrumbPage>
+                                                        {formatFirstLetterToUpperCase(
+                                                            child,
+                                                        )}
+                                                    </BreadcrumbPage>
+                                                </BreadcrumbLink>
+                                            </BreadcrumbItem>
+                                        </>
+                                    )}
+                                </BreadcrumbList>
+                            </Breadcrumb>
+                        </div>
+                    </header>
+                    <section className="bg-white rounded-tl-3xl overflow-y-hidden h-[calc(100vh-8.5vh)] shadow-md">
+                        {children}
+                    </section>
+                </main>
             </SidebarInset>
         </SidebarProvider>
     );
