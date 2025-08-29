@@ -28,13 +28,13 @@ Route::get('/dashboard', function () {
     ]);
 });
 
-Route::get('/login', function() {
+Route::get('/login', function () {
     return inertia('login/page', [
-        
+
     ]);
 });
 
-Route::get('/manage-user', function() {
+Route::get('/manage-user', function () {
     return inertia('manage-user/page', [
     ]);
 });

@@ -35,8 +35,8 @@ export default function Layout({ children }: PageProps) {
     return (
         <SidebarProvider>
             <AppSidebar />
-            <SidebarInset>
-                <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+            <SidebarInset className="bg-sand">
+                <header className="bg-none  flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear bg-sand">
                     <div className="flex items-center gap-2 px-4">
                         <SidebarTrigger className="-ml-1" />
                         <Separator
@@ -68,7 +68,9 @@ export default function Layout({ children }: PageProps) {
                         </Breadcrumb>
                     </div>
                 </header>
-                <section>{children}</section>
+                <section className="bg-white rounded-tl-3xl p-4 h-full shadow-md">
+                    {children}
+                </section>
             </SidebarInset>
         </SidebarProvider>
     );

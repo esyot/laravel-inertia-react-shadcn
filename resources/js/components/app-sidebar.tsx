@@ -14,10 +14,6 @@ import {
     SquareTerminal,
 } from "lucide-react";
 
-import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-projects";
-import { NavUser } from "@/components/nav-user";
-import { TeamSwitcher } from "@/components/team-switcher";
 import {
     Sidebar,
     SidebarContent,
@@ -157,17 +153,25 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
-        <Sidebar collapsible="icon" {...props}>
-            <SidebarHeader>
-                <TeamSwitcher teams={data.teams} />
+        <Sidebar collapsible="icon" {...props} className="border-none bg-sand">
+            <SidebarHeader className="bg-sand p-4">
+                <span className="font-semibold">BEC</span>
             </SidebarHeader>
-            <SidebarContent>
-                <NavMain items={data.navMain} />
-                <NavProjects projects={data.projects} />
+
+            <SidebarContent className="bg-sand">
+                <ul className="mt-4 px-4 space-y-4">
+                    <li className="flex items-center gap-2 pl-6 hover:bg-white rounded-3xl p-2 cursor-pointer">
+                        <i className="freecon icon-home icon-lg icon-gray-500"></i>
+                        <span>Home</span>
+                    </li>
+
+                    <li className="flex items-center gap-2 pl-6 hover:bg-white rounded-3xl p-2 cursor-pointer">
+                        <i className="freecon icon-people icon-lg icon-gray-500"></i>
+                        <span>Users</span>
+                    </li>
+                </ul>
             </SidebarContent>
-            <SidebarFooter>
-                <NavUser user={data.user} />
-            </SidebarFooter>
+            <SidebarFooter className="bg-sand"></SidebarFooter>
             <SidebarRail />
         </Sidebar>
     );
