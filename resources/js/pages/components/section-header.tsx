@@ -5,5 +5,5 @@ interface PageProps {
 }
 
 export default function SectionHeader({ children }: PageProps) {
-    return <main className="p-4">{children}</main>;
+    return <main className="border-b p-4">{children}</main>;
 }

@@ -19,11 +19,7 @@ export default function Page() {
     return (
         <main>
             <Layout>
-                <SectionHeader>
-                    <h1 className="text-xl font-bold">Dashboard</h1>
-                </SectionHeader>
-
-                <SectionContent>
+                <SectionContent header={false}>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                         {/* Account Summary */}
                         <Card className="shadow-md rounded-2xl">
