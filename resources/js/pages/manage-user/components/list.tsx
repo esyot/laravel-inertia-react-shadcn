@@ -9,6 +9,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { AddUserDialog } from "../components/user-dialog";
 
 type User = {
     name: string;
@@ -29,7 +30,7 @@ export function UserTable({ users, onView, onDelete, onAdd }: UserTableProps) {
             {/* Add User button */}
             <div className="flex justify-between items-center">
                 <h2 className="text-lg font-semibold">User List</h2>
-                <Button onClick={onAdd}>+ Add User</Button>
+                <AddUserDialog onAdd={onAdd} />
             </div>
 
             {/* User Table */}

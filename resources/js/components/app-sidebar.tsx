@@ -162,12 +162,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <ul className="mt-4 px-4 space-y-4">
                     <li className="flex items-center gap-2 pl-6 hover:bg-white rounded-3xl p-2 cursor-pointer">
                         <i className="freecon icon-home icon-lg icon-gray-500"></i>
-                        <span>Home</span>
+                        <a href="/dashboard">Home</a>
                     </li>
 
                     <li className="flex items-center gap-2 pl-6 hover:bg-white rounded-3xl p-2 cursor-pointer">
                         <i className="freecon icon-people icon-lg icon-gray-500"></i>
-                        <span>Users</span>
+                        <a href="/manage-user">Users</a>
                     </li>
                 </ul>
             </SidebarContent>
