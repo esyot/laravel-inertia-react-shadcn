@@ -35,6 +35,11 @@ Route::get('/login', function () {
 });
 
 Route::get('/manage-user', function () {
-    return inertia('manage-user/page', [
+    return inertia('manage-user/index', [
+    ]);
+});
+
+Route::get('/payment', function () {
+    return inertia('payment/index', [
     ]);
 });

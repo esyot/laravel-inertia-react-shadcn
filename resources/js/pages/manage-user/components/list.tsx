@@ -9,7 +9,6 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { AddUserDialog } from "../components/user-dialog";
 
 type User = {
     name: string;
@@ -21,18 +20,12 @@ type UserTableProps = {
     users: User[];
     onView?: (user: User) => void;
     onDelete?: (user: User) => void;
-    onAdd?: () => void;
+    // onAdd?: () => void;
 };
 
-export function UserTable({ users, onView, onDelete, onAdd }: UserTableProps) {
+export function UserTable({ users, onView, onDelete }: UserTableProps) {
     return (
         <div className="space-y-4">
-            {/* Add User button */}
-            <div className="flex justify-between items-center">
-                <h2 className="text-lg font-semibold">User List</h2>
-                <AddUserDialog onAdd={onAdd} />
-            </div>
-
             {/* User Table */}
             <Table>
                 <TableCaption>A list of users with actions.</TableCaption>
