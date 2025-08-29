@@ -1,5 +1,6 @@
 import { users } from "../manage-user/data/users";
 import { UserTable } from "./components/list";
+import Layout from "../layout";
 
 export default function HomePage() {
     const handleView = (user: any) => {
@@ -15,13 +16,19 @@ export default function HomePage() {
     };
 
     return (
-        <div className="p-6 mx-32 mt-16">
-            <UserTable
-                users={users}
-                onView={handleView}
-                onDelete={handleDelete}
-                onAdd={handleAdd}
-            />
+        <div>
+            <main>
+                <Layout>
+                    <section>
+                        <UserTable
+                            users={users}
+                            onView={handleView}
+                            onDelete={handleDelete}
+                            onAdd={handleAdd}
+                        />
+                    </section>
+                </Layout>
+            </main>
         </div>
     );
 }
