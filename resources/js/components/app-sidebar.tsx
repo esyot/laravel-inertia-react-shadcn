@@ -15,6 +15,7 @@ import {
     SquareTerminal,
     Users,
     UsersRound,
+    HandCoins,
 } from "lucide-react";
 
 import {
@@ -24,7 +25,8 @@ import {
     SidebarHeader,
     SidebarRail,
 } from "@/components/ui/sidebar";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
+import { cn } from "@/lib/utils";
 
 const data = {
     user: {
@@ -156,6 +158,7 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+    const { url } = usePage();
     return (
         <Sidebar collapsible="icon" {...props} className="border-none bg-sand">
             <SidebarHeader className="bg-sand p-4">
@@ -164,14 +167,37 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
             <SidebarContent className="bg-sand">
                 <ul className="mt-4 px-4 space-y-4">
-                    <li className="flex items-center gap-2 pl-6 hover:bg-white rounded-3xl p-2 cursor-pointer">
+                    <li
+                        className={cn(
+                            url.startsWith("/dashboard")
+                                ? "bg-blue-500 text-white"
+                                : "hover:bg-white",
+                            "flex items-center gap-2 pl-6 rounded-3xl p-2 cursor-pointer",
+                        )}
+                    >
                         <LayoutDashboard />
                         <Link href="/dashboard">Dashboard</Link>
                     </li>
 
-                    <li className="flex items-center gap-2 pl-6 hover:bg-white rounded-3xl p-2 cursor-pointer">
+                    <li
+                        className={`flex items-center gap-2 pl-6 rounded-3xl p-2 cursor-pointer ${
+                            url === "/manage-user"
+                                ? "bg-blue-500 text-white"
+                                : "hover:bg-white"
+                        }`}
+                    >
                         <Users />
                         <Link href="/manage-user">Users</Link>
+                    </li>
+                    <li
+                        className={`flex items-center gap-2 pl-6 rounded-3xl p-2 cursor-pointer ${
+                            url === "/payment"
+                                ? "bg-blue-500 text-white"
+                                : "hover:bg-white"
+                        }`}
+                    >
+                        <HandCoins />
+                        <Link href="/payment">Transaction</Link>
                     </li>
                 </ul>
             </SidebarContent>

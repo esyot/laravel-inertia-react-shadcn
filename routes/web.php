@@ -38,3 +38,8 @@ Route::get('/manage-user', function () {
     return inertia('manage-user/page', [
     ]);
 });
+
+Route::get('/payment', function () {
+    return inertia('payment/page', [
+    ]);
+});

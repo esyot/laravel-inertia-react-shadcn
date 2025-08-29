@@ -1,6 +1,7 @@
-import { users } from "../manage-user/data/users";
+import { users } from "./data/users";
 import { UserTable } from "./components/list";
 import Layout from "../layout";
+import { AddUserDialog } from "./components/user-dialog";
 
 export default function HomePage() {
     const handleView = (user: any) => {
@@ -19,12 +20,16 @@ export default function HomePage() {
         <div>
             <main>
                 <Layout>
+                    {/* Add User button */}
+                    <div className="flex justify-between items-center">
+                        <h2 className="text-lg font-semibold">User List</h2>
+                        <AddUserDialog onAdd={handleAdd} />
+                    </div>
                     <section>
                         <UserTable
                             users={users}
                             onView={handleView}
                             onDelete={handleDelete}
-                            onAdd={handleAdd}
                         />
                     </section>
                 </Layout>
