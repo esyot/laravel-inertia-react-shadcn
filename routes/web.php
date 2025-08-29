@@ -34,12 +34,12 @@ Route::get('/login', function () {
     ]);
 });
 
-Route::get('/manage-user', function () {
-    return inertia('manage-user/page', [
+Route::get('/users', function () {
+    return inertia('users/page', [
     ]);
 });
 
-Route::get('/payment', function () {
-    return inertia('payment/page', [
+Route::get('/transactions', function () {
+    return inertia('transactions/page', [
     ]);
 });
