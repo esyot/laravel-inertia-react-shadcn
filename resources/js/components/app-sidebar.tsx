@@ -26,6 +26,7 @@ import {
     SidebarRail,
 } from "@/components/ui/sidebar";
 import { Link, usePage } from "@inertiajs/react";
+import { cn } from "@/lib/utils";
 
 const data = {
     user: {
@@ -167,11 +168,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarContent className="bg-sand">
                 <ul className="mt-4 px-4 space-y-4">
                     <li
-                        className={`flex items-center gap-2 pl-6 rounded-3xl p-2 cursor-pointer ${
+                        className={cn(
                             url.startsWith("/dashboard")
                                 ? "bg-blue-500 text-white"
-                                : "hover:bg-white"
-                        }`}
+                                : "hover:bg-white",
+                            "flex items-center gap-2 pl-6 rounded-3xl p-2 cursor-pointer",
+                        )}
                     >
                         <LayoutDashboard />
                         <Link href="/dashboard">Dashboard</Link>
