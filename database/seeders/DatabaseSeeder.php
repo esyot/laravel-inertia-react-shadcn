@@ -5,20 +5,45 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call(RoleSeeder::class);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => 'password123',
+        $adminRole   = Role::where('name', 'admin')->first();
+        $cashierRole = Role::where('name', 'cashier')->first();
+        $editorRole  = Role::where('name', 'editor')->first();
+        $customerRole= Role::where('name', 'customer')->first();
+
+        $admin = User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('password'),
         ]);
+        $admin->roles()->attach($adminRole);
+
+        $cashier = User::factory()->create([
+            'name' => 'Cashier',
+            'email' => 'cashier@example.com',
+            'password' => bcrypt('password'),
+        ]);
+        $cashier->roles()->attach($cashierRole);
+
+        $editor = User::factory()->create([
+            'name' => 'Editor',
+            'email' => 'editor@example.com',
+            'password' => bcrypt('password'),
+        ]);
+        $editor->roles()->attach($editorRole);
+
+        $customer = User::factory()->create([
+            'name' => 'Customer',
+            'email' => 'customer@example.com',
+            'password' => bcrypt('password'),
+        ]);
+        $customer->roles()->attach($customerRole);
     }
 }
