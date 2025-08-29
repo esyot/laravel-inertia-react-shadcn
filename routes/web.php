@@ -23,7 +23,7 @@ Route::get('/instructions/requirements', function () {
 });
 
 Route::get('/dashboard', function () {
-    return inertia('dashboard/index', [
+    return inertia('dashboard/page', [
 
     ]);
 });
