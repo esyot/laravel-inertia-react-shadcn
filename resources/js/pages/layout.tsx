@@ -2,7 +2,6 @@ import { AppSidebar } from "@/components/app-sidebar";
 import {
     Breadcrumb,
     BreadcrumbItem,
-    BreadcrumbLink,
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
@@ -19,6 +18,8 @@ interface PageProps {
     children: ReactNode;
 }
 import { usePage } from "@inertiajs/react";
+
+import { Link } from "@inertiajs/react";
 
 export default function Layout({ children }: PageProps) {
     const { url, component } = usePage();
@@ -47,23 +48,23 @@ export default function Layout({ children }: PageProps) {
                             <Breadcrumb>
                                 <BreadcrumbList>
                                     <BreadcrumbItem className="hidden md:block">
-                                        <BreadcrumbLink href={parent}>
+                                        <Link href={parent}>
                                             {formatFirstLetterToUpperCase(
                                                 parent,
                                             )}
-                                        </BreadcrumbLink>
+                                        </Link>
                                     </BreadcrumbItem>
                                     {child !== "page" && (
                                         <>
                                             <BreadcrumbSeparator className="hidden md:block" />
                                             <BreadcrumbItem>
-                                                <BreadcrumbLink href={url}>
+                                                <Link href={url}>
                                                     <BreadcrumbPage>
                                                         {formatFirstLetterToUpperCase(
                                                             child,
                                                         )}
                                                     </BreadcrumbPage>
-                                                </BreadcrumbLink>
+                                                </Link>
                                             </BreadcrumbItem>
                                         </>
                                     )}

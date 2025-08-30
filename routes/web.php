@@ -3,7 +3,23 @@
 use App\Http\Controllers\CustomerController;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Http\Controllers\SocialiteController;
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
+
+// socialite
+Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider'])->name('social.auth');
+Route::get('/auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback'])->name('social.callback');
+
+
+Route::get('/log-out', function () {
+
+    Auth::logout();
+
+    return redirect('/');
+});
 
 //Landing page
 Route::get('/', function () {
@@ -25,13 +41,18 @@ Route::get('/instructions/requirements', function () {
     return view("instructions.requirements");
 });
 
-Route::get('/dashboard', function () {
-    return inertia('dashboard/page', [
+Route::middleware(['auth'])->group(function () {
 
-    ]);
+
+    Route::get('/dashboard', function () {
+        return inertia('dashboard/page', [
+        ]);
+    })->name('dashboard');
+
+
 });
 
-//------------->BILL CHECKING 
+
 Route::get('/bill-checking', function () {
     return inertia('bill-checking/page', [
     ]);
@@ -47,13 +68,32 @@ Route::get('/customers/search', function (Request $request) {
 });
 
 Route::get('/customers/{id}', [CustomerController::class, 'show']);
-//------------->BILL CHECKING 
+
 
 Route::get('/login', function () {
     return inertia('login/page', [
 
     ]);
 });
+
+// Route::get('/users', function () {
+//     return inertia('users/page', [
+//     ]);
+// });
+
+Route::get('/transactions', function () {
+    return inertia('transactions/page', [
+    ]);
+});
+
+//LOGIN FOR USERS
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.attempt');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/users', [UserController::class, 'index'])->name('users.page');
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
 Route::get('/manage-user', function () {
     return inertia('manage-user/page', [
