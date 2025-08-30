@@ -1,29 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AppLayout from "@/layouts/AppLayout";
 import axios from "axios";
-import SectionContent from "../components/section-content";
+import { router } from "@inertiajs/react";
 
-export default function Page() {
+type Customer = {
+    id: number;
+    code: string;
+    name: string;
+    municipal: string;
+    barangay: string;
+};
+
+export default function BillChecking() {
     const [search, setSearch] = useState("");
-    const [results, setResults] = useState<any[]>([]);
+    const [results, setResults] = useState<Customer[]>([]);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        if (search.length > 2) {
-            setLoading(true);
-            axios
-                .get(`/customers/search?query=${search}`)
-                .then((res) => {
-                    setResults(res.data);
-                })
-                .finally(() => setLoading(false));
-        } else {
-            setResults([]);
-        }
-    }, [search]);
+    const handleSearchCustomer = () => {
+        setLoading(true);
+        axios
+            .get(`/customers/search?query=${search}`)
+            .then((res) => {
+                setResults(res.data);
+            })
+            .catch(() => {})
+            .finally(() => setLoading(false));
+    };
 
-    const handleSelect = (customer: any) => {
-        window.location.href = `/customers/${customer.id}`;
+    const handleSelect = (code: string) => {
+        router.visit(`/customers/${code}`);
     };
 
     return (
@@ -38,7 +43,10 @@ export default function Page() {
                             <input
                                 type="text"
                                 value={search}
-                                onChange={(e) => setSearch(e.target.value)}
+                                onChange={(e) => {
+                                    handleSearchCustomer();
+                                    setSearch(e.currentTarget.value);
+                                }}
                                 placeholder="Enter your customer code (e.g. SAGB-SC-P1-NS8DSK31GP)"
                                 className="w-full border-2 border-gray-300 rounded-xl px-6 py-4 text-lg focus:outline-none focus:ring-4 focus:ring-blue-400 focus:border-transparent"
                             />
@@ -54,7 +62,7 @@ export default function Page() {
                                             key={customer.id}
                                             className="px-6 py-4 hover:bg-blue-100 cursor-pointer border-b border-gray-100 last:border-b-0"
                                             onClick={() =>
-                                                handleSelect(customer)
+                                                handleSelect(customer.code)
                                             }
                                         >
                                             <div className="font-bold text-gray-800 text-xl mb-1">

@@ -8,35 +8,49 @@ use Inertia\Inertia;
 
 class CustomerController extends Controller
 {
-    
+
+    public function index()
+    {
+        return inertia('customers/page');
+    }
+
     public function search(Request $request)
     {
         $search = $request->query('q', '');
 
         $customers = Customer::where('code', 'like', "%{$search}%")
             ->limit(10)
-            ->get(['id', 'name', 'code']); 
+            ->get(['id', 'name', 'code']);
 
         return response()->json($customers);
     }
 
-//     public function show($id)
+    //     public function show($id)
 // {
 //     $customer = Customer::findOrFail($id);
 
-//     return inertia('customers/page', [
+    //     return inertia('customers/page', [
 //         'customer' => $customer,
 //     ]);
 // }
 
-public function show($id)
-{
-    $customer = Customer::with('bills')->findOrFail($id);
+    public function show($code)
+    {
 
-    return Inertia::render('customers/page', [
-        'customer' => $customer
-    ]);
-}
+        if (!$code)
+        {
+            return back()->withErrors([
+                'error' => 'Code not found!',
+            ]);
+        }
+        $customer = Customer::where('code', '=', $code)
+            ->with('bills')
+            ->first();
+
+        return Inertia::render('customers/customer', [
+            'customer' => $customer
+        ]);
+    }
 
 
 }

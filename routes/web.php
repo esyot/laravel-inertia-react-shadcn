@@ -67,8 +67,10 @@ Route::get('/customers/search', function (Request $request) {
         ->get();
 });
 
-Route::get('/customers/{id}', [CustomerController::class, 'show']);
+Route::get('/customers/{code}', [CustomerController::class, 'show']);
 
+
+Route::get('/customers', [CustomerController::class, 'index']);
 
 Route::get('/login', function () {
     return inertia('login/page', [
