@@ -15,7 +15,6 @@ export default function Transaction() {
                     <div className="text-xl font-semibold">
                         Transaction Page
                     </div>
-
                     {/* Simple tab buttons */}
                     <div className="flex gap-2">
                         <Button

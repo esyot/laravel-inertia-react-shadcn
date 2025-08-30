@@ -8,21 +8,30 @@ use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
-    public function showLoginForm() {
+    public function showLoginForm()
+    {
+
+        if (Auth::check())
+        {
+            return redirect()->route('dashboard');
+        }
+
         return inertia('login/page');
     }
 
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials))
+        {
             $request->session()->regenerate();
             return redirect()->intended('/dashboard');
 
-                        // if ($user->roles->contains('name', 'cashier')) {
+            // if ($user->roles->contains('name', 'cashier')) {
             //     return redirect()->intended('/cashier/dashboard');
             // }
             // if ($user->roles->contains('name', 'editor')) {
@@ -38,7 +47,7 @@ class LoginController extends Controller
         ]);
     }
 
-        public function logout(Request $request)
+    public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();

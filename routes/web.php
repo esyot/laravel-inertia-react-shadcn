@@ -1,7 +1,23 @@
 <?php
 
+use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+
+
+
+
+// socialite
+Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider'])->name('social.auth');
+Route::get('/auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback'])->name('social.callback');
+
+
+Route::get('/log-out', function () {
+
+    Auth::logout();
+
+    return redirect('/');
+});
 
 //Landing page
 Route::get('/', function () {
@@ -24,10 +40,14 @@ Route::get('/instructions/requirements', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+
+
     Route::get('/dashboard', function () {
         return inertia('dashboard/page', [
         ]);
-    });
+    })->name('dashboard');
+
+
 });
 
 
