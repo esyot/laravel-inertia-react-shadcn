@@ -17,41 +17,64 @@ class CustomerFactory extends Factory
      */
     public function definition(): array
     {
-        $municipal = $this->faker->city();            // e.g. "New Jersey"
-        $barangay  = $this->faker->words(2, true);    // e.g. "Santa Catalina"
-        $purokNum  = $this->faker->numberBetween(1, 9);
+        $municipalities = [
+            'Tubigon', 'Clarin', 'Calape', 'Sagbayan', 'Catigbian'
+        ];
 
-        // --- Municipal Code Rule ---
-        $muniParts = explode(" ", $municipal);
+        $barangaysByMunicipality = [
+            'Tubigon' => [
+                'Poblacion', 'Tinangnan', 'Panaytayon', 'Pooc Oriental', 'Pooc Occidental', 'Bunacan',
+                'Bagongbanwa', 'Bantoyan', 'Batasan', 'Binanlan', 'Buhangin',
+                'Cabulihan', 'Cayam', 'Cogtong', 'Danao', 'Guiwanon',
+                'Ilijan', 'Lapasan', 'Lipay', 'Macaas', 'Matabao',
+                'Panaytayon', 'Panaytayon', 'Pandan', 'Pinayagan', 'Pooc',
+                'Talenceras', 'Tubod', 'Ubojan', 'Villanueva'
+            ],
+            'Clarin' => [
+                'Poblacion', 'Bacani', 'Bogtongbod', 'Bonbon', 'Buenavista',
+                'Caboy', 'Caluwasan', 'Candajec', 'Cantoyoc', 'Comaang',
+                'Danahao', 'Katipunan', 'Lajog', 'Mataub', 'Nahawan',
+                'Pangapasan', 'Poblacion', 'Tontunan', 'Tubod', 'Villaflor'
+            ],
+            'Calape' => [
+                'Poblacion', 'Abucay', 'Banlasan', 'Bentig', 'Binogawan',
+                'Bonbon', 'Cabayugan', 'Cabulihan', 'Camanocan', 'Cantabas',
+                'Cantugas', 'Cogton', 'Danao', 'Desamparados', 'Kahayag',
+                'Kinabag-an', 'Labuon', 'Lawis', 'Liboron', 'Looc',
+                'Macaas', 'Madangog', 'Magtongtong', 'Mandaug', 'Ondol',
+                'Sampoangon', 'San Isidro', 'Santa Cruz', 'Sohoton',
+                'Tultugan', 'U-og', 'Ulbojan'
+            ],
+            'Sagbayan' => [
+                'Poblacion', 'Calangahan', 'Canmano', 'Cansagaya', 'Katipunan',
+                'Langtad', 'Libertad Norte', 'Libertad Sur', 'Mantalongon',
+                'Poblacion', 'San Agustin', 'San Antonio', 'San Isidro',
+                'San Ramon', 'San Vicente', 'Santa Catalina', 'Santa Cruz',
+                'Taguanao', 'Ubayon', 'Villafuerte'
+            ],
+            'Catigbian' => [
+                'Poblacion', 'Alangawasan', 'Ambuan', 'Bahi', 'Bantuan',
+                'Binaliw', 'Bonbon', 'Bongdo', 'Cambailan', 'Candumayao',
+                'Cang-iras', 'Cansagub', 'Dagohoy', 'Haguilanan', 'Hinagdanan',
+                'Las Vegas', 'Libertad', 'Mabini', 'Mahayag', 'Manduyog',
+                'Rizal', 'Salvador', 'San Isidro', 'San Jose', 'San Pedro',
+                'Santo Niño', 'Sinakayanan', 'Triple Union', 'Union'
+            ]
+        ];
 
-        if (count($muniParts) > 1) {
-            $firstWord = strtoupper($muniParts[0]);
-            if (strlen($firstWord) === 3) {
-                // take 3 letters + first letter of next word
-                $muniCode = $firstWord . strtoupper(substr($muniParts[1], 0, 1));
-            } else {
-                // just take first 4 letters
-                $muniCode = strtoupper(substr($firstWord, 0, 4));
-            }
-        } else {
-            // single word municipal
-            $muniCode = strtoupper(substr($municipal, 0, 4));
-        }
+        $municipal = $this->faker->randomElement($municipalities);
+        $barangay = $this->faker->randomElement($barangaysByMunicipality[$municipal]);
+        $purokNum = $this->faker->numberBetween(1, 5);
 
-        // --- Barangay Code (first letter of each word) ---
-        $brgyCode = strtoupper(
-            collect(explode(" ", $barangay))
-                ->map(fn($w) => substr($w, 0, 1))
-                ->implode("")
-        );
+        $muniCode = strtoupper(substr($municipal, 0, 4));
 
-        // --- Purok Code ---
-        $purokCode  = "P{$purokNum}";
+        $brgyCode = strtoupper(substr(preg_replace('/[^A-Za-z]/', '', $barangay), 0, 3));
 
-        // --- Random Unique Code ---
-        $randomCode = strtoupper(Str::random(10));
+        $purokCode = "P{$purokNum}";
 
-        $fullCode   = "{$muniCode}-{$brgyCode}-{$purokCode}-{$randomCode}";
+        $randomCode = strtoupper(Str::random(4));
+
+        $fullCode = "{$muniCode}-{$brgyCode}-{$purokCode}-{$randomCode}";
 
         return [
             'name'      => $this->faker->name(),

@@ -20,7 +20,6 @@ class BillFactory extends Factory
      */
     public function definition(): array
     {
-        // Generate billing months in descending order (newest first)
         static $monthOffset = 0;
         $billingDate = Carbon::now()->subMonths($monthOffset);
         $monthOffset++;
@@ -29,7 +28,6 @@ class BillFactory extends Factory
         $status = 'Paid';
         $amount = $this->faker->randomFloat(2, 800, 2000);
         
-        // Generate payment dates in descending order within each month
         if (self::$lastPaymentDate === null) {
             self::$lastPaymentDate = Carbon::now();
         }
@@ -37,12 +35,10 @@ class BillFactory extends Factory
         $paymentDate = self::$lastPaymentDate->copy()->subDays(rand(0, 3));
         self::$lastPaymentDate = $paymentDate;
         
-        // Ensure payment date is not before the billing month
         if ($paymentDate->lt($billingDate)) {
             $paymentDate = $billingDate->copy()->addDays(rand(0, 10));
         }
         
-        // Calculate penalty if paid after due date
         $penalty = 0;
         if ($paymentDate->gt($dueDate)) {
             $monthsOverdue = $paymentDate->diffInMonths($dueDate);
@@ -64,7 +60,6 @@ class BillFactory extends Factory
     public function configure()
     {
         return $this->afterMaking(function ($bill) {
-            // Reset static variables for each new customer/bill set
             self::$lastPaymentDate = null;
         });
     }
@@ -74,11 +69,9 @@ class BillFactory extends Factory
         $now = Carbon::now();
         $dueDate = $now->copy()->day(14);
 
-        // For current bill, use recent payment date
         $paymentDate = $now->copy()->subDays(rand(0, 5));
         $penalty = 0;
 
-        // Check if payment was late
         if ($paymentDate->gt($dueDate)) {
             $monthsOverdue = $paymentDate->diffInMonths($dueDate);
             $penalty = max(1, $monthsOverdue) * 100;
@@ -93,15 +86,11 @@ class BillFactory extends Factory
         ]);
     }
 
-    /**
-     * Force only past bills (before current month)
-     */
     public function past(int $monthsAgo = 1): static
     {
         $date = Carbon::now()->subMonths($monthsAgo);
         $dueDate = $date->copy()->day(14);
 
-        // Generate payment date in descending order
         $paymentDate = Carbon::now()->subDays(rand($monthsAgo * 30, ($monthsAgo + 1) * 30));
         
         $penalty = 0;
