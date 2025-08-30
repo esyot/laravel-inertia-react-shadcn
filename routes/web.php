@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 
@@ -72,9 +73,10 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.attempt');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/manage-user', function () {
-    return inertia('manage-user/page', [
-    ]);
+//create users
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
 });
 
 Route::get('/payment', function () {
