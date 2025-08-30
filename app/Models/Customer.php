@@ -18,6 +18,12 @@ class Customer extends Model
         'code',
     ];
 
+    public function bills()
+{
+    return $this->hasMany(Bill::class);
+}
+
+
     protected static function booted()
 {
     static::creating(function ($customer) {

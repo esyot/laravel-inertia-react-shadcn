@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('municipal');
             $table->string('barangay');
             $table->string('purok')->nullable();
-            $table->string('code')->unique();
+            $table->string('code')->unique();$table->enum('status', ['Active', 'Terminated'])->default('Active');
+
             $table->timestamps();
         });
     }

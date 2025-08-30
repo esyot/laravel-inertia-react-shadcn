@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CustomerController extends Controller
 {
@@ -19,13 +20,23 @@ class CustomerController extends Controller
         return response()->json($customers);
     }
 
-    public function show($id)
-{
-    $customer = Customer::findOrFail($id);
+//     public function show($id)
+// {
+//     $customer = Customer::findOrFail($id);
 
-    return inertia('customers/page', [
-        'customer' => $customer,
+//     return inertia('customers/page', [
+//         'customer' => $customer,
+//     ]);
+// }
+
+public function show($id)
+{
+    $customer = Customer::with('bills')->findOrFail($id);
+
+    return Inertia::render('customers/page', [
+        'customer' => $customer
     ]);
 }
+
 
 }
