@@ -96,7 +96,7 @@ export function AddUserDialog({ onAdd }: AddUserDialogProps) {
     return (
         <Dialog open={open} onOpenChange={handleOpenChange}>
             <DialogTrigger asChild>
-                <Button>Add User</Button>
+                <Button className="cursor-pointer">Add User</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -229,11 +229,19 @@ export function AddUserDialog({ onAdd }: AddUserDialogProps) {
 
                     <DialogFooter>
                         <DialogClose asChild>
-                            <Button variant="outline" type="button">
+                            <Button
+                                className="cursor-pointer"
+                                variant="outline"
+                                type="button"
+                            >
                                 Cancel
                             </Button>
                         </DialogClose>
-                        <Button type="submit" disabled={processing}>
+                        <Button
+                            className="cursor-pointer"
+                            type="submit"
+                            disabled={processing}
+                        >
                             {processing ? "Saving..." : "Save User"}
                         </Button>
                     </DialogFooter>
