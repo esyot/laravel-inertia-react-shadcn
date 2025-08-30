@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $admin = User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@example.com',
+            'address' => 'Tubigon, Bohol',
             'password' => bcrypt('password'),
         ]);
         $admin->roles()->attach($adminRole);
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $cashier = User::factory()->create([
             'name' => 'Cashier',
             'email' => 'cashier@example.com',
+            'address' => 'Tubigon, Bohol',
             'password' => bcrypt('password'),
         ]);
         $cashier->roles()->attach($cashierRole);
@@ -35,6 +37,7 @@ class DatabaseSeeder extends Seeder
         $editor = User::factory()->create([
             'name' => 'Editor',
             'email' => 'editor@example.com',
+            'address' => 'Tubigon, Bohol',
             'password' => bcrypt('password'),
         ]);
         $editor->roles()->attach($editorRole);
@@ -42,6 +45,7 @@ class DatabaseSeeder extends Seeder
         $customer = User::factory()->create([
             'name' => 'Customer',
             'email' => 'customer@example.com',
+            'address' => 'Tubigon, Bohol',
             'password' => bcrypt('password'),
         ]);
         $customer->roles()->attach($customerRole);
