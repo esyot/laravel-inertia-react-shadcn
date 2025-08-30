@@ -41,6 +41,10 @@ class HandleInertiaRequests extends Middleware
             'errors' => fn() => $request->session()->get('errors')
                 ? $request->session()->get('errors')->getBag('default')->getMessages()
                 : (object) [],
+            'flash' => [
+                'success' => fn () => $request->session()->get('success'),
+                'delete'   => fn () => $request->session()->get('delete'),
+            ],
         ]);
     }
 }

@@ -3,9 +3,7 @@
 use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
-
-
-
+use App\Http\Controllers\UserController;
 
 // socialite
 Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider'])->name('social.auth');
@@ -57,10 +55,10 @@ Route::get('/login', function () {
     ]);
 });
 
-Route::get('/users', function () {
-    return inertia('users/page', [
-    ]);
-});
+// Route::get('/users', function () {
+//     return inertia('users/page', [
+//     ]);
+// });
 
 Route::get('/transactions', function () {
     return inertia('transactions/page', [
@@ -71,6 +69,10 @@ Route::get('/transactions', function () {
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.attempt');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/users', [UserController::class, 'index'])->name('users.page');
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
 Route::get('/manage-user', function () {
     return inertia('manage-user/page', [
