@@ -1,5 +1,12 @@
 import React from "react";
 import AppLayout from "@/layouts/AppLayout";
+import {
+    Card,
+    CardHeader,
+    CardTitle,
+    CardContent,
+    CardFooter,
+} from "@/components/ui/card";
 
 export default function Page({ customer }: any) {
     if (!customer) return <p className="text-center">Customer not found</p>;
@@ -11,16 +18,16 @@ export default function Page({ customer }: any) {
         maximumFractionDigits: 2,
     });
 
-    const normalizeStatus = (s: string) => (s || "").toLowerCase();
+    const normalizeStatus = (s: string) => s || "";
 
     const getStatusColor = (status: string) => {
         const s = normalizeStatus(status);
         switch (s) {
-            case "unpaid":
+            case "Unpaid":
                 return "text-red-600";
-            case "overdue":
+            case "Overdue":
                 return "text-orange-600";
-            case "paid":
+            case "Paid":
                 return "text-green-600";
             default:
                 return "text-gray-600";
@@ -47,7 +54,7 @@ export default function Page({ customer }: any) {
         return {
             penalty,
             total: amount + penalty,
-            status: bill.status.toLowerCase(), // Use the status from database
+            status: bill.status, // Use the status from database
         };
     };
 
@@ -116,73 +123,72 @@ export default function Page({ customer }: any) {
                         const { penalty, total, status } =
                             calculatePenaltyAndTotal(currentBill);
 
-                        // Debug: check what's in the currentBill
-                        console.log("Current Bill Data:", currentBill);
-                        console.log("Payment Date:", currentBill.payment_date);
-                        console.log(
-                            "Payment Date Type:",
-                            typeof currentBill.payment_date,
-                        );
-
                         return (
-                            <div className="mb-6 p-6 rounded-2xl shadow bg-white border">
-                                <h2 className="text-xl font-semibold mb-2">
-                                    Current Bill — {currentBill.billing_month}
-                                </h2>
-
-                                {/* Due Date */}
-                                <p className="text-gray-600">
-                                    Due Date: {currentBill.due_date}
-                                </p>
-
-                                {/* Amount Due */}
-                                <p className="text-lg">
-                                    Amount Due:{" "}
-                                    <span className="font-bold">
-                                        {peso.format(
-                                            Number(currentBill.amount_due),
-                                        )}
-                                    </span>
-                                </p>
-
-                                {/* Penalty */}
-                                {penalty > 0 && (
-                                    <p className="text-gray-700">
-                                        Penalty:{" "}
-                                        <span className="text-red-400">
-                                            {peso.format(penalty)}
+                            <Card className="mb-6 overflow-hidden">
+                                <CardHeader className="bg-muted/100 pb-3 pt-4">
+                                    <CardTitle className="text-xl flex justify-between items-center">
+                                        <span>
+                                            Current Bill —{" "}
+                                            {currentBill.billing_month}
                                         </span>
-                                    </p>
-                                )}
+                                        <span
+                                            className={`text-sm font-semibold px-3 py-1 rounded-full ${getStatusColor(status)} bg-muted`}
+                                        >
+                                            {status.charAt(0).toUpperCase() +
+                                                status.slice(1)}
+                                        </span>
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <p className="text-sm text-muted-foreground">
+                                                Due Date
+                                            </p>
+                                            <p className="font-medium">
+                                                {currentBill.due_date}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-muted-foreground">
+                                                Payment Date
+                                            </p>
+                                            <p className="font-medium">
+                                                {currentBill.payment_date
+                                                    ? new Date(
+                                                          currentBill.payment_date,
+                                                      ).toLocaleDateString()
+                                                    : "Not available"}
+                                            </p>
+                                        </div>
+                                    </div>
 
-                                {/* Total */}
-                                <p className="text-lg font-bold">
-                                    Total Amount Due: {peso.format(total)}
-                                </p>
-
-                                {/* Payment Date */}
-                                {currentBill.payment_date ? (
-                                    <p className="text-gray-600">
-                                        Paid on:{" "}
-                                        {new Date(
-                                            currentBill.payment_date,
-                                        ).toLocaleDateString()}
-                                    </p>
-                                ) : (
-                                    <p className="text-gray-600">
-                                        Payment date: Not available
-                                    </p>
-                                )}
-
-                                {/* Status */}
-                                <p
-                                    className={`font-semibold ${getStatusColor(status)}`}
-                                >
-                                    Status:{" "}
-                                    {status.charAt(0).toUpperCase() +
-                                        status.slice(1)}
-                                </p>
-                            </div>
+                                    <div className="border-t pt-4 space-y-2">
+                                        <div className="flex justify-between">
+                                            <span>Amount Due:</span>
+                                            <span className="font-bold">
+                                                {peso.format(
+                                                    Number(
+                                                        currentBill.amount_due,
+                                                    ),
+                                                )}
+                                            </span>
+                                        </div>
+                                        {penalty > 0 && (
+                                            <div className="flex justify-between text-destructive">
+                                                <span>Penalty:</span>
+                                                <span className="font-bold">
+                                                    {peso.format(penalty)}
+                                                </span>
+                                            </div>
+                                        )}
+                                        <div className="flex justify-between text-lg font-bold border-t pt-2">
+                                            <span>Total Amount Due:</span>
+                                            <span>{peso.format(total)}</span>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
                         );
                     })()}
 

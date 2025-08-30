@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('billing_month');
             $table->decimal('amount_due', 10, 2);
             $table->decimal('penalty', 10, 2)->default(0);
-            $table->enum('status', ['Unpaid', 'Paid','Overdue'])->default('unpaid');
+            $table->enum('status', ['Unpaid', 'Paid','Overdue'])->default('Unpaid');
             $table->date('due_date')->nullable();
             $table->decimal('total_amount_due', 10, 2)->default(0);
             $table->date('payment_date')->nullable();
