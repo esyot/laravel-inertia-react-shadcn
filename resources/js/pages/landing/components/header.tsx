@@ -17,22 +17,10 @@ export default function Header() {
 
                 <nav className="hidden md:flex items-center gap-6">
                     <a
-                        href="#"
+                        href="/bill-checking"
                         className="text-sm text-slate-600 hover:text-slate-900"
                     >
-                        To add
-                    </a>
-                    <a
-                        href="#"
-                        className="text-sm text-slate-600 hover:text-slate-900"
-                    >
-                        To add
-                    </a>
-                    <a
-                        href="#"
-                        className="text-sm text-slate-600 hover:text-slate-900"
-                    >
-                        To add
+                        Bill Checking
                     </a>
                     <Link href="/login">
                         <Button

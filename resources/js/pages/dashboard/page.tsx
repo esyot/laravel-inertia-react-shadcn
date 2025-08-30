@@ -21,7 +21,6 @@ export default function Page() {
             <Layout>
                 <SectionContent header={false}>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                        {/* Account Summary */}
                         <Card className="shadow-md rounded-2xl">
                             <CardHeader>
                                 <CardTitle className="text-lg font-semibold">
@@ -50,7 +49,6 @@ export default function Page() {
                             </CardContent>
                         </Card>
 
-                        {/* Current Bill */}
                         <Card className="shadow-md rounded-2xl">
                             <CardHeader className="flex flex-row items-center justify-between">
                                 <CardTitle className="text-lg font-semibold">
@@ -104,7 +102,6 @@ export default function Page() {
                             </CardFooter>
                         </Card>
 
-                        {/* Outstanding Balance */}
                         <Card className="shadow-md rounded-2xl">
                             <CardHeader className="flex flex-row items-center justify-between">
                                 <CardTitle className="text-lg font-semibold">
@@ -177,7 +174,6 @@ export default function Page() {
                         </Card>
                     </div>
 
-                    {/* Consumption Chart */}
                     <div className="mt-6">
                         <ChartAreaInteractive />
                     </div>

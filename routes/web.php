@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
+use App\Models\Customer;
+use Illuminate\Http\Request;
 use App\Http\Controllers\SocialiteController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
@@ -47,6 +51,23 @@ Route::middleware(['auth'])->group(function () {
 
 
 });
+
+
+Route::get('/bill-checking', function () {
+    return inertia('bill-checking/page', [
+    ]);
+});
+
+Route::get('/customers/search', function (Request $request) {
+    $query = $request->input('query');
+
+    return Customer::where('code', 'like', "%{$query}%")
+        ->orWhere('name', 'like', "%{$query}%")
+        ->limit(10)
+        ->get();
+});
+
+Route::get('/customers/{id}', [CustomerController::class, 'show']);
 
 
 Route::get('/login', function () {
