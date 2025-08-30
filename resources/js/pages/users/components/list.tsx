@@ -20,7 +20,6 @@ type UserTableProps = {
     users: User[];
     onView?: (user: User) => void;
     onDelete?: (user: User) => void;
-    // onAdd?: () => void;
 };
 
 export function UserTable({ users, onView, onDelete }: UserTableProps) {
