@@ -10,13 +10,7 @@ class Customer extends Model
     /** @use HasFactory<\Database\Factories\CustomerFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'municipal',
-        'barangay',
-        'purok',
-        'code',
-    ];
+    protected $fillable = ['name', 'municipal', 'barangay', 'purok', 'status'];
 
     public function bills()
     {

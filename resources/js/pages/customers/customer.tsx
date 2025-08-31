@@ -11,6 +11,8 @@ import {
 import SectionContent from "../components/section-content";
 import { useRef } from "react";
 import Layout from "../layout";
+import Button from "@/components/composables/button";
+import { ArrowLeft } from "lucide-react";
 
 export default function Customer({ customer, isAdmin = false }: any) {
     const printRef = useRef<HTMLDivElement>(null);
@@ -134,6 +136,15 @@ export default function Customer({ customer, isAdmin = false }: any) {
     const customerContent = (
         <div className="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
             <div className="w-full">
+                <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="w-fit -ml-2 -mt-2 cursor-pointer "
+                    onClick={() => window.history.back()}
+                >
+                    <ArrowLeft className="mr-2 h-4 w-4" /> Back
+                </Button>
                 <div>
                     <h1 className="text-3xl font-semibold mb-6">
                         {customer.name} — {customer.code}
