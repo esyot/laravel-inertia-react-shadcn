@@ -33,13 +33,11 @@ export default function DatePicker({
     disabled = false,
     formatString = "PPP",
 }: DatePickerProps) {
+    const labelClass = "text-gray-400 ml-2 text-xs ";
+    const placeholderClass = "text-gray-400 font-normal";
     return (
         <div className="flex flex-col gap-1">
-            {label && (
-                <label className="text-muted-foreground ml-2 text-sm font-medium">
-                    {label}
-                </label>
-            )}
+            {label && <label className={labelClass}>{label}</label>}
 
             <Popover>
                 <PopoverTrigger asChild>
@@ -48,12 +46,14 @@ export default function DatePicker({
                         shape="rounded"
                         disabled={disabled}
                         className={cn(
-                            "bg-sand-dugout tex-sm w-full justify-between px-4 text-left",
+                            "bg-gray-50  w-full justify-between px-4 text-left",
                             !date && "text-weak",
                             className,
                         )}
                     >
-                        {date ? format(date, formatString) : placeholder}
+                        <span className={placeholderClass}>
+                            {date ? format(date, formatString) : placeholder}
+                        </span>
                         <Calendar className="ml-2 h-4 w-4 text-gray-500" />
                     </Button>
                 </PopoverTrigger>

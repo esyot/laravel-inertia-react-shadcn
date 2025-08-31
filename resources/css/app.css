@@ -52,6 +52,9 @@
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sand: rgb(240, 239, 234);
+    --color-sand-weak: rgb(245, 244, 239);
+    --color-sand-moderate: rgb(230, 230, 230);
+    --color-sand-dugout: rgb(248, 248, 248);
 }
 
 :root {
