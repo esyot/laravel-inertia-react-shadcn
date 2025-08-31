@@ -11,7 +11,11 @@ class CustomerController extends Controller
 
     public function index()
     {
-        return inertia('customers/page');
+        $customers = Customer::orderBy('name', 'asc')->get();
+
+        return Inertia::render('customers/page', [
+            'customers' => $customers,
+        ]);
     }
 
     public function search(Request $request)
