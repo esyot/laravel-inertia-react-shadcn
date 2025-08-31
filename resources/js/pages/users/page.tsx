@@ -3,6 +3,7 @@ import { UserTable } from "./components/list";
 import Layout from "../layout";
 import { AddUserDialog } from "./components/user-dialog";
 import SectionContent from "../components/section-content";
+import SectionHeader from "../components/section-header";
 import { router, usePage } from "@inertiajs/react";
 
 export default function HomePage({ users }: any) {
@@ -22,7 +23,7 @@ export default function HomePage({ users }: any) {
         <div>
             <main>
                 <Layout>
-                    <SectionContent header={false}>
+                    <SectionHeader>
                         {flash.success && (
                             <div className="mb-4 p-3 bg-green-100 text-green-700 rounded">
                                 {flash.success}
@@ -38,6 +39,8 @@ export default function HomePage({ users }: any) {
                             <h2 className="text-lg font-semibold">User List</h2>
                             <AddUserDialog />
                         </div>
+                    </SectionHeader>
+                    <SectionContent header={false}>
                         <section>
                             <UserTable
                                 users={users}
