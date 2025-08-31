@@ -1,3 +1,4 @@
+import React from "react";
 import {
     Table,
     TableBody,
@@ -10,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/components/utils/dataFormatter";
+import { router } from "@inertiajs/react";
 
 type Customer = {
     code: string;
@@ -25,12 +27,26 @@ type MeterReading = {
     updated_at: string;
 };
 
+type Paginated<T> = {
+    data: T[];
+    current_page: number;
+    last_page: number;
+    total: number;
+    per_page: number;
+};
+
 type MeterTableProps = {
-    readings: MeterReading[];
+    readings: Paginated<MeterReading>;
     onDelete: (reading: MeterReading) => void;
 };
 
 export function MeterTable({ readings, onDelete }: MeterTableProps) {
+    const goToPage = (page: number) => {
+        if (page >= 1 && page <= readings.last_page) {
+            router.get(`/meters?page=${page}`); // reload data from backend
+        }
+    };
+
     return (
         <div className="space-y-4">
             {/* Meter Reading Table */}
@@ -49,10 +65,10 @@ export function MeterTable({ readings, onDelete }: MeterTableProps) {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {readings.map((reading, index) => (
-                        <TableRow key={index}>
+                    {readings.data.map((reading) => (
+                        <TableRow key={reading.id}>
                             <TableCell className="font-medium">
-                                {reading.customer.code}
+                                {reading.customer?.code}
                             </TableCell>
                             <TableCell>{reading.month}</TableCell>
                             <TableCell>{reading.year}</TableCell>
@@ -76,8 +92,39 @@ export function MeterTable({ readings, onDelete }: MeterTableProps) {
                 </TableBody>
                 <TableFooter>
                     <TableRow>
-                        <TableCell colSpan={6}>
-                            Total Readings: {readings.length}
+                        <TableCell colSpan={6} className="p-4">
+                            <div className="flex justify-between items-center w-full">
+                                <span>Total: {readings.total}</span>
+                                <div className="flex items-center space-x-2">
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() =>
+                                            goToPage(readings.current_page - 1)
+                                        }
+                                        disabled={readings.current_page === 1}
+                                    >
+                                        Previous
+                                    </Button>
+                                    <span>
+                                        Page {readings.current_page} of{" "}
+                                        {readings.last_page}
+                                    </span>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() =>
+                                            goToPage(readings.current_page + 1)
+                                        }
+                                        disabled={
+                                            readings.current_page ===
+                                            readings.last_page
+                                        }
+                                    >
+                                        Next
+                                    </Button>
+                                </div>
+                            </div>
                         </TableCell>
                     </TableRow>
                 </TableFooter>
