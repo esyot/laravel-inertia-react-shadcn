@@ -19,9 +19,14 @@ class Customer extends Model
     ];
 
     public function bills()
-{
-    return $this->hasMany(Bill::class);
-}
+    {
+        return $this->hasMany(Bill::class);
+    }
+
+      public function meterReadings()
+    {
+        return $this->hasMany(MeterReading::class);
+    }
 
 
     protected static function booted()
