@@ -7,6 +7,7 @@ use App\Http\Controllers\SocialiteController;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MeterReadingController;
 use App\Http\Controllers\UserController;
 
 // socialite
@@ -96,6 +97,10 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/users', [UserController::class, 'index'])->name('users.page');
 Route::post('/users', [UserController::class, 'store'])->name('users.store');
 Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+Route::get('/meters', [MeterReadingController::class, 'index'])->name('meters.page');
+Route::post('/meters', [MeterReadingController::class, 'store'])->name('meters.store');
+Route::delete('/meters/{id}', [MeterReadingController::class, 'destroy'])->name('meters.destroy');
 
 Route::get('/manage-user', function () {
     return inertia('manage-user/page', [
