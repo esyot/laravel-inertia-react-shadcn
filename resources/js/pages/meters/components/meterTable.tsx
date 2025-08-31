@@ -12,6 +12,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/components/utils/dataFormatter";
 import { router } from "@inertiajs/react";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination";
 
 type Customer = {
     code: string;
@@ -43,13 +52,20 @@ type MeterTableProps = {
 export function MeterTable({ readings, onDelete }: MeterTableProps) {
     const goToPage = (page: number) => {
         if (page >= 1 && page <= readings.last_page) {
-            router.get(`/meters?page=${page}`); // reload data from backend
+            router.get(`/meters?page=${page}`);
         }
+    };
+
+    const getPages = () => {
+        const pages = [];
+        for (let i = 1; i <= readings.last_page; i++) {
+            pages.push(i);
+        }
+        return pages;
     };
 
     return (
         <div className="space-y-4">
-            {/* Meter Reading Table */}
             <Table>
                 <TableCaption>
                     A list of meter readings with actions.
@@ -95,34 +111,63 @@ export function MeterTable({ readings, onDelete }: MeterTableProps) {
                         <TableCell colSpan={6} className="p-4">
                             <div className="flex justify-between items-center w-full">
                                 <span>Total: {readings.total}</span>
-                                <div className="flex items-center space-x-2">
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={() =>
-                                            goToPage(readings.current_page - 1)
-                                        }
-                                        disabled={readings.current_page === 1}
-                                    >
-                                        Previous
-                                    </Button>
-                                    <span>
-                                        Page {readings.current_page} of{" "}
-                                        {readings.last_page}
-                                    </span>
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={() =>
-                                            goToPage(readings.current_page + 1)
-                                        }
-                                        disabled={
-                                            readings.current_page ===
-                                            readings.last_page
-                                        }
-                                    >
-                                        Next
-                                    </Button>
+                                <div>
+                                    <Pagination>
+                                        <PaginationContent>
+                                            <PaginationItem>
+                                                <PaginationPrevious
+                                                    onClick={() =>
+                                                        goToPage(
+                                                            readings.current_page -
+                                                                1,
+                                                        )
+                                                    }
+                                                    disabled={
+                                                        readings.current_page ===
+                                                        1
+                                                    }
+                                                />
+                                            </PaginationItem>
+
+                                            {getPages().map((page) => (
+                                                <PaginationItem key={page}>
+                                                    {page ===
+                                                    readings.current_page ? (
+                                                        <PaginationLink
+                                                            href="#"
+                                                            className="bg-gray-200"
+                                                        >
+                                                            {page}
+                                                        </PaginationLink>
+                                                    ) : (
+                                                        <PaginationLink
+                                                            href="#"
+                                                            onClick={() =>
+                                                                goToPage(page)
+                                                            }
+                                                        >
+                                                            {page}
+                                                        </PaginationLink>
+                                                    )}
+                                                </PaginationItem>
+                                            ))}
+
+                                            <PaginationItem>
+                                                <PaginationNext
+                                                    onClick={() =>
+                                                        goToPage(
+                                                            readings.current_page +
+                                                                1,
+                                                        )
+                                                    }
+                                                    disabled={
+                                                        readings.current_page ===
+                                                        readings.last_page
+                                                    }
+                                                />
+                                            </PaginationItem>
+                                        </PaginationContent>
+                                    </Pagination>
                                 </div>
                             </div>
                         </TableCell>
