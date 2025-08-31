@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserInformation;
-use App\Models\UserLog;
+
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;

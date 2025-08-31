@@ -29,18 +29,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/instructions', function () {
-    return view("instructions.index");
-})->name('instructions.index');
-
-Route::get('/instructions/setup', function () {
-    return view("instructions.setup");
-});
-
-
-Route::get('/instructions/requirements', function () {
-    return view("instructions.requirements");
-});
 
 Route::middleware(['auth'])->group(function () {
 
@@ -49,6 +37,33 @@ Route::middleware(['auth'])->group(function () {
         return inertia('dashboard/page', [
         ]);
     })->name('dashboard');
+
+    Route::get('/transactions', function () {
+        return inertia('transactions/page', [
+        ]);
+    });
+
+    Route::get('/manage-user', function () {
+        return inertia('manage-user/page', [
+        ]);
+    });
+
+    Route::get('/payment', function () {
+        return inertia('payment/page', [
+        ]);
+    });
+
+
+
+    Route::get('/users', [UserController::class, 'index'])->name('users.page');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    Route::get('/meters', [MeterReadingController::class, 'index'])->name('meters.page');
+    Route::post('/meters', [MeterReadingController::class, 'store'])->name('meters.store');
+    Route::delete('/meters/{id}', [MeterReadingController::class, 'destroy'])->name('meters.destroy');
+
+    Route::get('/customers', [CustomerController::class, 'index']);
 
 
 });
@@ -71,7 +86,6 @@ Route::get('/customers/search', function (Request $request) {
 Route::get('/customers/{code}', [CustomerController::class, 'show']);
 
 
-Route::get('/customers', [CustomerController::class, 'index']);
 
 Route::get('/login', function () {
     return inertia('login/page', [
@@ -79,35 +93,24 @@ Route::get('/login', function () {
     ]);
 });
 
-// Route::get('/users', function () {
-//     return inertia('users/page', [
-//     ]);
-// });
 
-Route::get('/transactions', function () {
-    return inertia('transactions/page', [
-    ]);
-});
+
 
 //LOGIN FOR USERS
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.attempt');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/users', [UserController::class, 'index'])->name('users.page');
-Route::post('/users', [UserController::class, 'store'])->name('users.store');
-Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
-Route::get('/meters', [MeterReadingController::class, 'index'])->name('meters.page');
-Route::post('/meters', [MeterReadingController::class, 'store'])->name('meters.store');
-Route::delete('/meters/{id}', [MeterReadingController::class, 'destroy'])->name('meters.destroy');
+// Others
+Route::get('/instructions', function () {
+    return view("instructions.index");
+})->name('instructions.index');
 
-Route::get('/manage-user', function () {
-    return inertia('manage-user/page', [
-    ]);
+Route::get('/instructions/setup', function () {
+    return view("instructions.setup");
 });
 
-Route::get('/payment', function () {
-    return inertia('payment/page', [
-    ]);
+Route::get('/instructions/requirements', function () {
+    return view("instructions.requirements");
 });
