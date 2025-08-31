@@ -16,7 +16,7 @@ export default function CustomersPage({ customers }: any) {
     return (
         <Layout>
             <SectionHeader className="flex justify-between items-center ">
-                <h1 className="text-xl font-semibold">Customer List</h1>
+                <h1 className="text-lg font-semibold">Customers</h1>
                 <div className="flex gap-6 items-center">
                     <Popover>
                         <PopoverTrigger className=" hover:bg-sand/50 p-2 cursor-pointer block rounded">

@@ -43,8 +43,8 @@ export default function Index({ readings }: any) {
     return (
         <main>
             <Layout>
-                <SectionHeader className="flex justify-between">
-                    <h1 className="text-xl font-semibold">Meter Readings</h1>
+                <SectionHeader className="flex items-center justify-between">
+                    <h1 className="text-lg font-semibold">Meter Readings</h1>
 
                     <div className="flex gap-6 items-center">
                         <Popover>

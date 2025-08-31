@@ -5,7 +5,6 @@ import { AddUserDialog } from "./components/user-dialog";
 import SectionContent from "../components/section-content";
 import SectionHeader from "../components/section-header";
 import { router, usePage } from "@inertiajs/react";
-import SectionHeader from "../components/section-header";
 import React from "react";
 
 import {
@@ -46,8 +45,7 @@ export default function HomePage({ users }: any) {
         <div>
             <main>
                 <Layout>
-        <SectionHeader className="flex justify-between items-center">
-
+                    <SectionHeader className="flex justify-between items-center">
                         {flash.success && (
                             <div className="mb-4 p-3 bg-green-100 text-green-700 rounded">
                                 {flash.success}
@@ -112,7 +110,6 @@ export default function HomePage({ users }: any) {
                     </SectionHeader>
 
                     <SectionContent header={true}>
-
                         <section>
                             <UserTable
                                 users={users}

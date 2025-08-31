@@ -31,7 +31,7 @@ export default function Transaction() {
     return (
         <Layout>
             <SectionHeader className="flex items-center justify-between">
-                <h1 className="text-xl font-semibold">Transactions</h1>
+                <h1 className="text-lg font-semibold">Transactions</h1>
 
                 <div className="flex gap-6 items-center">
                     <Popover>
