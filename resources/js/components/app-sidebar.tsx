@@ -32,6 +32,7 @@ const menuItems = [
     { name: "Users", link: "/users", icon: Users },
     { name: "Transactions", link: "/transactions", icon: HandCoins },
     { name: "Meters", link: "/meters", icon: CircleGauge },
+    { name: "Customers", link: "/customers", icon: Users },
 ];
 
 export function AppSidebar() {

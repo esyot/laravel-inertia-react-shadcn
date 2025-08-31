@@ -84,8 +84,7 @@ Route::get('/customers/search', function (Request $request) {
 });
 
 Route::get('/customers/{code}', [CustomerController::class, 'show']);
-
-
+Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
 
 Route::get('/login', function () {
     return inertia('login/page', [
@@ -93,8 +92,15 @@ Route::get('/login', function () {
     ]);
 });
 
+// Route::get('/users', function () {
+//     return inertia('users/page', [
+//     ]);
+// });
 
-
+Route::get('/transactions', function () {
+    return inertia('transactions/page', [
+    ]);
+});
 
 //LOGIN FOR USERS
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');

@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { Button } from "@/components/ui/button";
 export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
+    const { props }: any = usePage();
+    const user = props.user;
+
     return (
         <>
             <header className="flex items-center justify-between px-4 sm:px-8 py-4 border-b">
@@ -22,14 +25,25 @@ export default function Header() {
                     >
                         Bill Checking
                     </a>
-                    <Link href="/login">
-                        <Button
-                            variant="default"
-                            className="ml-2 cursor-pointer"
-                        >
-                            Login
-                        </Button>
-                    </Link>
+                    {user ? (
+                        <Link href="/dashboard">
+                            <Button
+                                variant="default"
+                                className="ml-2 cursor-pointer"
+                            >
+                                <span>{user.name}</span>
+                            </Button>
+                        </Link>
+                    ) : (
+                        <Link href="/login">
+                            <Button
+                                variant="default"
+                                className="ml-2 cursor-pointer"
+                            >
+                                Login
+                            </Button>
+                        </Link>
+                    )}
                 </nav>
 
                 <div className="md:hidden flex items-center">
