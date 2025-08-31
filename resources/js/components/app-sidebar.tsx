@@ -6,7 +6,13 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { LayoutDashboard, Users, HandCoins, CircleGauge } from "lucide-react";
+import {
+    LayoutDashboard,
+    Users,
+    HandCoins,
+    CircleGauge,
+    ChevronUp,
+} from "lucide-react";
 
 import {
     Sidebar,
@@ -19,6 +25,7 @@ import {
 import { Link, usePage } from "@inertiajs/react";
 
 import { cn } from "@/lib/utils";
+import { Button } from "./ui/button";
 
 const menuItems = [
     { name: "Dashboard", link: "/dashboard", icon: LayoutDashboard },
@@ -60,7 +67,7 @@ export function AppSidebar() {
             <SidebarFooter className="bg-sand border-t hover:bg-white/50 p-0">
                 <Popover>
                     <PopoverTrigger>
-                        <div className="flex w-full gap-2 p-2 items-center border flex-1">
+                        <div className="flex w-full justify-center gap-2 p-2 items-center border flex-1">
                             {user?.img ? (
                                 <Avatar>
                                     <AvatarImage src={user?.img} />
@@ -74,6 +81,8 @@ export function AppSidebar() {
                             )}
 
                             <h1>{user.name}</h1>
+
+                            <ChevronUp size={16} className="block m-2" />
                         </div>
                     </PopoverTrigger>
                     <PopoverContent className="w-48 p-0">

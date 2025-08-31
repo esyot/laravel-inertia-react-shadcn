@@ -1,39 +1,18 @@
 import Layout from "../layout";
 import { users } from "../users/data/users";
+import SectionHeader from "../components/section-header";
 import SectionContent from "../components/section-content";
+
 import { TransactionTable } from "./components/transactionHistoryTable";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
 
 export default function Transaction() {
-    const [showHistory, setShowHistory] = useState(true);
-
     return (
         <Layout>
+            <SectionHeader className="flex items-center justify-between">
+                <h1 className="text-xl font-semibold">Transactions</h1>
+            </SectionHeader>
             <SectionContent header={false}>
-                <div className="flex items-center justify-between mb-4">
-                    <div className="text-xl font-semibold">
-                        Transaction Page
-                    </div>
-                    {/* Simple tab buttons */}
-                    <div className="flex gap-2">
-                        <Button
-                            variant={showHistory ? "default" : "outline"}
-                            onClick={() => setShowHistory(true)}
-                        >
-                            History
-                        </Button>
-                        <Button
-                            variant={!showHistory ? "default" : "outline"}
-                            onClick={() => setShowHistory(false)}
-                        >
-                            Customers
-                        </Button>
-                    </div>
-                </div>
-
-                {/* Pass toggle state to table */}
-                <TransactionTable users={users} showHistory={showHistory} />
+                <TransactionTable users={users} />
             </SectionContent>
         </Layout>
     );

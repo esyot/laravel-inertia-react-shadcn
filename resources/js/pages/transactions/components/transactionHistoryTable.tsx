@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
     Table,
     TableBody,
@@ -8,7 +9,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 
 type User = {
     name: string;
@@ -22,24 +22,19 @@ type UserTableProps = {
     showHistory?: boolean;
 };
 
-export function TransactionTable({
-    users,
-    showHistory = false,
-}: UserTableProps) {
+export function TransactionTable({ users }: UserTableProps) {
     return (
         <div className="space-y-4">
             <Table>
-                <TableCaption>
-                    {showHistory
-                        ? "A list of past transactions."
-                        : "Customers that may need to pay."}
-                </TableCaption>
+                <TableCaption>A list of past transactions</TableCaption>
                 <TableHeader>
                     <TableRow>
                         <TableHead>Name</TableHead>
                         <TableHead>Email</TableHead>
                         <TableHead>Address</TableHead>
-                        <TableHead className="text-right">Action</TableHead>
+                        <TableHead>Amount</TableHead>
+                        <TableHead>Date</TableHead>
+                        <TableHead>Action</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -50,27 +45,30 @@ export function TransactionTable({
                             </TableCell>
                             <TableCell>{user.email}</TableCell>
                             <TableCell>{user.address}</TableCell>
-                            <TableCell className="text-right">
-                                {showHistory ? (
-                                    <Button variant="outline" size="sm">
-                                        View History
-                                    </Button>
-                                ) : user.hasPaymentDue ? (
-                                    <Button variant="destructive" size="sm">
-                                        Pay Now
-                                    </Button>
-                                ) : (
-                                    <span className="text-gray-500">
-                                        No Action
-                                    </span>
-                                )}
+                            <TableCell>4000.00</TableCell>
+                            <TableCell>
+                                {new Date(
+                                    Date.now() -
+                                        Math.floor(
+                                            Math.random() *
+                                                1000 *
+                                                60 *
+                                                60 *
+                                                24 *
+                                                30,
+                                        ),
+                                ).toLocaleString()}
+                            </TableCell>
+
+                            <TableCell>
+                                <Button variant="outline">View History</Button>
                             </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
                 <TableFooter>
                     <TableRow>
-                        <TableCell colSpan={4}>Total: {users.length}</TableCell>
+                        <TableCell colSpan={5}>Total: {users.length}</TableCell>
                     </TableRow>
                 </TableFooter>
             </Table>

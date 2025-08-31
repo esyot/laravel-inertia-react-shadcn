@@ -72,7 +72,7 @@ export default function Layout({ children }: PageProps) {
                             </Breadcrumb>
                         </div>
                     </header>
-                    <section className="bg-white rounded-tl-3xl overflow-y-hidden h-[calc(100vh-8.5vh)] shadow-md">
+                    <section className="bg-white sm:rounded-tl-3xl overflow-y-hidden h-[calc(100vh-8.5vh)] shadow-md">
                         {children}
                     </section>
                 </main>
