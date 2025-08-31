@@ -17,9 +17,51 @@ import {
 } from "@/components/ui/table";
 
 import SectionContent from "../components/section-content";
+import { useRef } from "react";
 
 export default function Customer({ customer }: any) {
+    const printRef = useRef<HTMLDivElement>(null);
     if (!customer) return <p className="text-center">Customer not found</p>;
+
+    // Print Receipt
+    const handlePrint = () => {
+        const printContents = printRef.current?.innerHTML;
+        if (printContents) {
+            const printWindow = window.open("", "", "height=700,width=900");
+            if (printWindow) {
+                printWindow.document.write(`
+                <html>
+                  <head>
+                    <title>Receipt</title>
+                    <link rel="stylesheet" href="/css/receipt.css">
+                  </head>
+                  <body>
+                    <div class="receipt">
+                      <div class="header">
+                        <img src="/assets/images/logo.jpg" alt="Company Logo" class="logo"/>
+                        <h1>Receipt</h1>
+                        <p>${new Date().toLocaleDateString()}</p>
+                      </div>
+                      <div class="section">
+                        ${printContents}
+                      </div>
+                    </div>
+                    <div class="footer">
+                    Thank you for your payment! <br>
+                  </div>
+                  </body>
+                </html>
+            `);
+                printWindow.document.close();
+
+                // ✅ Wait until the new window (and CSS) is loaded
+                printWindow.onload = function () {
+                    printWindow.focus();
+                    printWindow.print();
+                };
+            }
+        }
+    };
 
     // Helpers
     const peso = new Intl.NumberFormat("en-PH", {
@@ -150,8 +192,17 @@ export default function Customer({ customer }: any) {
                                                             status.slice(1)}
                                                     </span>
                                                 </CardTitle>
+                                                <button
+                                                    onClick={handlePrint}
+                                                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                                                >
+                                                    Print Receipt
+                                                </button>
                                             </CardHeader>
-                                            <CardContent className="space-y-6">
+                                            <CardContent
+                                                ref={printRef}
+                                                className="space-y-6"
+                                            >
                                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                                     <div>
                                                         <p className="text-base text-muted-foreground">
