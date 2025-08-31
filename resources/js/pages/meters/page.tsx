@@ -10,6 +10,7 @@ import axios from "axios";
 type Customer = {
     id: number;
     code: string;
+    name?: string;
 };
 
 export default function Index({ readings }: any) {
@@ -17,11 +18,18 @@ export default function Index({ readings }: any) {
     const [search, setSearch] = useState("");
     const [results, setResults] = useState<Customer[]>([]);
     const [loading, setLoading] = useState(false);
+    const [filteredReadings, setFilteredReadings] = useState(readings);
 
-    const handleSearchCustomer = () => {
+    const handleSearchCustomer = (query: string) => {
+        if (!query) {
+            setResults([]);
+            setFilteredReadings(readings); // reset table if input cleared
+            return;
+        }
+
         setLoading(true);
         axios
-            .get(`/customers/search?query=${search}`)
+            .get(`/customers/search?query=${query}`)
             .then((res) => {
                 setResults(res.data);
             })
@@ -29,15 +37,23 @@ export default function Index({ readings }: any) {
             .finally(() => setLoading(false));
     };
 
-    const handleSelect = (code: string) => {
-        router.visit(`/customers/${code}`);
+    const handleSelect = (customer: Customer) => {
+        setSearch(customer.code);
+        setResults([]);
+
+        // Filter readings based on customer_id
+        const filtered = readings.filter(
+            (r: any) => r.customer_id === customer.id,
+        );
+        setFilteredReadings(filtered);
     };
 
-    const handleDelete = (readings: any) => {
-        if (confirm(`Are you sure you want to delete ${readings.name}?`)) {
-            router.delete(`/meters/${readings.id}`);
+    const handleDelete = (reading: any) => {
+        if (confirm(`Are you sure you want to delete this reading?`)) {
+            router.delete(`/meters/${reading.id}`);
         }
     };
+
     return (
         <main>
             <Layout>
@@ -51,8 +67,9 @@ export default function Index({ readings }: any) {
                                 type="text"
                                 value={search}
                                 onChange={(e) => {
-                                    handleSearchCustomer();
-                                    setSearch(e.currentTarget.value);
+                                    const val = e.currentTarget.value;
+                                    setSearch(val);
+                                    handleSearchCustomer(val);
                                 }}
                                 placeholder="Enter your customer code (e.g. SAGB-SC-P1-NS8DSK31GP)"
                                 className="w-[70%] border-2 p-2 border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:border-transparent"
@@ -69,12 +86,17 @@ export default function Index({ readings }: any) {
                                             key={customer.id}
                                             className="px-6 py-4 hover:bg-blue-100 cursor-pointer border-b border-gray-100 last:border-b-0"
                                             onClick={() =>
-                                                handleSelect(customer.code)
+                                                handleSelect(customer)
                                             }
                                         >
                                             <div className="font-bold text-gray-800">
                                                 {customer.code}
                                             </div>
+                                            {customer.name && (
+                                                <div className="text-sm text-gray-500">
+                                                    {customer.name}
+                                                </div>
+                                            )}
                                         </li>
                                     ))}
                                 </ul>
@@ -84,7 +106,10 @@ export default function Index({ readings }: any) {
                     <AddMeterReadingDialog />
                 </SectionHeader>
                 <SectionContent header={false}>
-                    <MeterTable readings={readings} onDelete={handleDelete} />
+                    <MeterTable
+                        readings={filteredReadings}
+                        onDelete={handleDelete}
+                    />
                 </SectionContent>
             </Layout>
         </main>
