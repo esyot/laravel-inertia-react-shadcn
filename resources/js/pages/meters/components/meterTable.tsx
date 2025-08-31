@@ -11,13 +11,18 @@ import {
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/components/utils/dataFormatter";
 
+type Customer = {
+    code: string;
+};
 type MeterReading = {
     id: number;
+    customer: Customer;
     customer_id: number;
     month: string;
     year: number;
     meter_value: number;
-    timestamp: string;
+    created_at: string;
+    updated_at: string;
 };
 
 type MeterTableProps = {
@@ -35,7 +40,7 @@ export function MeterTable({ readings, onDelete }: MeterTableProps) {
                 </TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Customer ID</TableHead>
+                        <TableHead>Code</TableHead>
                         <TableHead>Month</TableHead>
                         <TableHead>Year</TableHead>
                         <TableHead>Meter Value</TableHead>
@@ -47,7 +52,7 @@ export function MeterTable({ readings, onDelete }: MeterTableProps) {
                     {readings.map((reading, index) => (
                         <TableRow key={index}>
                             <TableCell className="font-medium">
-                                {reading.customer_id}
+                                {reading.customer.code}
                             </TableCell>
                             <TableCell>{reading.month}</TableCell>
                             <TableCell>{reading.year}</TableCell>
