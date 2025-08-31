@@ -4,7 +4,7 @@ import SectionContent from "../components/section-content";
 import { router, usePage } from "@inertiajs/react";
 import { AddMeterReadingDialog } from "./components/meterDialog";
 import SectionHeader from "../components/section-header";
-import React from "react";
+import React, { useState } from "react";
 
 import {
     Popover,
@@ -29,11 +29,51 @@ interface FilterProps {
     }) => void;
 }
 
-export default function Index({ readings }: any) {
+export default function Index({ readings, filters }: any) {
     const { props }: any = usePage();
 
     const [startDate, setStartDate] = React.useState<Date>();
     const [endDate, setEndDate] = React.useState<Date>();
+
+    const [form, setForm] = useState({
+        code: filters?.code || "",
+        name: filters?.name || "",
+        municipal: filters?.municipal || "",
+        meter: filters?.meter || "",
+        brgy: filters?.brgy || "",
+        startDate: filters?.startDate || undefined,
+        endDate: filters?.endDate || undefined,
+    });
+
+    const handleChange = (key: string, value: any) => {
+        setForm((prev) => ({ ...prev, [key]: value }));
+    };
+
+    const handleSubmit = () => {
+        router.get(
+            "/meters",
+            { ...form },
+            { preserveState: true, preserveScroll: true },
+        );
+    };
+
+    const handleCancel = () => {
+        setForm({
+            code: "",
+            name: "",
+            municipal: "",
+            meter: "",
+            brgy: "",
+            startDate: undefined,
+            endDate: undefined,
+        });
+
+        router.get(
+            "/meters",
+            {},
+            { preserveState: false, preserveScroll: true },
+        );
+    };
 
     const handleDelete = (readings: any) => {
         if (confirm(`Are you sure you want to delete ${readings.name}?`)) {
@@ -48,7 +88,7 @@ export default function Index({ readings }: any) {
 
                     <div className="flex gap-6 items-center">
                         <Popover>
-                            <PopoverTrigger className=" hover:bg-sand/50 p-2 cursor-pointer block rounded">
+                            <PopoverTrigger className="hover:bg-sand/50 p-2 cursor-pointer block rounded">
                                 <ListFilter size={16} />
                             </PopoverTrigger>
                             <PopoverContent className="space-y-4">
@@ -56,35 +96,83 @@ export default function Index({ readings }: any) {
                                     Filter Actions
                                 </h1>
 
-                                <Input label="Code" placeholder="Code" />
-                                <Input label="Name" placeholder="Name" />
+                                <Input
+                                    label="Code"
+                                    value={form.code}
+                                    onChange={(e) =>
+                                        handleChange("code", e.target.value)
+                                    }
+                                    placeholder="Code"
+                                />
+                                <Input
+                                    label="Name"
+                                    value={form.name}
+                                    onChange={(e) =>
+                                        handleChange("name", e.target.value)
+                                    }
+                                    placeholder="Name"
+                                />
                                 <Input
                                     label="Municipal"
+                                    value={form.municipal}
+                                    onChange={(e) =>
+                                        handleChange(
+                                            "municipal",
+                                            e.target.value,
+                                        )
+                                    }
                                     placeholder="Municipal"
                                 />
-                                <Input label="Meter" placeholder="Meter" />
-                                <Input label="Brgy" placeholder="Brgy" />
+                                <Input
+                                    label="Meter"
+                                    value={form.meter}
+                                    onChange={(e) =>
+                                        handleChange("meter", e.target.value)
+                                    }
+                                    placeholder="Meter"
+                                />
+                                <Input
+                                    label="Brgy"
+                                    value={form.brgy}
+                                    onChange={(e) =>
+                                        handleChange("brgy", e.target.value)
+                                    }
+                                    placeholder="Brgy"
+                                />
 
                                 <div className="grid grid-cols-2 gap-2">
                                     <DatePicker
                                         label="Start"
-                                        date={startDate}
-                                        setDate={setStartDate}
+                                        date={form.startDate}
+                                        setDate={(d) =>
+                                            handleChange("startDate", d)
+                                        }
                                         placeholder="Start date"
                                     />
                                     <DatePicker
                                         label="End"
-                                        date={endDate}
-                                        setDate={setEndDate}
+                                        date={form.endDate}
+                                        setDate={(d) =>
+                                            handleChange("endDate", d)
+                                        }
                                         placeholder="End date"
                                     />
                                 </div>
 
                                 <div className="mt-2 grid grid-cols-2 gap-2">
-                                    <Button variant="outline" shape="rounded">
+                                    <Button
+                                        variant="outline"
+                                        shape="rounded"
+                                        onClick={handleCancel}
+                                    >
                                         Cancel
                                     </Button>
-                                    <Button shape="rounded"> Submit</Button>
+                                    <Button
+                                        shape="rounded"
+                                        onClick={handleSubmit}
+                                    >
+                                        Submit
+                                    </Button>
                                 </div>
                             </PopoverContent>
                         </Popover>
