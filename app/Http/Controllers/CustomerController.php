@@ -29,32 +29,24 @@ class CustomerController extends Controller
         return response()->json($customers);
     }
 
-    //     public function show($id)
-// {
-//     $customer = Customer::findOrFail($id);
-
-    //     return inertia('customers/page', [
-//         'customer' => $customer,
-//     ]);
-// }
-
     public function show($code)
-    {
+{
+    $customer = Customer::where('code', '=', $code)
+        ->with('bills')
+        ->first();
 
-        if (!$code)
-        {
-            return back()->withErrors([
-                'error' => 'Code not found!',
-            ]);
-        }
-        $customer = Customer::where('code', '=', $code)
-            ->with('bills')
-            ->first();
-
-        return Inertia::render('customers/customer', [
-            'customer' => $customer
-        ]);
+    if (!$customer) {
+        return redirect()->route('customers.index')->with('error', 'Customer not found');
     }
+
+    // Determine if the user is an admin
+    $isAdmin = auth()->check() && auth()->user()->isAdmin();
+
+    return Inertia::render('customers/customer', [
+        'customer' => $customer,
+        'isAdmin' => $isAdmin
+    ]);
+}
 
 
 }
