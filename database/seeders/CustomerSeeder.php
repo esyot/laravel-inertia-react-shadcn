@@ -15,7 +15,7 @@ class CustomerSeeder extends Seeder
     public function run(): void
     {
         Customer::factory()
-            ->count(10)
+            ->count(15)
             ->create()
             ->each(function ($customer) {
                 Bill::factory()->current()->create([
