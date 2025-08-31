@@ -66,6 +66,8 @@ export function AddMeterReadingDialog() {
         post("/meters", {
             onSuccess: () => {
                 reset();
+                setSearch("");
+                setResults([]);
                 setOpen(false);
             },
         });
@@ -97,7 +99,7 @@ export function AddMeterReadingDialog() {
                                     handleSearchCustomer(val);
                                 }}
                                 placeholder="Enter your customer code (e.g. SAGB-SC-P1-NS8DSK31GP)"
-                                className="w-[70%] border-2 p-2 border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:border-transparent"
+                                className="w-full border-2 p-2 border-gray-300 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:border-transparent"
                             />
 
                             {loading && (
