@@ -13,32 +13,40 @@ import {
     SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { ReactNode } from "react";
+import { usePage } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 
 interface PageProps {
     children: ReactNode;
 }
-import { usePage } from "@inertiajs/react";
-
-import { Link } from "@inertiajs/react";
 
 export default function Layout({ children }: PageProps) {
-    const { url, component } = usePage();
+    const { url, component, props } = usePage();
 
     const parts = component.toString().split("/");
-
     const parent: string = parts[0] ?? "";
     const child: string = parts[1] ?? "";
+
+    // Check if we're on specific pages
+    const isCustomerDetailPage = component
+        .toString()
+        .includes("customers/customer");
+    const isCustomerListPage =
+        component.toString().includes("customers/list") ||
+        (component.toString().includes("customers") && !isCustomerDetailPage);
+    const customerCode = props.customer?.code;
 
     const formatFirstLetterToUpperCase = (text: string) => {
         let formattedText = text[0]?.toUpperCase() + text.slice(1);
         return formattedText;
     };
+
     return (
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset className="bg-sand ">
                 <main className="h-screen overflow-y-hidden">
-                    <header className="bg-none  flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear bg-sand">
+                    <header className="bg-none flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear bg-sand">
                         <div className="flex items-center gap-2 px-4">
                             <SidebarTrigger className="-ml-1" />
                             <Separator
@@ -47,14 +55,28 @@ export default function Layout({ children }: PageProps) {
                             />
                             <Breadcrumb>
                                 <BreadcrumbList>
+                                    {/* Always show the parent link */}
                                     <BreadcrumbItem className="hidden md:block">
-                                        <Link href={parent}>
+                                        <Link href={`/${parent}`}>
                                             {formatFirstLetterToUpperCase(
                                                 parent,
                                             )}
                                         </Link>
                                     </BreadcrumbItem>
-                                    {child !== "page" && (
+
+                                    {/* Show child only if it's not the main list page and not empty */}
+                                    {isCustomerDetailPage && customerCode ? (
+                                        <>
+                                            <BreadcrumbSeparator className="hidden md:block" />
+                                            <BreadcrumbItem>
+                                                <BreadcrumbPage>
+                                                    {customerCode}
+                                                </BreadcrumbPage>
+                                            </BreadcrumbItem>
+                                        </>
+                                    ) : !isCustomerListPage &&
+                                      child !== "page" &&
+                                      child !== "" ? (
                                         <>
                                             <BreadcrumbSeparator className="hidden md:block" />
                                             <BreadcrumbItem>
@@ -67,7 +89,7 @@ export default function Layout({ children }: PageProps) {
                                                 </Link>
                                             </BreadcrumbItem>
                                         </>
-                                    )}
+                                    ) : null}
                                 </BreadcrumbList>
                             </Breadcrumb>
                         </div>

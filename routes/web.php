@@ -57,7 +57,6 @@ Route::get('/bill-checking', function () {
     return inertia('bill-checking/page', [
     ]);
 });
-
 Route::get('/customers/search', function (Request $request) {
     $query = $request->input('query');
 
@@ -66,8 +65,8 @@ Route::get('/customers/search', function (Request $request) {
         ->limit(10)
         ->get();
 });
-
 Route::get('/customers/{code}', [CustomerController::class, 'show']);
+
 
 
 Route::get('/customers', [CustomerController::class, 'index']);

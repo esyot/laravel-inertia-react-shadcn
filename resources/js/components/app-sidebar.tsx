@@ -6,7 +6,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { LayoutDashboard, Users, HandCoins } from "lucide-react";
+import { LayoutDashboard, Users, HandCoins, BookUser } from "lucide-react";
 
 import {
     Sidebar,
@@ -24,6 +24,7 @@ const menuItems = [
     { name: "Dashboard", link: "/dashboard", icon: LayoutDashboard },
     { name: "Users", link: "/users", icon: Users },
     { name: "Transactions", link: "/transactions", icon: HandCoins },
+    { name: "Customers", link: "/customers", icon: BookUser },
 ];
 
 export function AppSidebar() {

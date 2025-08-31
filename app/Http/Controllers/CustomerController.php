@@ -11,7 +11,11 @@ class CustomerController extends Controller
 
     public function index()
     {
-        return inertia('customers/page');
+        $customers = Customer::paginate(10);
+        
+        return Inertia::render('customers/list', [
+            'customers' => $customers
+    ]);
     }
 
     public function search(Request $request)
@@ -25,32 +29,37 @@ class CustomerController extends Controller
         return response()->json($customers);
     }
 
-    //     public function show($id)
-// {
-//     $customer = Customer::findOrFail($id);
-
-    //     return inertia('customers/page', [
-//         'customer' => $customer,
-//     ]);
-// }
-
     public function show($code)
-    {
+{
+    $customer = Customer::where('code', '=', $code)
+        ->with('bills')
+        ->first();
 
-        if (!$code)
-        {
-            return back()->withErrors([
-                'error' => 'Code not found!',
-            ]);
-        }
-        $customer = Customer::where('code', '=', $code)
-            ->with('bills')
-            ->first();
-
-        return Inertia::render('customers/customer', [
-            'customer' => $customer
-        ]);
+    if (!$customer) {
+        return redirect()->route('customers.index')->with('error', 'Customer not found');
     }
 
+    // Check if user is authenticated and has admin role
+    $isAdmin = false;
+    
+    if (auth()->check()) {
+        $isAdmin = auth()->user()->isAdmin();
+    }
 
+    return Inertia::render('customers/customer', [
+        'customer' => $customer,
+        'isAdmin' => $isAdmin
+    ]);
+}
+    
+    // public function show($code)
+    // {
+    //     $customer = Customer::where('code', '=', $code)
+    //         ->with('bills')
+    //         ->first();
+
+    //     return Inertia::render('customers/customer', [
+    //         'customer' => $customer
+    //     ]);
+    // }
 }
