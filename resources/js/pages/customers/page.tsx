@@ -11,7 +11,7 @@ export default function CustomersPage({ customers }: any) {
                 <h1 className="text-xl font-semibold">Customer List</h1>
                 <Button className="cursor-pointer">Add Customer</Button>
             </SectionHeader>
-            <SectionContent header={false}>
+            <SectionContent header={true}>
                 <CustomerTable customers={customers} />
             </SectionContent>
         </Layout>
