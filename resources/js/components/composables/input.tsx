@@ -21,7 +21,7 @@ export default function Input({
     type = "text",
     ...rest
 }: Props) {
-    const labelClass = "text-moderate-weak ml-2 font-medium";
+    const labelClass = "text-gray-400 ml-2 text-xs ";
 
     const inputClass =
         "w-full border-moderate border my-1 bg-white-weak rounded-3xl px-4 py-2 appearance-none [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-6 [&::-webkit-calendar-picker-indicator]:cursor-pointer";
