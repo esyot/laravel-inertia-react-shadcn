@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import axios from "axios";
 import {
     Dialog,
     DialogContent,
@@ -12,7 +13,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useForm } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
+import { useState } from "react";
 
 const MONTHS = [
     "January",
@@ -29,11 +31,30 @@ const MONTHS = [
     "December",
 ];
 
+type Customer = {
+    id: number;
+    code: string;
+};
+
 export function AddMeterReadingDialog() {
     const [open, setOpen] = React.useState(false);
+    const [search, setSearch] = React.useState("");
+    const [results, setResults] = useState<Customer[]>([]);
+    const [loading, setLoading] = useState(false);
+
+    const handleSearchCustomer = (val: string) => {
+        setLoading(true);
+        axios
+            .get(`/customers/search?query=${search}`)
+            .then((res) => {
+                setResults(res.data);
+            })
+            .catch(() => {})
+            .finally(() => setLoading(false));
+    };
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        customer_id: "",
+        customer_code: "",
         month: "",
         year: new Date().getFullYear().toString(),
         meter_value: "",
@@ -55,32 +76,78 @@ export function AddMeterReadingDialog() {
             <DialogTrigger asChild>
                 <Button onClick={() => setOpen(true)}>Add Meter</Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="sm:min-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>Add New Meter Reading</DialogTitle>
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="grid gap-4 py-4">
-                    {/* Customer ID */}
+                    {/* Customer Code */}
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="customer_id" className="text-right">
-                            Customer ID
+                        <Label htmlFor="customer_code" className="text-right">
+                            Customer Code
                         </Label>
                         <div className="col-span-3">
                             <Input
-                                id="customer_id"
-                                type="number"
-                                value={data.customer_id}
-                                onChange={(e) =>
-                                    setData("customer_id", e.target.value)
-                                }
-                                placeholder="Enter customer ID"
+                                type="text"
+                                value={search}
+                                onChange={(e) => {
+                                    const val = e.currentTarget.value;
+                                    setSearch(val);
+                                    handleSearchCustomer(val);
+                                }}
+                                placeholder="Enter your customer code (e.g. SAGB-SC-P1-NS8DSK31GP)"
+                                className="w-[70%] border-2 p-2 border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:border-transparent"
                             />
-                            {errors.customer_id && (
+
+                            {loading && (
+                                <div className="absolute bg-white w-full border-2 border-gray-200 rounded-xl shadow-lg mt-2 p-4 text-gray-600 text-lg">
+                                    Searching...
+                                </div>
+                            )}
+
+                            {results.length > 0 && (
+                                <ul className="absolute bg-white w-full border-2 border-gray-200 rounded-xl shadow-lg mt-2 max-h-80 overflow-y-auto z-10 text-lg">
+                                    {results.map((customer) => (
+                                        <li
+                                            key={customer.id}
+                                            className="px-6 py-4 hover:bg-blue-100 cursor-pointer border-b border-gray-100 last:border-b-0"
+                                            onClick={() => {
+                                                setSearch(customer.code);
+                                                setData(
+                                                    "customer_code",
+                                                    customer.code,
+                                                );
+                                                setResults([]);
+                                            }}
+                                        >
+                                            <div className="font-bold text-gray-800">
+                                                {customer.code}
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+
+                            {errors.customer_code && (
                                 <p className="text-sm text-red-500 mt-1">
-                                    {errors.customer_id}
+                                    {errors.customer_code}
                                 </p>
                             )}
+                            {/* <Input
+                                id="customer_code"
+                                type="text"
+                                value={data.customer_code}
+                                onChange={(e) =>
+                                    setData("customer_code", e.target.value)
+                                }
+                                placeholder="Enter customer code"
+                            />
+                            {errors.customer_code && (
+                                <p className="text-sm text-red-500 mt-1">
+                                    {errors.customer_code}
+                                </p>
+                            )} */}
                         </div>
                     </div>
 
