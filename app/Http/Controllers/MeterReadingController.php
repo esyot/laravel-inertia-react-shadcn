@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\MeterReading;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -20,16 +21,23 @@ class MeterReadingController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'customer_id' => 'required|exists:customers,id',
-            'month'       => 'required|string',
-            'year'        => 'required|integer',
+        $request->validate([
+            'customer_code' => 'required|exists:customers,code',
+            'month' => 'required|string',
+            'year' => 'required|integer',
             'meter_value' => 'required|numeric',
         ]);
 
-        MeterReading::create($validated);
+        $customer = Customer::where('code', $request->customer_code)->firstOrFail();
 
-      return to_route('meters.page')->with('success', 'User created successfully!');
+        MeterReading::create([
+            'customer_id'  => $customer->id, 
+            'month'        => $request->month,
+            'year'         => $request->year,
+            'meter_value'  => $request->meter_value,
+        ]);
+
+        return redirect()->route('meters.page')->with('success', 'Meter reading added.');
     }
 
     public function destroy($id)

@@ -33,7 +33,7 @@ export function AddMeterReadingDialog() {
     const [open, setOpen] = React.useState(false);
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        customer_id: "",
+        customer_code: "",
         month: "",
         year: new Date().getFullYear().toString(),
         meter_value: "",
@@ -55,30 +55,30 @@ export function AddMeterReadingDialog() {
             <DialogTrigger asChild>
                 <Button onClick={() => setOpen(true)}>Add Meter</Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="sm:min-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>Add New Meter Reading</DialogTitle>
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="grid gap-4 py-4">
-                    {/* Customer ID */}
+                    {/* Customer Code */}
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="customer_id" className="text-right">
-                            Customer ID
+                        <Label htmlFor="customer_code" className="text-right">
+                            Customer Code
                         </Label>
                         <div className="col-span-3">
                             <Input
-                                id="customer_id"
-                                type="number"
-                                value={data.customer_id}
+                                id="customer_code"
+                                type="text"
+                                value={data.customer_code}
                                 onChange={(e) =>
-                                    setData("customer_id", e.target.value)
+                                    setData("customer_code", e.target.value)
                                 }
-                                placeholder="Enter customer ID"
+                                placeholder="Enter customer code"
                             />
-                            {errors.customer_id && (
+                            {errors.customer_code && (
                                 <p className="text-sm text-red-500 mt-1">
-                                    {errors.customer_id}
+                                    {errors.customer_code}
                                 </p>
                             )}
                         </div>
