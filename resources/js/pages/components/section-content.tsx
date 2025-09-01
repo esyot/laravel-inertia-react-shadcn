@@ -2,11 +2,11 @@ import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
 interface PageProps {
-    header: boolean;
+    header?: boolean;
     children: ReactNode;
 }
 
-export default function SectionContent({ children, header }: PageProps) {
+export default function SectionContent({ children, header = true }: PageProps) {
     return (
         <main
             className={cn(

@@ -9,10 +9,11 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $users = User::orderBy('name', 'asc')->get();
 
-        $logs = UserLog::with('user')->get()->map(function($log) {
+        $logs = UserLog::with('user')->get()->map(function ($log) {
             return [
                 'name' => $log->user->name,
                 'device' => $log->device,
@@ -22,7 +23,7 @@ class UserController extends Controller
 
         return Inertia::render('users/page', [
             'users' => $users,
-            'logs'  => $logs,
+            'logs' => $logs,
         ]);
     }
 

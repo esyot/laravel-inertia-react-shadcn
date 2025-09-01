@@ -9,16 +9,10 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-type UserLog = {
-    id: number;
-    user_id: number;
-    name: string;
-    device: string;
-    timestamp: string;
-};
+import type { Log } from "@/lib/types";
 
 type UserLogsTableProps = {
-    logs: UserLog[];
+    logs: Log[];
 };
 
 export function UserLogsTable({ logs }: UserLogsTableProps) {

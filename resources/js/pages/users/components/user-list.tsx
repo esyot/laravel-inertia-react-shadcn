@@ -20,7 +20,7 @@ type UserTableProps = {
 
 export function UserTable({ users, onView, onDelete }: UserTableProps) {
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 px-4">
             <Table>
                 <TableCaption>A list of users with actions.</TableCaption>
                 <TableHeader>

@@ -1,33 +1,42 @@
-import { users } from "./data/users";
-import { UserTable } from "./components/list";
-import Layout from "../layout";
-import { AddUserDialog } from "./components/user-dialog";
-import SectionContent from "../components/section-content";
-import SectionHeader from "../components/section-header";
 import { router, usePage } from "@inertiajs/react";
-import React, { useState } from "react";
+import { useState } from "react";
+
+import Layout from "../layout";
+import { UserTable } from "./components/user-list";
+import { AddUserDialog } from "./components/user-dialog";
+import { UserLogsTable } from "./components/user-logs";
+
+import SectionHeader from "../components/section-header";
+import SectionContent from "../components/section-content";
+import DatePicker from "@/components/composables/date-picker";
+import Button from "@/components/composables/button";
+import Input from "@/components/composables/input";
 
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import Input from "@/components/composables/input";
-import { ListFilter } from "lucide-react";
-import DatePicker from "@/components/composables/date-picker";
-import Button from "@/components/composables/button";
-import { UserLogsTable } from "../admin/users/userlogs";
-import { cn } from "@/lib/utils";
-import type { User } from "@/lib/types";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export default function HomePage({ users, logs }: any) {
+import { ListFilter } from "lucide-react";
+
+import type { User, Log } from "@/lib/types";
+
+import { users } from "./data/users";
+
+type UsersProps = {
+    users: User[];
+    logs: Log[];
+};
+
+export default function Users({ users, logs }: UsersProps) {
     const { props }: any = usePage();
     const { flash } = props as any;
 
-    const [startDate, setStartDate] = React.useState<Date>();
-    const [endDate, setEndDate] = React.useState<Date>();
+    const [startDate, setStartDate] = useState<Date>();
+    const [endDate, setEndDate] = useState<Date>();
 
     const handleView = (user: User) => {
         alert(`Viewing ${user.name}`);
@@ -44,12 +53,12 @@ export default function HomePage({ users, logs }: any) {
             <main>
                 <Layout>
                     {flash.success && (
-                        <div className="m-2 rounded-md p-3 bg-green-100 text-green-700 rounded">
+                        <div className="m-2 rounded-md p-3 bg-green-100 text-green-700 ">
                             {flash.success}
                         </div>
                     )}
                     {flash.delete && (
-                        <div className="m-2 rounded-md p-3 bg-red-100 text-red-700 rounded">
+                        <div className="m-2 rounded-md p-3 bg-red-100 text-red-700 ">
                             {flash.delete}
                         </div>
                     )}
@@ -122,16 +131,18 @@ export default function HomePage({ users, logs }: any) {
                                 <AddUserDialog />
                             </div>
                         </SectionHeader>
-                        <TabsContent value="users">
-                            <UserTable
-                                users={users}
-                                onView={handleView}
-                                onDelete={handleDelete}
-                            />
-                        </TabsContent>
-                        <TabsContent value="userLogs">
-                            <UserLogsTable logs={logs} />
-                        </TabsContent>
+                        <SectionContent>
+                            <TabsContent value="users">
+                                <UserTable
+                                    users={users}
+                                    onView={handleView}
+                                    onDelete={handleDelete}
+                                />
+                            </TabsContent>
+                            <TabsContent value="userLogs">
+                                <UserLogsTable logs={logs} />
+                            </TabsContent>
+                        </SectionContent>
                     </Tabs>
                 </Layout>
             </main>
