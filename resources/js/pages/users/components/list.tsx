@@ -21,7 +21,6 @@ type UserTableProps = {
 export function UserTable({ users, onView, onDelete }: UserTableProps) {
     return (
         <div className="space-y-4">
-            {/* User Table */}
             <Table>
                 <TableCaption>A list of users with actions.</TableCaption>
                 <TableHeader>
@@ -59,7 +58,7 @@ export function UserTable({ users, onView, onDelete }: UserTableProps) {
                 </TableBody>
                 <TableFooter>
                     <TableRow>
-                        <TableCell colSpan={4}>
+                        <TableCell colSpan={5}>
                             Total Users: {users.length}
                         </TableCell>
                     </TableRow>

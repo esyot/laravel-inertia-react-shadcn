@@ -39,18 +39,14 @@ export function UserLogsTable({ logs }: UserLogsTableProps) {
                         <TableCell>{log.device}</TableCell>
                         <TableCell>{log.timestamp}</TableCell>
                         <TableCell className="text-center">
-                            {/* <Button 
-                                variant="destructive"
-                                onClick={() => handleDelete(log)}
-                                >Delete
-                            </Button> */}
+                            <Button variant="outline">View Details</Button>
                         </TableCell>
                     </TableRow>
                 ))}
             </TableBody>
             <TableFooter>
                 <TableRow>
-                    <TableCell colSpan={3}>Total Logs: {logs.length}</TableCell>
+                    <TableCell colSpan={4}>Total Logs: {logs.length}</TableCell>
                 </TableRow>
             </TableFooter>
         </Table>

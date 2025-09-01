@@ -28,7 +28,6 @@ export default function HomePage({ users, logs }: any) {
 
     const [startDate, setStartDate] = React.useState<Date>();
     const [endDate, setEndDate] = React.useState<Date>();
-    const [activeTab, setActiveTab] = useState<"users" | "logs">("users");
 
     const handleView = (user: User) => {
         alert(`Viewing ${user.name}`);
@@ -55,36 +54,15 @@ export default function HomePage({ users, logs }: any) {
                         </div>
                     )}
 
-                    <SectionHeader>
-                        <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full gap-4">
-                            <div>
-                                <nav className="flex space-x-6 border-b border-gray-200">
-                                    <button
-                                        className={cn(
-                                            "pb-2 transition",
-                                            activeTab === "users"
-                                                ? "border-b-2 border-blue-500 text-blue-600 font-semibold"
-                                                : "text-gray-500 hover:text-gray-700",
-                                        )}
-                                        onClick={() => setActiveTab("users")}
-                                    >
-                                        Users
-                                    </button>
-                                    <button
-                                        className={cn(
-                                            "pb-2 transition",
-                                            activeTab === "logs"
-                                                ? "border-b-2 border-blue-500 text-blue-600 font-semibold"
-                                                : "text-gray-500 hover:text-gray-700",
-                                        )}
-                                        onClick={() => setActiveTab("logs")}
-                                    >
-                                        User Logs
-                                    </button>
-                                </nav>
-                            </div>
+                    <Tabs defaultValue="users" className="w-full">
+                        <SectionHeader className="flex items-center justify-between">
+                            <TabsList>
+                                <TabsTrigger value="users"> Users</TabsTrigger>
+                                <TabsTrigger value="userLogs">
+                                    User Logs
+                                </TabsTrigger>
+                            </TabsList>
 
-                            {/* Right side: Filter + Add button */}
                             <div className="flex items-center gap-4">
                                 <Popover>
                                     <PopoverTrigger className="hover:bg-gray-100 p-2 cursor-pointer rounded border">
@@ -143,19 +121,18 @@ export default function HomePage({ users, logs }: any) {
                                 </Popover>
                                 <AddUserDialog />
                             </div>
-                        </div>
-                    </SectionHeader>
-
-                    <SectionContent header={true}>
-                        {activeTab === "users" && (
+                        </SectionHeader>
+                        <TabsContent value="users">
                             <UserTable
                                 users={users}
                                 onView={handleView}
                                 onDelete={handleDelete}
                             />
-                        )}
-                        {activeTab === "logs" && <UserLogsTable logs={logs} />}
-                    </SectionContent>
+                        </TabsContent>
+                        <TabsContent value="userLogs">
+                            <UserLogsTable logs={logs} />
+                        </TabsContent>
+                    </Tabs>
                 </Layout>
             </main>
         </div>
