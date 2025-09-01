@@ -1,4 +1,4 @@
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar } from "@/components/sidebar";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -15,7 +15,7 @@ import {
 import { ReactNode } from "react";
 import { usePage } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";
-import ProfilePage from "./profile/profile-popover";
+import ProfilePage from "../pages/profile/profile-popover";
 
 interface PageProps {
     children: ReactNode;

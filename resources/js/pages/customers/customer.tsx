@@ -1,6 +1,6 @@
-import AppLayout from "@/layouts/AppLayout";
-import Layout from "../layout";
-import SectionContent from "../components/section-content";
+import AppLayout from "@/layouts/public-layout";
+import Layout from "@/layouts/private-layout";
+import SectionContent from "@/components/section-content";
 import CustomerContent from "./components/customer-content";
 
 import { usePage } from "@inertiajs/react";

@@ -1,9 +1,9 @@
 import { MeterTable } from "./components/meterTable";
-import Layout from "../layout";
-import SectionContent from "../components/section-content";
+import Layout from "@/layouts/private-layout";
+import SectionContent from "@/components/section-content";
 import { router, usePage } from "@inertiajs/react";
 import { AddMeterReadingDialog } from "./components/meterDialog";
-import SectionHeader from "../components/section-header";
+import SectionHeader from "@/components/section-header";
 import React, { useState } from "react";
 
 import {

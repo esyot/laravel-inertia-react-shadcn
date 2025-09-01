@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 
-import type { User } from "@/lib/types";
+import type { User } from "@/lib/interface/types";
 
 type UserTableProps = {
     users: User[];

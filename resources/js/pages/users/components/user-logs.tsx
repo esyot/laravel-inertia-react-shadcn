@@ -9,7 +9,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-import type { Log } from "@/lib/types";
+import type { Log } from "@/lib/interface/types";
 
 type UserLogsTableProps = {
     logs: Log[];

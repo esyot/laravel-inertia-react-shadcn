@@ -8,12 +8,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { ChartAreaInteractive } from "@/components/ui/chart-area-interactive";
 
-import Layout from "../layout";
+import Layout from "@/layouts/private-layout";
 import { ChevronRight, TriangleAlert, TriangleAlertIcon } from "lucide-react";
 import { Link } from "@inertiajs/react";
 
-import SectionHeader from "../components/section-header";
-import SectionContent from "../components/section-content";
+import SectionHeader from "@/components/section-header";
+import SectionContent from "@/components/section-content";
 
 export default function Page() {
     return (

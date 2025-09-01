@@ -4,7 +4,7 @@ import Footer from "@/pages/landing/components/footer";
 
 export default function AppLayout({ children }: { children: ReactNode }) {
     return (
-        <div className="min-h-screen flex flex-col">
+        <div className="h-screen overflow-hidden flex flex-col">
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />

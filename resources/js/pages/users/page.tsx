@@ -1,13 +1,13 @@
 import { router, usePage } from "@inertiajs/react";
 import { useState } from "react";
 
-import Layout from "../layout";
+import Layout from "@/layouts/private-layout";
 import { UserTable } from "./components/user-list";
 import { AddUserDialog } from "./components/user-dialog";
 import { UserLogsTable } from "./components/user-logs";
 
-import SectionHeader from "../components/section-header";
-import SectionContent from "../components/section-content";
+import SectionHeader from "@/components/section-header";
+import SectionContent from "@/components/section-content";
 import DatePicker from "@/components/composables/date-picker";
 import Button from "@/components/composables/button";
 import Input from "@/components/composables/input";
@@ -22,7 +22,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { ListFilter } from "lucide-react";
 
-import type { User, Log } from "@/lib/types";
+import type { User, Log } from "@/lib/interface/types";
 
 import { users } from "./data/users";
 

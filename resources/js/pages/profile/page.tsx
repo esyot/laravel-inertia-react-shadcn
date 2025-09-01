@@ -1,6 +1,6 @@
-import Layout from "@/pages/layout";
-import SectionHeader from "@/pages/components/section-header";
-import SectionContent from "@/pages/components/section-content";
+import Layout from "@/layouts/private-layout";
+import SectionHeader from "@/components/section-header";
+import SectionContent from "@/components/section-content";
 import ProfileHeader from "./components/profile-header";
 import ProfileContent from "./components/profile-content";
 import { usePage } from "@inertiajs/react";

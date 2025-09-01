@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AppLayout from "@/layouts/AppLayout";
+import AppLayout from "@/layouts/public-layout";
 import axios from "axios";
 import { router } from "@inertiajs/react";
 

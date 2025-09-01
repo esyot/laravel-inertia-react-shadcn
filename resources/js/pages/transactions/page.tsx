@@ -1,7 +1,7 @@
-import Layout from "../layout";
+import Layout from "@/layouts/private-layout";
 import { users } from "../users/data/users";
-import SectionHeader from "../components/section-header";
-import SectionContent from "../components/section-content";
+import SectionHeader from "@/components/section-header";
+import SectionContent from "@/components/section-content";
 
 import { TransactionTable } from "./components/transactionHistoryTable";
 

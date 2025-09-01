@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "@inertiajs/react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import AppLayout from "@/layouts/AppLayout";
+import AppLayout from "@/layouts/public-layout";
 const illustrationSrc =
     "https://img.freepik.com/premium-vector/pay-electricity-using-mobile-application-tiny-people-holding-light-bulb-phone_1135642-147.jpg?w=1480"; // replace with your image path
 

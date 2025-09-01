@@ -1,6 +1,6 @@
-import Layout from "../layout";
-import SectionContent from "../components/section-content";
-import SectionHeader from "../components/section-header";
+import Layout from "@/layouts/private-layout";
+import SectionContent from "@/components/section-content";
+import SectionHeader from "@/components/section-header";
 import Button from "@/components/composables/button";
 import { CustomerTable } from "./components/customer-list";
 import { ListFilter, CheckCircle2Icon, XCircleIcon } from "lucide-react";
@@ -161,7 +161,6 @@ export default function CustomersPage({ customers, filters }: any) {
                     </Popover>
 
                     <AddCustomerDialog />
-                    {/* <Button className="cursor-pointer">Add Customer</Button> */}
                 </div>
             </SectionHeader>
             <SectionContent header={true}>
