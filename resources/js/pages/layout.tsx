@@ -15,6 +15,7 @@ import {
 import { ReactNode } from "react";
 import { usePage } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";
+import ProfilePage from "./profile/profile-popover";
 
 interface PageProps {
     children: ReactNode;
@@ -46,7 +47,7 @@ export default function Layout({ children }: PageProps) {
             <AppSidebar />
             <SidebarInset className="bg-sand ">
                 <main className="h-screen overflow-y-hidden">
-                    <header className="bg-none flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear bg-sand">
+                    <header className="bg-none flex justify-between mr-5 h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear bg-sand">
                         <div className="flex items-center gap-2 px-4">
                             <SidebarTrigger className="-ml-1" />
                             <Separator
@@ -92,6 +93,9 @@ export default function Layout({ children }: PageProps) {
                                     ) : null}
                                 </BreadcrumbList>
                             </Breadcrumb>
+                        </div>
+                        <div>
+                            <ProfilePage />
                         </div>
                     </header>
                     <section className="bg-white rounded-tl-3xl overflow-y-hidden h-[calc(100vh-8.5vh)] shadow-md">
