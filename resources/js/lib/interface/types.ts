@@ -14,6 +14,37 @@ export type Log = {
     timestamp: string;
 };
 
+export type Customer = {
+    id: number;
+    name: string;
+    municipal: string;
+    barangay: string;
+    purok: string;
+    code: string;
+    status: "active" | "inactive" | "suspended";
+    timestamp: string;
+};
+
+export type Meter = {
+    id: number;
+    customer: Customer;
+    customer_id: number;
+    month: string;
+    year: number;
+    meter_value: number;
+    created_at: string;
+    updated_at: string;
+    timestamp: string;
+};
+
+export type Paginated<T> = {
+    data: T[];
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+};
+
 export type UserInformation = {
     id: number;
     phone: string;
