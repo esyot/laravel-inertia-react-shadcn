@@ -22,18 +22,11 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 
+import { DeleteAlertDialog } from "./delete-dialog";
+import type { Meter } from "@/lib/interface/types";
+
 type Customer = {
     code: string;
-};
-type MeterReading = {
-    id: number;
-    customer: Customer;
-    customer_id: number;
-    month: string;
-    year: number;
-    meter_value: number;
-    created_at: string;
-    updated_at: string;
 };
 
 type Paginated<T> = {
@@ -44,12 +37,12 @@ type Paginated<T> = {
     per_page: number;
 };
 
-type MeterTableProps = {
-    readings: Paginated<MeterReading>;
-    onDelete: (reading: MeterReading) => void;
+type MeterProps = {
+    readings: Paginated<Meter>;
+    onDelete: (reading: Meter) => void;
 };
 
-export function MeterTable({ readings, onDelete }: MeterTableProps) {
+export function MeterTable({ readings, onDelete }: MeterProps) {
     const goToPage = (page: number) => {
         if (page >= 1 && page <= readings.last_page) {
             router.get(`/meters?page=${page}`);
@@ -93,15 +86,10 @@ export function MeterTable({ readings, onDelete }: MeterTableProps) {
                                 {formatDate(reading.created_at)}
                             </TableCell>
                             <TableCell className="text-right space-x-2">
-                                {onDelete && (
-                                    <Button
-                                        variant="destructive"
-                                        size="sm"
-                                        onClick={() => onDelete(reading)}
-                                    >
-                                        Delete
-                                    </Button>
-                                )}
+                                <DeleteAlertDialog
+                                    itemName={`meter reading for ${reading.customer?.code}`}
+                                    onConfirm={() => onDelete(reading)}
+                                />
                             </TableCell>
                         </TableRow>
                     ))}
