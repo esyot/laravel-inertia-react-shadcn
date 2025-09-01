@@ -45,6 +45,7 @@ class HandleInertiaRequests extends Middleware
                 'success' => fn () => $request->session()->get('success'),
                 'delete'   => fn () => $request->session()->get('delete'),
             ],
+            
         ]);
     }
 }

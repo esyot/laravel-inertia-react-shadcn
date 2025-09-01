@@ -59,6 +59,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
+    //User logs
+    Route::delete('/logs/{id}', [UserLogController::class, 'destroy'])->name('users.logs.destroy');
     Route::get('/meters', [MeterReadingController::class, 'index'])->name('meters.page');
     Route::post('/meters', [MeterReadingController::class, 'store'])->name('meters.store');
     Route::delete('/meters/{id}', [MeterReadingController::class, 'destroy'])->name('meters.destroy');
