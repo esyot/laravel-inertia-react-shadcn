@@ -16,38 +16,43 @@
         <section class="mb-10">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Quickstart</h2>
             <p class="text-gray-700 mb-4">Clone the repository and install the dependencies:</p>
-            <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto"><code>
-                                                        git clone --branch staging https://github.com/esyot/laravel-inertia-react-shadcn.git
-                                                        cd laravel-inertia-react-shadcn
-                                                        npm install
-                                                        composer install
-                                                                    </code></pre>
+            <div class="flex flex-col bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto">
+                <span>git clone --branch staging https://github.com/esyot/laravel-inertia-react-shadcn.git</span>
+                <span>cd laravel-inertia-react-shadcn</span>
+                <span> npm install</span>
+                <span>composer install</span>
+            </div>
         </section>
 
         <section class="mb-10">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Getting Started</h2>
             <p class="text-gray-700 mb-4">Start the development servers:</p>
-            <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto"><code>
-                                                        npm run dev
-                                                        php artisan serve
-                                                                    </code></pre>
+            <div class="flex flex-col bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto">
+                <span>npm run dev</span>
+                <span>php artisan serve</span>
+
+            </div>
         </section>
 
         <section class="mb-10">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Git Flow</h2>
             <ol class="list-decimal pl-6 text-gray-700 space-y-4">
                 <li>
-                    From the <code class="bg-gray-200 px-1 py-0.5 rounded text-sm">main</code> branch, create a <code
-                        class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</code> branch:
-                    <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                                        git checkout -b staging
-                                                                            </code></pre>
+                    From the <span class="bg-gray-200 px-1 py-0.5 rounded text-sm">main</span> branch, create a <span
+                        class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</span> branch:
+                    <div class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2">
+                        <span>
+                            git checkout -b staging
+                        </span>
+                    </div>
                 </li>
                 <li>
-                    Pull the latest changes from <code class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</code>:
-                    <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                                        git pull origin staging
-                                                                            </code></pre>
+                    Pull the latest changes from <span class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</span>:
+                    <div class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2">
+                        <span>
+                            git pull origin staging
+                        </span>
+                    </div>
                 </li>
             </ol>
         </section>
@@ -56,10 +61,12 @@
             <h3 class="text-xl font-semibold text-gray-800 mb-4">Working on a Feature</h3>
             <ol class="list-decimal pl-6 text-gray-700 space-y-4">
                 <li>
-                    Create a branch from <code class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</code>:
-                    <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                                        git checkout -b &lt;username&gt;/feature/login
-                                                                            </code></pre>
+                    Create a branch from <span class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</span>:
+                    <div class="flex flex-col bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2">
+                        <span>
+                            git checkout -b <username>/feature/login
+                        </span>
+                    </div>
                 </li>
             </ol>
         </section>
@@ -68,10 +75,11 @@
             <h3 class="text-xl font-semibold text-gray-800 mb-4">Working on a Bug Fix</h3>
             <ol class="list-decimal pl-6 text-gray-700 space-y-4">
                 <li>
-                    Create a branch from <code class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</code>:
-                    <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                                        git checkout -b &lt;username&gt;/fix/login
-                                                                            </code></pre>
+                    Create a branch from <span class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</span>:
+                    <div class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><span>
+                            git checkout -b &lt;username&gt;/fix/login
+                        </span>
+                    </div>
                 </li>
             </ol>
         </section>
@@ -82,19 +90,21 @@
                 <li>Make code changes.</li>
 
                 <li>Add changes:
-                    <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                                            git add .
-                                                                  </code></pre>
+                    <div class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><span>
+                            git add .
+                        </span>
+                    </div>
                 </li>
 
                 <li>Commit using <strong>Conventional Commit</strong> format:
-                    <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                                            git commit -m "type(scope): short description"
-                                                                  </code></pre>
+                    <div class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><span>
+                            git commit -m "type(scope): short description"
+                        </span>
+                    </div>
 
                     <p class="text-sm text-gray-600 mt-2">
-                        Use the format <code
-                            class="bg-gray-200 px-1 py-0.5 rounded text-sm">type(scope): description</code>.
+                        Use the format <span class="bg-gray-200 px-1 py-0.5 rounded text-sm">type(scope):
+                            description</span>.
                         The <strong>scope</strong> is optional but recommended. It indicates what part of the app the
                         change
                         affects (e.g., a page, feature, or component).
@@ -102,40 +112,40 @@
 
                     <p class="text-sm text-gray-700 font-medium mt-3">Examples:</p>
                     <ul class="list-disc pl-6 text-sm text-gray-700 space-y-1">
-                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">feat(login): add login form</code>
+                        <li><span class="bg-gray-200 px-1 py-0.5 rounded text-sm">feat(login): add login form</span>
                         </li>
-                        <li><code
-                                class="bg-gray-200 px-1 py-0.5 rounded text-sm">fix(profile): handle avatar upload bug</code>
+                        <li><span class="bg-gray-200 px-1 py-0.5 rounded text-sm">fix(profile): handle avatar upload
+                                bug</span>
                         </li>
-                        <li><code
-                                class="bg-gray-200 px-1 py-0.5 rounded text-sm">docs(readme): update contribution guidelines</code>
+                        <li><span class="bg-gray-200 px-1 py-0.5 rounded text-sm">docs(readme): update contribution
+                                guidelines</span>
                         </li>
                     </ul>
 
                     <p class="text-sm text-gray-700 mt-4 font-medium">Allowed commit types:</p>
                     <ul class="list-disc pl-6 text-sm text-gray-700 space-y-1">
-                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">feat</code>: A new feature</li>
-                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">fix</code>: A bug fix</li>
-                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">docs</code>: Documentation only
+                        <li><span class="bg-gray-200 px-1 py-0.5 rounded text-sm">feat</span>: A new feature</li>
+                        <li><span class="bg-gray-200 px-1 py-0.5 rounded text-sm">fix</span>: A bug fix</li>
+                        <li><span class="bg-gray-200 px-1 py-0.5 rounded text-sm">docs</span>: Documentation only
                             changes</li>
-                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">style</code>: Formatting only (no code
+                        <li><span class="bg-gray-200 px-1 py-0.5 rounded text-sm">style</span>: Formatting only (no code
                             changes)</li>
-                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">refactor</code>: Code changes that
+                        <li><span class="bg-gray-200 px-1 py-0.5 rounded text-sm">refactor</span>: Code changes that
                             neither fix
                             a bug nor add a feature</li>
-                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">perf</code>: Performance improvements
+                        <li><span class="bg-gray-200 px-1 py-0.5 rounded text-sm">perf</span>: Performance improvements
                         </li>
-                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">test</code>: Adding or updating tests
+                        <li><span class="bg-gray-200 px-1 py-0.5 rounded text-sm">test</span>: Adding or updating tests
                         </li>
-                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">build</code>: Build system or
+                        <li><span class="bg-gray-200 px-1 py-0.5 rounded text-sm">build</span>: Build system or
                             dependency
                             changes</li>
-                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">ci</code>: CI/CD configuration changes
+                        <li><span class="bg-gray-200 px-1 py-0.5 rounded text-sm">ci</span>: CI/CD configuration changes
                         </li>
-                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">chore</code>: Other changes that don’t
+                        <li><span class="bg-gray-200 px-1 py-0.5 rounded text-sm">chore</span>: Other changes that don’t
                             affect
                             source or tests</li>
-                        <li><code class="bg-gray-200 px-1 py-0.5 rounded text-sm">revert</code>: Reverting a previous
+                        <li><span class="bg-gray-200 px-1 py-0.5 rounded text-sm">revert</span>: Reverting a divvious
                             commit
                         </li>
                     </ul>
@@ -146,12 +156,13 @@
                 </li>
 
                 <li>Push:
-                    <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                                            git push origin head
-                                                                  </code></pre>
+                    <div class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><span>
+                            git push origin head
+                        </span>
+                    </div>
                 </li>
 
-                <li>Create a pull request to <code class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</code> and
+                <li>Create a pull request to <span class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</span> and
                     request
                     review.</li>
             </ol>
@@ -182,15 +193,17 @@
         <section class="mb-10">
             <h3 class="text-xl font-semibold text-gray-800 mb-4">Merging to Local Branch</h3>
             <ol class="list-decimal pl-6 text-gray-700 space-y-4">
-                <li>Switch to <code class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</code>:
-                    <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                                        git checkout staging
-                                                                            </code></pre>
+                <li>Switch to <span class="bg-gray-200 px-1 py-0.5 rounded text-sm">staging</span>:
+                    <div class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><span>
+                            git checkout staging
+                        </span>
+                    </div>
                 </li>
                 <li>Pull latest changes:
-                    <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><code>
-                                                        git pull origin staging
-                                                                            </code></pre>
+                    <div class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto mt-2"><span>
+                            git pull origin staging
+                        </span>
+                    </div>
                 </li>
                 <li>Create a feature or fix branch.</li>
                 <li>Repeat commit/push steps.</li>

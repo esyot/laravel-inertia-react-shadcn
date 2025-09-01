@@ -21,6 +21,11 @@ interface PageProps {
     children: ReactNode;
 }
 
+type Customer = {
+    code: string;
+    name: string;
+};
+
 export default function Layout({ children }: PageProps) {
     const { url, component, props } = usePage();
 
@@ -28,14 +33,7 @@ export default function Layout({ children }: PageProps) {
     const parent: string = parts[0] ?? "";
     const child: string = parts[1] ?? "";
 
-    // Check if we're on specific pages
-    const isCustomerDetailPage = component
-        .toString()
-        .includes("customers/customer");
-    const isCustomerListPage =
-        component.toString().includes("customers/list") ||
-        (component.toString().includes("customers") && !isCustomerDetailPage);
-    const customerCode = props.customer?.code;
+    const customer = props?.customer as Customer;
 
     const formatFirstLetterToUpperCase = (text: string) => {
         let formattedText = text[0]?.toUpperCase() + text.slice(1);
@@ -56,7 +54,6 @@ export default function Layout({ children }: PageProps) {
                             />
                             <Breadcrumb>
                                 <BreadcrumbList>
-                                    {/* Always show the parent link */}
                                     <BreadcrumbItem className="hidden md:block">
                                         <Link href={`/${parent}`}>
                                             {formatFirstLetterToUpperCase(
@@ -65,32 +62,19 @@ export default function Layout({ children }: PageProps) {
                                         </Link>
                                     </BreadcrumbItem>
 
-                                    {/* Show child only if it's not the main list page and not empty */}
-                                    {isCustomerDetailPage && customerCode ? (
-                                        <>
-                                            <BreadcrumbSeparator className="hidden md:block" />
-                                            <BreadcrumbItem>
-                                                <BreadcrumbPage>
-                                                    {customerCode}
-                                                </BreadcrumbPage>
-                                            </BreadcrumbItem>
-                                        </>
-                                    ) : !isCustomerListPage &&
-                                      child !== "page" &&
-                                      child !== "" ? (
-                                        <>
-                                            <BreadcrumbSeparator className="hidden md:block" />
-                                            <BreadcrumbItem>
-                                                <Link href={url}>
-                                                    <BreadcrumbPage>
-                                                        {formatFirstLetterToUpperCase(
-                                                            child,
-                                                        )}
-                                                    </BreadcrumbPage>
-                                                </Link>
-                                            </BreadcrumbItem>
-                                        </>
-                                    ) : null}
+                                    <BreadcrumbSeparator className="hidden md:block" />
+                                    <BreadcrumbItem>
+                                        <Link href={url}>
+                                            <BreadcrumbPage>
+                                                {component ===
+                                                "customers/customer"
+                                                    ? customer.code
+                                                    : formatFirstLetterToUpperCase(
+                                                          child,
+                                                      )}
+                                            </BreadcrumbPage>
+                                        </Link>
+                                    </BreadcrumbItem>
                                 </BreadcrumbList>
                             </Breadcrumb>
                         </div>

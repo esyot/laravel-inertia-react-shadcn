@@ -143,7 +143,7 @@ const menuItems = [
 export function AppSidebar() {
     const { url, props }: any = usePage();
 
-    const user = props.user;
+    const user = props?.user;
 
     return (
         <Sidebar className="border-none bg-sand">
@@ -186,7 +186,7 @@ export function AppSidebar() {
                                 </Avatar>
                             )}
 
-                            <h1>{user.name}</h1>
+                            <h1>{user?.name}</h1>
 
                             <ChevronUp size={16} className="block m-2" />
                         </div>
