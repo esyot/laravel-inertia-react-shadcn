@@ -10,11 +10,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 
-type User = {
-    name: string;
-    email: string;
-    address: string;
-};
+import type { User } from "@/lib/types";
 
 type UserTableProps = {
     users: User[];
@@ -32,7 +28,6 @@ export function UserTable({ users, onView, onDelete }: UserTableProps) {
                     <TableRow>
                         <TableHead>Name</TableHead>
                         <TableHead>Email</TableHead>
-                        <TableHead>Address</TableHead>
                         <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -43,7 +38,6 @@ export function UserTable({ users, onView, onDelete }: UserTableProps) {
                                 {user.name}
                             </TableCell>
                             <TableCell>{user.email}</TableCell>
-                            <TableCell>{user.address}</TableCell>
                             <TableCell className="flex justify-end gap-2">
                                 <Button
                                     variant="outline"

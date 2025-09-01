@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/esyot/freecon@6c5197e/freecon.css">
 
     @viteReactRefresh
-    @routes
+    <script src="{{ asset('js/ziggy.js') }}"></script>
     @vite(['resources/css/app.css', 'resources/js/app.tsx'])
     @inertiaHead
 </head>

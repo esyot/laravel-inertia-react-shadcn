@@ -18,6 +18,9 @@ import DatePicker from "@/components/composables/date-picker";
 import Button from "@/components/composables/button";
 import { UserLogsTable } from "../admin/users/userlogs";
 import { cn } from "@/lib/utils";
+import type { User } from "@/lib/types";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function HomePage({ users, logs }: any) {
     const { props }: any = usePage();
@@ -27,11 +30,11 @@ export default function HomePage({ users, logs }: any) {
     const [endDate, setEndDate] = React.useState<Date>();
     const [activeTab, setActiveTab] = useState<"users" | "logs">("users");
 
-    const handleView = (user: any) => {
+    const handleView = (user: User) => {
         alert(`Viewing ${user.name}`);
     };
 
-    const handleDelete = (user: any) => {
+    const handleDelete = (user: User) => {
         if (confirm(`Are you sure you want to delete ${user.name}?`)) {
             router.delete(`/users/${user.id}`);
         }

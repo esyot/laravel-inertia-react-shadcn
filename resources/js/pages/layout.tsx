@@ -62,19 +62,23 @@ export default function Layout({ children }: PageProps) {
                                         </Link>
                                     </BreadcrumbItem>
 
-                                    <BreadcrumbSeparator className="hidden md:block" />
-                                    <BreadcrumbItem>
-                                        <Link href={url}>
-                                            <BreadcrumbPage>
-                                                {component ===
-                                                "customers/customer"
-                                                    ? customer.code
-                                                    : formatFirstLetterToUpperCase(
-                                                          child,
-                                                      )}
-                                            </BreadcrumbPage>
-                                        </Link>
-                                    </BreadcrumbItem>
+                                    {child != "page" && (
+                                        <>
+                                            <BreadcrumbSeparator className="hidden md:block" />
+                                            <BreadcrumbItem>
+                                                <Link href={url}>
+                                                    <BreadcrumbPage>
+                                                        {component ===
+                                                        "customers/customer"
+                                                            ? customer.code
+                                                            : formatFirstLetterToUpperCase(
+                                                                  child,
+                                                              )}
+                                                    </BreadcrumbPage>
+                                                </Link>
+                                            </BreadcrumbItem>{" "}
+                                        </>
+                                    )}
                                 </BreadcrumbList>
                             </Breadcrumb>
                         </div>
