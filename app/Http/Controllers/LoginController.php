@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Jenssegers\Agent\Agent;
+use App\Models\UserLog;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -29,6 +31,14 @@ class LoginController extends Controller
         if (Auth::attempt($credentials))
         {
             $request->session()->regenerate();
+
+            $agent = new Agent();
+
+            UserLog::create([
+                'user_id' => Auth::id(),
+                'device'  => $agent->platform() . ' - ' . $agent->browser(),
+            ]);
+
             return redirect()->intended('/dashboard');
 
             // if ($user->roles->contains('name', 'cashier')) {

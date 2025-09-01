@@ -63,6 +63,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
 
+    //User logs
+    Route::delete('/logs/{id}', [UserLogController::class, 'destroy'])->name('users.logs.destroy');
     Route::get('/meters', [MeterReadingController::class, 'index'])->name('meters.page');
     Route::post('/meters', [MeterReadingController::class, 'store'])->name('meters.store');
     Route::delete('/meters/{id}', [MeterReadingController::class, 'destroy'])->name('meters.destroy');
