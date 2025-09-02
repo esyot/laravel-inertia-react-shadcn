@@ -102,6 +102,7 @@ class BillFactory extends Factory
                 'due_date' => $dueDate->format('Y-m-d'),
                 'status' => 'Paid',
                 'payment_date' => $dueDate->copy()->addDays(rand(1, 15))->format('Y-m-d'),
+                'penalty' => $this->faker->randomFloat(2, 0, 100),
             ];
         });
     }
