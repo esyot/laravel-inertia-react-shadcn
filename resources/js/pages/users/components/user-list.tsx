@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 import type { User } from "@/lib/interface/types";
+import ViewDialog from "./view-dialog";
 
 type UserTableProps = {
     users: User[];
@@ -38,12 +39,8 @@ export function UserTable({ users, onView, onDelete }: UserTableProps) {
                             </TableCell>
                             <TableCell>{user.email}</TableCell>
                             <TableCell className="flex justify-end gap-2">
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => onView?.(user)}
-                                >
-                                    View
+                                <Button variant="outline" size="sm">
+                                    <ViewDialog user={user} />
                                 </Button>
                                 <Button
                                     variant="destructive"
