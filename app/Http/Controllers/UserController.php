@@ -11,7 +11,20 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('name', 'asc')->get();
+        $users = User::with('roles')
+        ->orderBy('name', 'asc')
+        ->get()
+        ->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'social_id' => $user->social_id ?: '', 
+                'role' => $user->roles->first()->name ?? 'No role',
+                'created_at' => $user->created_at->format('M d, Y h:i A'), 
+                'updated_at' => $user->updated_at->format('M d, Y h:i A'),
+            ];
+        });
 
         $logs = UserLog::with('user')->get()->map(function ($log) {
             return [
