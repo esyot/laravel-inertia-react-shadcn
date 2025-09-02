@@ -12,7 +12,9 @@ class MeterReading extends Model
         'customer_id',
         'month',
         'year',
-        'meter_value'
+        'meter_value',
+        'consumption',
+        'bill_id',
     ];
 
     public function customer()

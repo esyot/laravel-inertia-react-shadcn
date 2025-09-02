@@ -65,21 +65,40 @@ class CustomerController extends Controller
     public function show($code)
 {
     $customer = Customer::where('code', '=', $code)
-        ->with('bills')
+        ->with(['bills', 'meterReadings' => function($query) {
+            $query->orderBy('created_at', 'desc')->take(12); // Get last 12 readings
+        }])
         ->first();
-
+        
     if (!$customer) {
         return redirect()->route('customers.index')->with('error', 'Customer not found');
     }
 
-    // Determine if the user is an admin
     $isAdmin = auth()->check() && auth()->user()->isAdmin();
 
     return Inertia::render('customers/customer', [
         'customer' => $customer,
-        'isAdmin' => $isAdmin
+        'isAdmin' => $isAdmin,
+        'ratePerKwh' => 25.5 
     ]);
 }
 
+//     public function show($code)
+// {
+//     $customer = Customer::where('code', '=', $code)
+//         ->with('bills')
+//         ->first();
 
+//     if (!$customer) {
+//         return redirect()->route('customers.index')->with('error', 'Customer not found');
+//     }
+
+//     // Determine if the user is an admin
+//     $isAdmin = auth()->check() && auth()->user()->isAdmin();
+
+//     return Inertia::render('customers/customer', [
+//         'customer' => $customer,
+//         'isAdmin' => $isAdmin
+//     ]);
+// }
 }

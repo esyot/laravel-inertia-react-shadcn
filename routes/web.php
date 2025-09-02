@@ -127,3 +127,10 @@ Route::get('/instructions/setup', function () {
 Route::get('/instructions/requirements', function () {
     return view("instructions.requirements");
 });
+
+
+
+
+//API ROUTES
+Route::get('/api/customers/{customer}/meter-readings', [MeterReadingController::class, 'customerMeter'])
+    ->name('api.customers.meter-readings');
