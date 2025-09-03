@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 
 import type { User } from "@/lib/interface/types";
 import ViewDialog from "./view-dialog";
-import UserChangePass from "./user-change-password";
 
 type UserTableProps = {
     users: User[];
@@ -40,11 +39,7 @@ export function UserTable({ users, onView, onDelete }: UserTableProps) {
                             </TableCell>
                             <TableCell>{user.email}</TableCell>
                             <TableCell className="flex justify-end gap-2">
-                                <Button
-                                    className="cursor-pointer"
-                                    variant="outline"
-                                    size="sm"
-                                >
+                                <Button variant="outline" size="sm">
                                     <ViewDialog user={user} />
                                 </Button>
                                 <Button
@@ -53,13 +48,6 @@ export function UserTable({ users, onView, onDelete }: UserTableProps) {
                                     onClick={() => onDelete?.(user)}
                                 >
                                     Delete
-                                </Button>
-                                <Button
-                                    className="cursor-pointer"
-                                    variant="outline"
-                                    size="sm"
-                                >
-                                    <UserChangePass user={user} />
                                 </Button>
                             </TableCell>
                         </TableRow>
