@@ -43,6 +43,8 @@ type MeterProps = {
 };
 
 export function MeterTable({ readings, onDelete }: MeterProps) {
+    const data = readings?.data ?? [];
+
     const goToPage = (page: number) => {
         if (page >= 1 && page <= readings.last_page) {
             router.get(`/meters?page=${page}`);
@@ -58,110 +60,86 @@ export function MeterTable({ readings, onDelete }: MeterProps) {
     };
 
     return (
-        <div className="space-y-4">
-            <Table>
-                <TableCaption>
-                    A list of meter readings with actions.
-                </TableCaption>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Code</TableHead>
-                        <TableHead>Month</TableHead>
-                        <TableHead>Year</TableHead>
-                        <TableHead>Meter Value</TableHead>
-                        <TableHead>Timestamp</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {readings.data.map((reading) => (
-                        <TableRow key={reading.id}>
-                            <TableCell className="font-medium">
-                                {reading.customer?.code}
-                            </TableCell>
-                            <TableCell>{reading.month}</TableCell>
-                            <TableCell>{reading.year}</TableCell>
-                            <TableCell>{reading.meter_value}</TableCell>
-                            <TableCell>
-                                {formatDate(reading.created_at)}
-                            </TableCell>
-                            <TableCell className="text-right space-x-2">
-                                <DeleteAlertDialog
-                                    itemName={`meter reading for ${reading.customer?.code}`}
-                                    onConfirm={() => onDelete(reading)}
-                                />
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-                <TableFooter>
-                    <TableRow>
-                        <TableCell colSpan={6} className="p-4">
-                            <div className="flex justify-between items-center w-full">
-                                <span>Total: {readings.total}</span>
-                                <div>
-                                    <Pagination>
-                                        <PaginationContent>
-                                            <PaginationItem>
-                                                <PaginationPrevious
-                                                    onClick={() =>
-                                                        goToPage(
-                                                            readings.current_page -
-                                                                1,
-                                                        )
-                                                    }
-                                                    disabled={
-                                                        readings.current_page ===
-                                                        1
-                                                    }
-                                                />
-                                            </PaginationItem>
+        <div className="border-strong overflow-hidden rounded-xl border">
+            <div className="bg-sand-dugout text-weak border-strong hidden grid-cols-6 border-b px-5 pt-4 pb-3 text-sm font-medium md:grid">
+                <div>Code</div>
+                <div>Month</div>
+                <div>Year</div>
+                <div>Meter Value</div>
+                <div>Timestamp</div>
+                <div className="flex justify-end mr-16">Action</div>
+            </div>
 
-                                            {getPages().map((page) => (
-                                                <PaginationItem key={page}>
-                                                    {page ===
-                                                    readings.current_page ? (
-                                                        <PaginationLink
-                                                            href="#"
-                                                            className="bg-gray-200"
-                                                        >
-                                                            {page}
-                                                        </PaginationLink>
-                                                    ) : (
-                                                        <PaginationLink
-                                                            href="#"
-                                                            onClick={() =>
-                                                                goToPage(page)
-                                                            }
-                                                        >
-                                                            {page}
-                                                        </PaginationLink>
-                                                    )}
-                                                </PaginationItem>
-                                            ))}
-
-                                            <PaginationItem>
-                                                <PaginationNext
-                                                    onClick={() =>
-                                                        goToPage(
-                                                            readings.current_page +
-                                                                1,
-                                                        )
-                                                    }
-                                                    disabled={
-                                                        readings.current_page ===
-                                                        readings.last_page
-                                                    }
-                                                />
-                                            </PaginationItem>
-                                        </PaginationContent>
-                                    </Pagination>
+            <div className="h-[calc(100vh-17.5rem)] divide-y divide-gray-200 overflow-y-scroll scroll-smooth">
+                {data.length > 0 ? (
+                    data.map((reading) => (
+                        <div
+                            key={reading.id}
+                            className="px-6 py-4 hover:bg-gray-50"
+                        >
+                            <div className="grid gap-3 md:grid-cols-6 md:items-center">
+                                <div className="flex items-center gap-3">
+                                    <span className="text-sm font-medium text-[#222222]">
+                                        {reading.customer?.code}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <span className="text-sm font-medium text-[#222222]">
+                                        {reading.month}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <span className="text-sm font-medium text-[#222222]">
+                                        {reading.year}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <span className="text-sm font-medium text-[#222222]">
+                                        {reading.meter_value}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-2 text-gray-700">
+                                    <span className="text-sm font-medium text-[#222222] capitalize">
+                                        {formatDate(reading.created_at)}
+                                    </span>
+                                </div>
+                                <div className="flex items-center justify-end">
+                                    <DeleteAlertDialog
+                                        itemName={`meter reading for ${reading.customer?.code}`}
+                                        onConfirm={() => onDelete(reading)}
+                                    />
                                 </div>
                             </div>
-                        </TableCell>
-                    </TableRow>
-                </TableFooter>
-            </Table>
+                        </div>
+                    ))
+                ) : (
+                    <div className="px-6 py-4 text-center text-gray-500">
+                        No transactions found
+                    </div>
+                )}
+            </div>
+
+            <div className="text-weak flex flex-col items-center justify-between gap-3 border-t px-6 py-3 text-sm font-medium md:flex-row">
+                <div className="flex items-center gap-3">
+                    <button
+                        className="h-8 rounded-full border px-3 py-1 font-bold text-[#222222] hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent"
+                        disabled={readings.current_page <= 1}
+                        onClick={() => goToPage(readings.current_page - 1)}
+                    >
+                        Previous
+                    </button>
+                    <button
+                        className="h-8 rounded-full border px-3 py-1 font-bold text-[#222222] hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent"
+                        disabled={readings.current_page >= readings.last_page}
+                        onClick={() => goToPage(readings.current_page + 1)}
+                    >
+                        Next
+                    </button>
+                </div>
+                <span>
+                    Page {readings.current_page} of {readings.last_page}
+                </span>
+            </div>
         </div>
     );
 }
