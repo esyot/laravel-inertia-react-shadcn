@@ -117,7 +117,6 @@ export function TransactionTable({ customers }: UserTableProps) {
                 <span>
                     Page {customers.current_page} of {customers.last_page}
                 </span>
-                <span>Total: {customers.total}</span>
             </div>
         </div>
     );
