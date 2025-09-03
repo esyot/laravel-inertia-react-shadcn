@@ -21,4 +21,9 @@ class MeterReading extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+    public function bill()
+    {
+        return $this->belongsTo(Bill::class);
+    }
 }

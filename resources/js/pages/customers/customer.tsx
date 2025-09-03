@@ -194,6 +194,20 @@ export default function Customer({
         });
     }, []);
 
+    const getCurrentMonthMeterReading = useCallback(() => {
+        if (!customer.meter_readings?.length) return null;
+
+        const currentMonth = new Date().toLocaleString("default", {
+            month: "long",
+        });
+        const currentYear = new Date().getFullYear();
+
+        return customer.meter_readings.find(
+            (reading) =>
+                reading.month === currentMonth && reading.year === currentYear,
+        );
+    }, [customer.meter_readings]);
+
     const getSortIcon = useCallback(
         (field: SortField) => {
             if (sortField !== field)
@@ -405,9 +419,16 @@ export default function Customer({
                             <div className="flex justify-between text-base lg:text-lg">
                                 <span>Amount Due:</span>
                                 <span className="font-bold">
-                                    {peso.format(
-                                        Number(currentBill.amount_due),
-                                    )}
+                                    {getCurrentMonthMeterReading()?.consumption
+                                        ? peso.format(
+                                              calculateBill(
+                                                  getCurrentMonthMeterReading()!
+                                                      .consumption!,
+                                              ),
+                                          )
+                                        : peso.format(
+                                              Number(currentBill.amount_due),
+                                          )}
                                 </span>
                             </div>
                             {currentBill.penalty > 0 && (
@@ -421,9 +442,18 @@ export default function Customer({
                             <div className="flex justify-between text-xl lg:text-2xl font-bold border-t pt-4">
                                 <span>Total Amount Due:</span>
                                 <span>
-                                    {peso.format(
-                                        Number(currentBill.total_amount_due),
-                                    )}
+                                    {getCurrentMonthMeterReading()?.consumption
+                                        ? peso.format(
+                                              calculateBill(
+                                                  getCurrentMonthMeterReading()!
+                                                      .consumption!,
+                                              ) + currentBill.penalty,
+                                          )
+                                        : peso.format(
+                                              Number(
+                                                  currentBill.total_amount_due,
+                                              ),
+                                          )}
                                 </span>
                             </div>
                         </div>

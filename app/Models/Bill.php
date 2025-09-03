@@ -15,8 +15,11 @@ class Bill extends Model
         'customer_id',
         'billing_month',
         'amount_due',
+        'penalty',
         'status',
-        'due_date'
+        'due_date',
+        'payment_date',
+        'total_amount_due'
     ];
 
     public function customer()
@@ -24,27 +27,40 @@ class Bill extends Model
     return $this->belongsTo(Customer::class);
 }
 
-public function getComputedStatusAttribute(): string
-{
-    if (!$this->payment_date) {
-        return $this->due_date < now() ? 'Overdue' : 'Unpaid';
+    public function meterReading()
+    {
+        return $this->hasOne(MeterReading::class);
     }
 
-    return 'Paid';
-}
+public function getAmountDueAttribute($value)
+    {
+        // If there's a meter reading, calculate amount based on consumption
+        if ($this->meterReading && $this->meterReading->consumption) {
+            return $this->meterReading->consumption * 11; // Your rate per kWh
+        }
+        
+        return $value;
+    }
 
-public function getPenaltyAttribute(): float
-{
-    if ($this->computed_status !== 'Overdue') return 0;
+    public function getComputedStatusAttribute(): string
+    {
+        if (!$this->payment_date) {
+            return $this->due_date < now() ? 'Overdue' : 'Unpaid';
+        }
 
-    $monthsOverdue = now()->diffInMonths(Carbon::parse($this->due_date));
-    return $monthsOverdue * 100; // 100 pesos per month
-}
+        return 'Paid';
+    }
 
-public function getTotalAmountDueAttribute(): float
-{
-    return $this->amount_due + $this->penalty;
-}
+    public function getPenaltyAttribute(): float
+    {
+        if ($this->computed_status !== 'Overdue') return 0;
 
+        $monthsOverdue = now()->diffInMonths(Carbon::parse($this->due_date));
+        return $monthsOverdue * 100; // 100 pesos per month
+    }
 
+    public function getTotalAmountDueAttribute(): float
+    {
+        return $this->amount_due + $this->penalty;
+    }
 }
