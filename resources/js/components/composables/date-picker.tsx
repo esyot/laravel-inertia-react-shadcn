@@ -34,7 +34,7 @@ export default function DatePicker({
     formatString = "PPP",
 }: DatePickerProps) {
     const labelClass = "text-gray-400 ml-2 text-xs ";
-    const placeholderClass = "text-gray-400 font-normal";
+    const placeholderClass = "truncate text-gray-400 font-normal";
     return (
         <div className="flex flex-col gap-1">
             {label && <label className={labelClass}>{label}</label>}
