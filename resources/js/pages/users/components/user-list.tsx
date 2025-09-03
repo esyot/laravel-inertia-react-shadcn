@@ -49,6 +49,7 @@ export function UserTable({ users, onView, onDelete }: UserTableProps) {
                                 </Button>
                                 <Button
                                     variant="destructive"
+                                    className="cursor-pointer"
                                     size="sm"
                                     onClick={() => onDelete?.(user)}
                                 >
