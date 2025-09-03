@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\TransactionController;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\SocialiteController;
@@ -104,10 +105,8 @@ Route::get('/login', function () {
 //     ]);
 // });
 
-Route::get('/transactions', function () {
-    return inertia('transactions/page', [
-    ]);
-});
+Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.page');
+
 
 //LOGIN FOR USERS
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');

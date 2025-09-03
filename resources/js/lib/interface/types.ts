@@ -24,7 +24,8 @@ export type Customer = {
     purok: string;
     code: string;
     status: "active" | "inactive" | "suspended";
-    timestamp: string;
+    created_at: string;
+    updated_at: string;
 };
 
 export type Meter = {
