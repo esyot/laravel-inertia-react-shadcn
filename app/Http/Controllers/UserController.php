@@ -9,34 +9,54 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::with('roles')
-        ->orderBy('name', 'asc')
-        ->get()
-        ->map(function ($user) {
-            return [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'social_id' => $user->social_id ?: '', 
-                'role' => $user->roles->first()->name ?? 'No role',
-                'created_at' => $user->created_at->format('M d, Y h:i A'), 
-                'updated_at' => $user->updated_at->format('M d, Y h:i A'),
-            ];
-        });
+        $filters = $request->only([
+            'name', 'email', 'social_id', 'device', 'code',
+        ]);
 
-        $logs = UserLog::with('user')->get()->map(function ($log) {
-            return [
-                'name' => $log->user->name,
-                'device' => $log->device,
-                'timestamp' => $log->created_at->format('Y-m-d H:i:s'),
-            ];
-        });
+        $users = User::with('roles')
+            ->when($request->filled('name'), fn ($q) =>
+                $q->where('name', 'like', '%'.$request->name.'%'))
+            ->when($request->filled('email'), fn ($q) =>
+                $q->where('email', 'like', '%'.$request->email.'%'))
+            ->when($request->filled('social_id'), fn ($q) =>
+                $q->where('social_id', 'like', '%'.$request->social_id.'%'))
+            ->when($request->filled('code') && Schema::hasColumn('users', 'code'), fn ($q) =>
+                $q->where('code', 'like', '%'.$request->code.'%'))
+            ->orderBy('name', 'asc')
+            ->get()
+            ->map(function ($user) {
+                return [
+                    'id'         => $user->id,
+                    'name'       => $user->name,
+                    'email'      => $user->email,
+                    'social_id'  => $user->social_id ?: '',
+                    'role'       => $user->roles->first()->name ?? 'No role',
+                    'created_at' => $user->created_at->format('M d, Y h:i A'),
+                    'updated_at' => $user->updated_at->format('M d, Y h:i A'),
+                ];
+            });
+
+        $logs = UserLog::with('user')
+            ->when($request->filled('name'), fn ($q) =>
+                $q->whereHas('user', fn ($uq) =>
+                    $uq->where('name', 'like', '%'.$request->name.'%')))
+            ->when($request->filled('device'), fn ($q) =>
+                $q->where('device', 'like', '%'.$request->device.'%'))
+            ->get()
+            ->map(function ($log) {
+                return [
+                    'name'      => $log->user->name,
+                    'device'    => $log->device,
+                    'timestamp' => $log->created_at->format('Y-m-d H:i:s'),
+                ];
+            });
 
         return Inertia::render('users/page', [
-            'users' => $users,
-            'logs' => $logs,
+            'users'   => $users,
+            'logs'    => $logs,
+            'filters' => $filters,
         ]);
     }
 
