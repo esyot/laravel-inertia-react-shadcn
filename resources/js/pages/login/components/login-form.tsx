@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 
-import { router, useForm, usePage } from "@inertiajs/react";
+import { router, useForm, usePage, Link } from "@inertiajs/react";
 
 import { cn } from "@/lib/utils";
 
@@ -56,15 +56,17 @@ export function LoginForm({
             <Card className="w-full max-w-md mx-auto border-slate-200/70 shadow-xl">
                 <CardHeader className="space-y-2">
                     {/* Back button */}
-                    <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        className="w-fit -ml-2 -mt-2 cursor-pointer "
-                        onClick={() => window.history.back()}
-                    >
-                        <ArrowLeft className="mr-2 h-4 w-4" /> Back
-                    </Button>
+                    <Link href="/">
+                        <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="w-fit -ml-2 -mt-2 cursor-pointer "
+                        >
+                            <ArrowLeft className="mr-2 h-4 w-4" /> Back
+                        </Button>
+                    </Link>
+
                     <div className="flex items-center gap-3">
                         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-emerald-500 shadow-md">
                             <Zap className="h-4 w-4 text-white" />
