@@ -101,6 +101,7 @@ class UserController extends Controller
 
     $user->update([
         'password' => Hash::make($request->new_password),
+        'is_password_changed' => false
     ]);
 
     return back()->with('success', 'Password updated successfully!');
