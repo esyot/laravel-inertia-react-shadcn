@@ -45,7 +45,12 @@ class HandleInertiaRequests extends Middleware
                 'success' => fn () => $request->session()->get('success'),
                 'delete'   => fn () => $request->session()->get('delete'),
             ],
-            
+            'auth' => [
+                'user' => fn () => $request->user()
+                    ? $request->user()->only('id','name','email','is_password_changed')
+                    : null,
+            ],
+            'must_change_password' => fn () => (bool) $request->session()->pull('must_change_password', false),
         ]);
     }
 }

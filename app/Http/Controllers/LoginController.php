@@ -7,6 +7,7 @@ use Jenssegers\Agent\Agent;
 use App\Models\UserLog;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -38,7 +39,10 @@ class LoginController extends Controller
                 'user_id' => Auth::id(),
                 'device'  => $agent->platform() . ' - ' . $agent->browser(),
             ]);
-
+            
+            $user = \Auth::user();
+            $request->session()->put('must_change_password', !$user->is_password_changed);
+        
             return redirect()->intended('/dashboard');
 
             // if ($user->roles->contains('name', 'cashier')) {
@@ -64,5 +68,18 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/login');
+    }
+
+    public function update(Request $request) {
+        $validated = $request->validate([
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $user = $request->user();
+        $user->password = Hash::make($validated['password']);
+        $user->is_password_changed = true;
+        $user->save();
+
+        return back()->with('success', 'Password updated successfully.');
     }
 }

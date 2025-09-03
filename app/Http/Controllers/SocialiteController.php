@@ -61,6 +61,7 @@ class SocialiteController extends Controller
                     'password' => Hash::make(Str::random(24)),
                     'signup_method' => $provider,
                     'social_id' => $provider . '_' . $socialId,
+                    'is_password_changed' => false,
                 ]);
 
                 if ($user)

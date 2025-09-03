@@ -6,6 +6,7 @@ export type User = {
     role: string;
     created_at: string;
     updated_at: string;
+    is_password_changed: boolean;
 };
 
 export type Log = {

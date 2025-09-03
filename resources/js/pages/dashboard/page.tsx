@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Card,
     CardHeader,
@@ -10,12 +12,51 @@ import { ChartAreaInteractive } from "@/components/ui/chart-area-interactive";
 
 import Layout from "@/layouts/private-layout";
 import { ChevronRight, TriangleAlert, TriangleAlertIcon } from "lucide-react";
-import { Link } from "@inertiajs/react";
+import { Link, usePage, useForm } from "@inertiajs/react";
 
 import SectionHeader from "@/components/section-header";
 import SectionContent from "@/components/section-content";
 
+import ChangePasswordDialog from "@/pages/login/components/change-password-dialog";
+import { User } from "@/lib/interface/types";
+import { useState, useEffect } from "react";
+
+type SharedProps = {
+    auth: { user: User | null };
+    must_change_password: boolean;
+};
+
 export default function Page() {
+    const { props } = usePage<SharedProps>();
+    const user = props.auth?.user;
+
+    const forceOpen =
+        props.must_change_password ||
+        (user ? !user.is_password_changed : false);
+    const [open, setOpen] = useState(false);
+
+    const { data, setData, patch, processing, errors, reset } = useForm({
+        password: "",
+        password_confirmation: "",
+    });
+
+    useEffect(() => {
+        if (forceOpen) setOpen(true);
+    }, [forceOpen]);
+
+    const onSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        (patch("/password"),
+            {
+                onSuccess: () => {
+                    reset();
+                    setOpen(false);
+                },
+            });
+    };
+
+    if (!user) return null;
+
     return (
         <main>
             <Layout>
@@ -177,6 +218,7 @@ export default function Page() {
                     <div className="mt-6">
                         <ChartAreaInteractive />
                     </div>
+                    {user && <ChangePasswordDialog user={user} />}
                 </SectionContent>
             </Layout>
         </main>
