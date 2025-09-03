@@ -21,7 +21,7 @@ export default function Transaction({ customers }: CustomersProps) {
                     <Filter />
                 </div>
             </SectionHeader>
-            <SectionContent header={false}>
+            <SectionContent header={true}>
                 <TransactionTable customers={customers} />
             </SectionContent>
         </Layout>

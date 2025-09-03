@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 
-import { router, useForm, usePage, Link } from "@inertiajs/react";
+import { router, useForm, usePage } from "@inertiajs/react";
 
 import { cn } from "@/lib/utils";
 
@@ -54,19 +54,17 @@ export function LoginForm({
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
             <Card className="w-full max-w-md mx-auto border-slate-200/70 shadow-xl">
-                <CardHeader className="space-y-2">
-                    {/* Back button */}
-                    <Link href="/">
-                        <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            className="w-fit -ml-2 -mt-2 cursor-pointer "
-                        >
-                            <ArrowLeft className="mr-2 h-4 w-4" /> Back
-                        </Button>
-                    </Link>
-                    <div className="flex items-center gap-3">
+                <CardHeader className="space-y-2 ">
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="w-fit -ml-2 -mt-2 cursor-pointer "
+                        onClick={() => router.visit("/")}
+                    >
+                        <ArrowLeft className=" h-4 w-4" /> Back
+                    </Button>
+                    <div className="flex justify-center w-full items-center gap-3">
                         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-emerald-500 shadow-md">
                             <Zap className="h-4 w-4 text-white" />
                         </div>
@@ -75,14 +73,13 @@ export function LoginForm({
                                 Welcome back
                             </CardTitle>
                             <CardDescription>
-                                Sign in to your ELICTRIC account
+                                Sign in to your BEC account
                             </CardDescription>
                         </div>
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <form className="space-y-6" onSubmit={handleSubmit}>
-                        {/* Email */}
+                    <form className="space-y-4" onSubmit={handleSubmit}>
                         <div className="grid gap-2">
                             <Label htmlFor="email">Email</Label>
                             <div className="relative">
@@ -106,16 +103,10 @@ export function LoginForm({
                                 </p>
                             )}
                         </div>
-                        {/* Password */}
+
                         <div className="grid gap-2">
                             <div className="flex items-center">
                                 <Label htmlFor="password">Password</Label>
-                                <a
-                                    href="#"
-                                    className="ml-auto inline-block text-sm text-slate-600 underline-offset-4 hover:underline"
-                                >
-                                    Forgot your password?
-                                </a>
                             </div>
                             <div className="relative">
                                 <Lock className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -123,6 +114,7 @@ export function LoginForm({
                                     id="password"
                                     type={showPassword ? "text" : "password"}
                                     value={data.password}
+                                    placeholder="Password"
                                     onChange={(e) =>
                                         setData("password", e.target.value)
                                     }
@@ -147,13 +139,14 @@ export function LoginForm({
                                     )}
                                 </button>
                             </div>
+
                             {errors.password && (
                                 <p className="text-sm text-red-500">
                                     {errors.password}
                                 </p>
                             )}
                         </div>
-                        {/* Actions */}
+
                         <div className="flex flex-col gap-3">
                             <Button
                                 type="submit"
@@ -184,11 +177,20 @@ export function LoginForm({
                                 </Button>
                             </a>
                         </div>
-                        <div className="mt-2 text-center text-sm text-slate-600">
-                            Don&apos;t have an account?
+
+                        <div className="flex justify-center">
                             <a
                                 href="#"
-                                className="font-medium underline underline-offset-4"
+                                className=" text-sm text-slate-600 underline-offset-4 hover:underline"
+                            >
+                                Forgot your password?
+                            </a>
+                        </div>
+                        <div className="mt-2 text-center text-sm text-slate-600">
+                            <span> Don't have an account? </span>
+                            <a
+                                href="#"
+                                className="text-center text-sm text-slate-600 underline-offset-4 hover:underline"
                             >
                                 Sign up
                             </a>

@@ -12,9 +12,8 @@ export default function Header() {
                 <div className="flex items-center gap-4">
                     <div className="leading-tight">
                         <h1 className="text-base sm:text-lg font-semibold ml-5">
-                            ELICTRIC
+                            BEC - Bohol Electric Company
                         </h1>
-                        {/* <p className="text-xs text-slate-500">Billing & Payment System</p> */}
                     </div>
                 </div>
 

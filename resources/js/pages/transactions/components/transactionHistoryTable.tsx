@@ -57,111 +57,68 @@ export function TransactionTable({ customers }: UserTableProps) {
     };
 
     return (
-        <div className="space-y-4">
-            <Table>
-                <TableCaption>A list of past transactions</TableCaption>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Name</TableHead>
-                        <TableHead>Date</TableHead>
-                        <TableHead className="flex justify-end mr-16">
-                            Action
-                        </TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {data.length > 0 ? (
-                        data.map((user) => (
-                            <TableRow key={user.id}>
-                                <TableCell className="font-medium">
-                                    {user.name}
-                                </TableCell>
-                                <TableCell>
-                                    {formatDate(user.created_at)}
-                                </TableCell>
-                                <TableCell className="flex justify-end">
+        <div className="border-strong overflow-hidden rounded-xl border">
+            <div className="bg-sand-dugout text-weak border-strong hidden grid-cols-3 border-b px-5 pt-4 pb-3 text-sm font-medium md:grid">
+                <div>Name</div>
+                <div>Date</div>
+                <div className="flex justify-end mr-16">Action</div>
+            </div>
+
+            <div className="h-[calc(100vh-17.5rem)] divide-y divide-gray-200 overflow-y-scroll scroll-smooth">
+                {data.length > 0 ? (
+                    data.map((user) => (
+                        <div
+                            key={user.id}
+                            className="px-6 py-4 hover:bg-gray-50"
+                        >
+                            <div className="grid gap-3 md:grid-cols-3 md:items-center">
+                                <div className="flex items-center gap-3">
+                                    <span className="text-sm font-medium text-[#222222]">
+                                        {user.name}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-2 text-gray-700">
+                                    <span className="text-sm font-medium text-[#222222] capitalize">
+                                        {formatDate(user.created_at)}
+                                    </span>
+                                </div>
+                                <div className="flex items-center justify-end">
                                     <Button variant="outline">
                                         View History
                                     </Button>
-                                </TableCell>
-                            </TableRow>
-                        ))
-                    ) : (
-                        <TableRow>
-                            <TableCell colSpan={3} className="text-center">
-                                No transactions found
-                            </TableCell>
-                        </TableRow>
-                    )}
-                </TableBody>
-                <TableFooter>
-                    <TableRow>
-                        <TableCell colSpan={6} className="p-4">
-                            <div className="flex justify-between items-center w-full">
-                                <span>Total: {customers.total}</span>
-                                <div>
-                                    <Pagination>
-                                        <PaginationContent>
-                                            <PaginationItem>
-                                                <PaginationPrevious
-                                                    onClick={() =>
-                                                        goToPage(
-                                                            customers.current_page -
-                                                                1,
-                                                        )
-                                                    }
-                                                    disabled={
-                                                        customers.current_page ===
-                                                        1
-                                                    }
-                                                />
-                                            </PaginationItem>
-
-                                            {getPages().map((page) => (
-                                                <PaginationItem key={page}>
-                                                    {page ===
-                                                    customers.current_page ? (
-                                                        <PaginationLink
-                                                            href="#"
-                                                            className="bg-gray-200"
-                                                        >
-                                                            {page}
-                                                        </PaginationLink>
-                                                    ) : (
-                                                        <PaginationLink
-                                                            href="#"
-                                                            onClick={() =>
-                                                                goToPage(page)
-                                                            }
-                                                        >
-                                                            {page}
-                                                        </PaginationLink>
-                                                    )}
-                                                </PaginationItem>
-                                            ))}
-
-                                            <PaginationItem>
-                                                <PaginationNext
-                                                    onClick={() =>
-                                                        goToPage(
-                                                            customers.current_page +
-                                                                1,
-                                                        )
-                                                    }
-                                                    disabled={
-                                                        customers.current_page ===
-                                                        customers.last_page
-                                                    }
-                                                />
-                                            </PaginationItem>
-                                        </PaginationContent>
-                                    </Pagination>
                                 </div>
                             </div>
-                        </TableCell>
-                    </TableRow>
-                </TableFooter>
-            </Table>
+                        </div>
+                    ))
+                ) : (
+                    <div className="px-6 py-4 text-center text-gray-500">
+                        No transactions found
+                    </div>
+                )}
+            </div>
+
+            <div className="text-weak flex flex-col items-center justify-between gap-3 border-t px-6 py-3 text-sm font-medium md:flex-row">
+                <div className="flex items-center gap-3">
+                    <button
+                        className="h-8 rounded-full border px-3 py-1 font-bold text-[#222222] hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent"
+                        disabled={customers.current_page <= 1}
+                        onClick={() => goToPage(customers.current_page - 1)}
+                    >
+                        Previous
+                    </button>
+                    <button
+                        className="h-8 rounded-full border px-3 py-1 font-bold text-[#222222] hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent"
+                        disabled={customers.current_page >= customers.last_page}
+                        onClick={() => goToPage(customers.current_page + 1)}
+                    >
+                        Next
+                    </button>
+                </div>
+                <span>
+                    Page {customers.current_page} of {customers.last_page}
+                </span>
+                <span>Total: {customers.total}</span>
+            </div>
         </div>
     );
 }
