@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('social_id')->nullable();
+            $table->boolean('is_password_changed')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
