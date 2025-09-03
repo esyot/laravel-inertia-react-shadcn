@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title inertia>{{ config('app.name', 'Laravel') }}</title>
+    <title>BEC - Bohol Electric Company</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/esyot/freecon@6c5197e/freecon.css">
+    <link rel="icon" type="image/x-icon" href="{{ asset('/assets/logo/logo.png') }}">
 
     @viteReactRefresh
     <script src="{{ asset('js/ziggy.js') }}"></script>
