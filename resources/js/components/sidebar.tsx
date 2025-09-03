@@ -170,7 +170,7 @@ export function AppSidebar() {
                     })}
                 </div>
             </SidebarContent>
-            <SidebarFooter className="bg-sand border-t hover:bg-white/50 p-0">
+            {/* <SidebarFooter className="bg-sand border-t hover:bg-white/50 p-0">
                 <Popover>
                     <PopoverTrigger>
                         <div className="flex w-full justify-center gap-2 p-2 items-center border flex-1">
@@ -202,7 +202,7 @@ export function AppSidebar() {
                         </ul>
                     </PopoverContent>
                 </Popover>
-            </SidebarFooter>
+            </SidebarFooter> */}
             <SidebarRail />
         </Sidebar>
     );
