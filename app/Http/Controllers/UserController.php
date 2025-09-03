@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\UserLog;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -83,4 +85,26 @@ class UserController extends Controller
 
         return to_route('users.page')->with('delete', 'User deleted successfully!');
     }
+
+    public function updatePassword(Request $request)
+{
+    $request->validate([
+        'current_password' => 'required',
+        'new_password' => 'required|min:8|confirmed',
+    ]);
+
+    $user = Auth::user();
+
+    if (!Hash::check($request->current_password, $user->password)) {
+        return back()->withErrors(['current_password' => 'Current password is incorrect.']);
+    }
+
+    $user->update([
+        'password' => Hash::make($request->new_password),
+        'is_password_changed' => false
+    ]);
+
+    return back()->with('success', 'Password updated successfully!');
+}
+
 }
