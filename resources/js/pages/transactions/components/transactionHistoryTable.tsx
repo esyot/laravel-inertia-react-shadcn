@@ -10,19 +10,52 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination";
+
+import { formatDate } from "@/components/utils/dataFormatter";
+
 type User = {
     name: string;
-    email: string;
-    address: string;
     hasPaymentDue?: boolean;
 };
 
+import type { Customer, Paginated } from "@/lib/interface/types";
+import { router } from "@inertiajs/react";
+
+// type CustomersProps = {
+//     customers: Customer[];
+// };
+
 type UserTableProps = {
-    users: User[];
+    customers: Paginated<Customer>;
     showHistory?: boolean;
 };
 
-export function TransactionTable({ users }: UserTableProps) {
+export function TransactionTable({ customers }: UserTableProps) {
+    const data = customers?.data ?? [];
+
+    const goToPage = (page: number) => {
+        if (page >= 1 && page <= customers.last_page) {
+            router.get(`/transactions?page=${page}`);
+        }
+    };
+
+    const getPages = () => {
+        const pages = [];
+        for (let i = 1; i <= customers.last_page; i++) {
+            pages.push(i);
+        }
+        return pages;
+    };
+
     return (
         <div className="space-y-4">
             <Table>
@@ -30,45 +63,102 @@ export function TransactionTable({ users }: UserTableProps) {
                 <TableHeader>
                     <TableRow>
                         <TableHead>Name</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Address</TableHead>
-                        <TableHead>Amount</TableHead>
                         <TableHead>Date</TableHead>
-                        <TableHead>Action</TableHead>
+                        <TableHead className="flex justify-end mr-16">
+                            Action
+                        </TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {users.map((user, index) => (
-                        <TableRow key={index}>
-                            <TableCell className="font-medium">
-                                {user.name}
-                            </TableCell>
-                            <TableCell>{user.email}</TableCell>
-                            <TableCell>{user.address}</TableCell>
-                            <TableCell>4000.00</TableCell>
-                            <TableCell>
-                                {new Date(
-                                    Date.now() -
-                                        Math.floor(
-                                            Math.random() *
-                                                1000 *
-                                                60 *
-                                                60 *
-                                                24 *
-                                                30,
-                                        ),
-                                ).toLocaleString()}
-                            </TableCell>
-
-                            <TableCell>
-                                <Button variant="outline">View History</Button>
+                    {data.length > 0 ? (
+                        data.map((user) => (
+                            <TableRow key={user.id}>
+                                <TableCell className="font-medium">
+                                    {user.name}
+                                </TableCell>
+                                <TableCell>
+                                    {formatDate(user.created_at)}
+                                </TableCell>
+                                <TableCell className="flex justify-end">
+                                    <Button variant="outline">
+                                        View History
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={3} className="text-center">
+                                No transactions found
                             </TableCell>
                         </TableRow>
-                    ))}
+                    )}
                 </TableBody>
                 <TableFooter>
                     <TableRow>
-                        <TableCell colSpan={5}>Total: {users.length}</TableCell>
+                        <TableCell colSpan={6} className="p-4">
+                            <div className="flex justify-between items-center w-full">
+                                <span>Total: {customers.total}</span>
+                                <div>
+                                    <Pagination>
+                                        <PaginationContent>
+                                            <PaginationItem>
+                                                <PaginationPrevious
+                                                    onClick={() =>
+                                                        goToPage(
+                                                            customers.current_page -
+                                                                1,
+                                                        )
+                                                    }
+                                                    disabled={
+                                                        customers.current_page ===
+                                                        1
+                                                    }
+                                                />
+                                            </PaginationItem>
+
+                                            {getPages().map((page) => (
+                                                <PaginationItem key={page}>
+                                                    {page ===
+                                                    customers.current_page ? (
+                                                        <PaginationLink
+                                                            href="#"
+                                                            className="bg-gray-200"
+                                                        >
+                                                            {page}
+                                                        </PaginationLink>
+                                                    ) : (
+                                                        <PaginationLink
+                                                            href="#"
+                                                            onClick={() =>
+                                                                goToPage(page)
+                                                            }
+                                                        >
+                                                            {page}
+                                                        </PaginationLink>
+                                                    )}
+                                                </PaginationItem>
+                                            ))}
+
+                                            <PaginationItem>
+                                                <PaginationNext
+                                                    onClick={() =>
+                                                        goToPage(
+                                                            customers.current_page +
+                                                                1,
+                                                        )
+                                                    }
+                                                    disabled={
+                                                        customers.current_page ===
+                                                        customers.last_page
+                                                    }
+                                                />
+                                            </PaginationItem>
+                                        </PaginationContent>
+                                    </Pagination>
+                                </div>
+                            </div>
+                        </TableCell>
                     </TableRow>
                 </TableFooter>
             </Table>
