@@ -12,9 +12,11 @@ use App\Http\Controllers\MeterReadingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 
-// socialite
-Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider'])->name('social.auth');
-Route::get('/auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback'])->name('social.callback');
+Route::middleware(['web'])->group(function () {
+    Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider'])->name('social.auth');
+    Route::get('/auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback'])->name('social.callback');
+
+});
 
 
 Route::get('/log-out', function () {

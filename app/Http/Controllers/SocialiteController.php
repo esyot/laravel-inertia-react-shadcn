@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
@@ -24,7 +25,7 @@ class SocialiteController extends Controller
         }
     }
 
-    public function handleProviderCallback($provider)
+    public function handleProviderCallback($provider, Request $request)
     {
         try
         {
@@ -42,14 +43,8 @@ class SocialiteController extends Controller
                 }
             })->first();
 
-            if ($user)
-            {
 
-                Auth::login($user);
-
-                return redirect()->route('home');
-
-            } else
+            if (!$user)
             {
                 $socialId = $socialUser->getId();
                 $avatarUrl = $socialUser->getAvatar();
@@ -68,13 +63,23 @@ class SocialiteController extends Controller
                     'social_id' => $provider . '_' . $socialId,
                 ]);
 
+                if ($user)
+                {
 
-                $user->assignRole('user');
+                    Auth::login($user);
+                    $user->assignRole('user');
+                    return redirect()->route('dashboard');
+                }
 
-                Auth::login($user);
 
-                return redirect()->route('dashboard');
             }
+
+
+            Auth::login($user);
+
+            return redirect()->route('home');
+
+
         } catch (Exception $e)
         {
             return redirect()->route('login')->with('error', 'Unable to authenticate with ' . ucfirst($provider));
