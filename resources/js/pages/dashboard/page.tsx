@@ -206,7 +206,7 @@ export default function Page() {
                             </CardContent>
                             <CardFooter className="flex justify-end">
                                 <Link
-                                    href="/payments"
+                                    href="/transactions"
                                     className="text-blue-600 hover:underline text-sm font-medium flex items-center"
                                 >
                                     View Full History <ChevronRight />

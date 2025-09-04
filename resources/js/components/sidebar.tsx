@@ -133,7 +133,12 @@ import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 
 const menuItems = [
-    { name: "Dashboard", link: "/dashboard", icon: LayoutDashboard },
+    {
+        name: "Dashboard",
+        link: "/dashboard",
+        icon: LayoutDashboard,
+        role: "admin",
+    },
     { name: "Users", link: "/users", icon: Users },
     { name: "Transactions", link: "/transactions", icon: HandCoins },
     { name: "Meters", link: "/meters", icon: CircleGauge },

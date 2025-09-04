@@ -24,27 +24,25 @@ class Bill extends Model
     return $this->belongsTo(Customer::class);
 }
 
-public function getComputedStatusAttribute(): string
-{
-    if (!$this->payment_date) {
-        return $this->due_date < now() ? 'Overdue' : 'Unpaid';
+    public function getComputedStatusAttribute(): string
+    {
+        if (!$this->payment_date) {
+            return $this->due_date < now() ? 'Overdue' : 'Unpaid';
+        }
+
+        return 'Paid';
     }
 
-    return 'Paid';
-}
+    public function getPenaltyAttribute(): float
+    {
+        if ($this->computed_status !== 'Overdue') return 0;
 
-public function getPenaltyAttribute(): float
-{
-    if ($this->computed_status !== 'Overdue') return 0;
+        $monthsOverdue = now()->diffInMonths(Carbon::parse($this->due_date));
+        return $monthsOverdue * 100; // 100 pesos per month
+    }
 
-    $monthsOverdue = now()->diffInMonths(Carbon::parse($this->due_date));
-    return $monthsOverdue * 100; // 100 pesos per month
-}
-
-public function getTotalAmountDueAttribute(): float
-{
-    return $this->amount_due + $this->penalty;
-}
-
-
+    public function getTotalAmountDueAttribute(): float
+    {
+        return $this->amount_due + $this->penalty;
+    }
 }
