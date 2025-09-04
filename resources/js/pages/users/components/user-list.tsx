@@ -30,19 +30,13 @@ type UserTableProps = {
 
 export function UserTable({ users, onDelete }: UserTableProps) {
     const data = users?.data ?? [];
+
     const goToPage = (page: number) => {
         if (page >= 1 && page <= users.last_page) {
             router.get(`/transactions?page=${page}`);
         }
     };
 
-    const getPages = () => {
-        const pages = [];
-        for (let i = 1; i <= users.last_page; i++) {
-            pages.push(i);
-        }
-        return pages;
-    };
     return (
         <div className="space-y-4 px-4">
             <Table>
@@ -54,6 +48,7 @@ export function UserTable({ users, onDelete }: UserTableProps) {
                         <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
+
                 <TableBody className="h-[calc(100vh-17.5rem)] divide-y divide-gray-200 overflow-y-scroll scroll-smooth">
                     {data.length > 0 ? (
                         data.map((user, index) => (
@@ -68,30 +63,18 @@ export function UserTable({ users, onDelete }: UserTableProps) {
                                     {user.email}
                                 </TableCell>
                                 <TableCell className="flex justify-end gap-2">
-                                    <div className="hidden sm:flex gap-2">
-                                        <Button
-                                            className="cursor-pointer"
-                                            variant="outline"
-                                            size="sm"
-                                        >
-                                            <ViewDialog user={user} />
-                                        </Button>
+                                    <div className="hidden sm:flex gap-2 items-center gap-4">
+                                        <ViewDialog user={user} />{" "}
+                                        <UserChangePass user={user} />{" "}
                                         <Button
                                             variant="destructive"
+                                            className="cursor-pointer"
                                             size="sm"
                                             onClick={() => onDelete?.(user)}
                                         >
                                             Delete
                                         </Button>
-                                        <Button
-                                            className="cursor-pointer"
-                                            variant="outline"
-                                            size="sm"
-                                        >
-                                            <UserChangePass user={user} />
-                                        </Button>
                                     </div>
-
                                     <div className="sm:hidden">
                                         <DropdownMenu>
                                             <DropdownMenuTrigger asChild>
@@ -102,21 +85,24 @@ export function UserTable({ users, onDelete }: UserTableProps) {
                                                     <MoreVertical className="h-4 w-4" />
                                                 </Button>
                                             </DropdownMenuTrigger>
+
                                             <DropdownMenuContent
                                                 align="end"
-                                                className="shadow-2xl border border-gray-300 space-y-2 p-6"
+                                                className="shadow-2xl border border-gray-300 space-y-2 p-4"
                                             >
                                                 <DropdownMenuItem asChild>
                                                     <ViewDialog user={user} />
                                                 </DropdownMenuItem>
+
                                                 <DropdownMenuItem
-                                                    className="space-y-2 p-0 text-red-500 "
+                                                    className="text-red-500 p-0 font-semibold"
                                                     onClick={() =>
                                                         onDelete?.(user)
                                                     }
                                                 >
                                                     Delete
                                                 </DropdownMenuItem>
+
                                                 <DropdownMenuItem asChild>
                                                     <UserChangePass
                                                         user={user}
@@ -129,37 +115,50 @@ export function UserTable({ users, onDelete }: UserTableProps) {
                             </TableRow>
                         ))
                     ) : (
-                        <div className="px-6 py-4 text-center text-gray-500">
-                            No users found
-                        </div>
+                        <TableRow>
+                            <TableCell
+                                colSpan={3}
+                                className="text-center text-gray-500 py-4"
+                            >
+                                No users found
+                            </TableCell>
+                        </TableRow>
                     )}
-                    <div className="text-weak flex flex-col items-center justify-between gap-3 border-t px-6 py-3 text-sm font-medium md:flex-row">
-                        <div className="flex items-center gap-3">
-                            <button
-                                className="h-8 rounded-full border px-3 py-1 font-bold text-[#222222] hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent"
-                                disabled={users.current_page <= 1}
-                                onClick={() => goToPage(users.current_page - 1)}
-                            >
-                                Previous
-                            </button>
-                            <button
-                                className="h-8 rounded-full border px-3 py-1 font-bold text-[#222222] hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent"
-                                disabled={users.current_page >= users.last_page}
-                                onClick={() => goToPage(users.current_page + 1)}
-                            >
-                                Next
-                            </button>
-                        </div>
-                        <span>
-                            Page {users.current_page} of {users.last_page}
-                        </span>
-                    </div>
                 </TableBody>
+
                 <TableFooter>
                     <TableRow>
-                        {/* <TableCell colSpan={5}>
-                            Total Users: {users.length}
-                        </TableCell> */}
+                        <TableCell colSpan={3}>
+                            <div className="text-weak flex flex-col items-center justify-between gap-3 border-t px-6 py-3 text-sm font-medium md:flex-row">
+                                <div className="flex items-center gap-3">
+                                    <button
+                                        className="h-8 rounded-full border px-3 py-1 font-bold text-[#222222] hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent"
+                                        disabled={users.current_page <= 1}
+                                        onClick={() =>
+                                            goToPage(users.current_page - 1)
+                                        }
+                                    >
+                                        Previous
+                                    </button>
+                                    <button
+                                        className="h-8 rounded-full border px-3 py-1 font-bold text-[#222222] hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent"
+                                        disabled={
+                                            users.current_page >=
+                                            users.last_page
+                                        }
+                                        onClick={() =>
+                                            goToPage(users.current_page + 1)
+                                        }
+                                    >
+                                        Next
+                                    </button>
+                                </div>
+                                <span>
+                                    Page {users.current_page} of{" "}
+                                    {users.last_page}
+                                </span>
+                            </div>
+                        </TableCell>
                     </TableRow>
                 </TableFooter>
             </Table>
