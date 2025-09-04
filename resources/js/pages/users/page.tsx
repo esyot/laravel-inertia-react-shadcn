@@ -9,13 +9,13 @@ import SectionContent from "@/components/section-content";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import type { User, Log } from "@/lib/interface/types";
+import type { User, Log, Paginated } from "@/lib/interface/types";
 import Filter from "./components/filter-popover";
 import { AddUserDialog } from "./components/user-dialog";
 import AlertNotification from "./components/alert-notification";
 
 type UsersProps = {
-    users: User[];
+    users: Paginated<User>;
     logs: Log[];
 };
 
