@@ -36,12 +36,6 @@ Route::get('/', function () {
 
 
 Route::middleware(['auth'])->group(function () {
-
-
-    // Route::get('/dashboard', function () {
-    //     return inertia('dashboard/page', [
-    //     ]);
-    // })->name('dashboard');
     
     Route::get('/dashboard', [AnalyticsController::class, 'index'])->name('dashboard');
 

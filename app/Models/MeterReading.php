@@ -9,7 +9,7 @@ class MeterReading extends Model
 {
     use HasFactory;
      protected $fillable = [
-        'customer_id',
+        'meter_id',
         'month',
         'year',
         'meter_value'
@@ -19,4 +19,11 @@ class MeterReading extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+
+public function meter()
+{
+    return $this->belongsTo(Meter::class);
+}
+
 }

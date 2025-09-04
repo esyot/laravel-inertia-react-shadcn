@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('meter_readings', function (Blueprint $table) {
+        Schema::create('meters', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('meter_id')->constrained()->onDelete('cascade');
-            $table->string('month');
-            $table->year('year');
-            $table->decimal('meter_value', 10, 2); 
+            $table->foreignId('customer_id')->constrained()->onDelete('cascade');
+            $table->string('meter_no')->unique();
+            $table->string('location')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('meter_readings');
+        Schema::dropIfExists('meters');
     }
 };

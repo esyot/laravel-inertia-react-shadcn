@@ -33,6 +33,7 @@ type AnalyticsProps = {
     meter_readings: {
         total: number;
         latest: {
+            meter: any;
             id: number;
             month: string;
             year: number;
@@ -41,7 +42,11 @@ type AnalyticsProps = {
     };
 };
 
-export default function Page({ analytics }: { analytics: AnalyticsProps }) {
+export default function AdminDashboard({
+    analytics,
+}: {
+    analytics: AnalyticsProps;
+}) {
     // Prepare data for charts
     const customerPieData = [
         { name: "Active", value: analytics.customers.active },
@@ -116,7 +121,7 @@ export default function Page({ analytics }: { analytics: AnalyticsProps }) {
                             <Card className="rounded-2xl shadow-sm">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                     <CardTitle className="text-sm font-medium">
-                                        Meter Readings
+                                        Total Meter Readings
                                     </CardTitle>
                                     <Gauge className="h-4 w-4 text-gray-500" />
                                 </CardHeader>
@@ -211,7 +216,8 @@ export default function Page({ analytics }: { analytics: AnalyticsProps }) {
                                             >
                                                 <span>
                                                     {reading.month}{" "}
-                                                    {reading.year}
+                                                    {reading.year} —{" "}
+                                                    {reading.meter.meter_no}
                                                 </span>
                                                 <span className="font-medium">
                                                     {reading.meter_value}

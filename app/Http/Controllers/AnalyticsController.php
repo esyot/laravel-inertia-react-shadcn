@@ -17,7 +17,7 @@ class AnalyticsController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        return Inertia::render('admin/dashboard/page', [
+        return Inertia::render('dashboard/admin-dashboard', [
             'analytics' => [
                 'customers' => [
                     'total' => Customer::count(),
@@ -33,7 +33,7 @@ class AnalyticsController extends Controller
                 ],
                 'meter_readings' => [
                     'total' => MeterReading::count(),
-                    'latest' => MeterReading::latest()->take(5)->get(),
+                    'latest' => MeterReading::with('meter')->latest()->take(5)->get(),
                 ],
             ]
         ]);

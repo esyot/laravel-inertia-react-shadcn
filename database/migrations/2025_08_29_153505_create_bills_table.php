@@ -13,9 +13,7 @@ return new class extends Migration
     {
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('customer_id')
-                ->constrained('customers')
-                ->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
             $table->string('billing_month');
             $table->decimal('amount_due', 10, 2);
             $table->decimal('penalty', 10, 2)->default(0);
