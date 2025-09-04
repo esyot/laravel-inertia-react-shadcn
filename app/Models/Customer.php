@@ -17,11 +17,10 @@ class Customer extends Model
         return $this->hasMany(Bill::class);
     }
 
-      public function meterReadings()
+    public function meterReadings()
     {
         return $this->hasMany(MeterReading::class);
     }
-
 
     protected static function booted()
 {
@@ -40,4 +39,9 @@ class Customer extends Model
     });
 }
 
+    public function getCurrentBillAttribute()
+    {
+        $currentMonth = now()->format('F Y');
+        return $this->bills()->where('billing_month', $currentMonth)->first();
+    }
 }

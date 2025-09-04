@@ -107,4 +107,24 @@ class MeterReadingController extends Controller
         return to_route('meters.page')->with('delete', 'User created successfully!');
     }
 
+    public function customerMeter(Request $request, $customerId)
+    {
+        $request->validate([
+            'year' => 'required|integer',
+            'month' => 'required|integer|between:1,12'
+        ]);
+
+        $year = $request->input('year');
+        $month = $request->input('month');
+        
+        $monthName = date('F', mktime(0, 0, 0, $month, 1));
+        
+        $readings = MeterReading::where('customer_id', $customerId)
+            ->where('year', $year)
+            ->where('month', $monthName)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return response()->json($readings);
+    }
 }

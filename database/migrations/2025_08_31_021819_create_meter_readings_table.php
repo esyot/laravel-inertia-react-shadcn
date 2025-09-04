@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('month');
             $table->year('year');
             $table->decimal('meter_value', 10, 2); 
+            $table->decimal('consumption', 10, 2);
+            $table->foreignId('bill_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }
