@@ -27,8 +27,8 @@ class UserController extends Controller
             ->when($request->filled('code') && Schema::hasColumn('users', 'code'), fn ($q) =>
                 $q->where('code', 'like', '%'.$request->code.'%'))
             ->orderBy('name', 'asc')
-            ->get()
-            ->map(function ($user) {
+            ->paginate(10)
+            ->through(function ($user) {
                 return [
                     'id'         => $user->id,
                     'name'       => $user->name,
