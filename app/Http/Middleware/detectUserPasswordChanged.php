@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class detectUserPasswordChanged
@@ -21,7 +22,13 @@ class detectUserPasswordChanged
         $request->attributes->set('must_change_password', true);
 
         }
+        if ($user && !$user->is_password_changed) {
+            if ($request->routeIs(['dashboard','password.update','logout'])) {
+                return $next($request);
+            }
 
+            return redirect()->route('dashboard');
+        }
         return $next($request);
     }
 }

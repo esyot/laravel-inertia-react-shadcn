@@ -16,6 +16,9 @@ import { ReactNode } from "react";
 import { usePage } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";
 import ProfilePage from "./profile/profile-popover";
+import { User } from "@/lib/interface/types";
+import { useState, useEffect } from "react";
+import ChangePasswordDialog from "@/pages/login/components/change-password-dialog";
 
 interface PageProps {
     children: ReactNode;
@@ -26,8 +29,14 @@ type Customer = {
     name: string;
 };
 
+type SharedProps = {
+    auth: { user: User | null };
+    must_change_password: boolean;
+};
+
 export default function Layout({ children }: PageProps) {
-    const { url, component, props } = usePage();
+    const { props, url, component } = usePage<SharedProps>();
+    const user = props.auth?.user;
 
     const parts = component.toString().split("/");
     const parent: string = parts[0] ?? "";
@@ -39,6 +48,17 @@ export default function Layout({ children }: PageProps) {
         let formattedText = text[0]?.toUpperCase() + text.slice(1);
         return formattedText;
     };
+
+    const forceOpen =
+        props.must_change_password ||
+        (user ? !user.is_password_changed : false);
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        if (forceOpen) setOpen(true);
+    }, [forceOpen]);
+
+    if (!user) return null;
 
     return (
         <SidebarProvider>
@@ -89,6 +109,8 @@ export default function Layout({ children }: PageProps) {
                     </header>
                     <section className="bg-white rounded-tl-3xl overflow-y-hidden h-[calc(100vh-8.5vh)] shadow-md">
                         {children}
+
+                        {user && <ChangePasswordDialog user={user} />}
                     </section>
                 </main>
             </SidebarInset>
