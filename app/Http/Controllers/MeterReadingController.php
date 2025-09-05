@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bill;
 use App\Models\Customer;
+use App\Models\Meter;
 use App\Models\MeterReading;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -38,8 +40,12 @@ class MeterReadingController extends Controller
             });
         }
 
-       if ($request->filled('meter')) {
-            $query->where('meter_value', 'like', '%' . $request->meter . '%');
+        if ($request->filled('prev_meter_value')) {
+            $query->where('prev_meter_value', '>=', $request->prev_meter_value);
+        }
+
+        if ($request->filled('curr_meter_value')) {
+            $query->where('curr_meter_value', '<=', $request->curr_meter_value);
         }
 
         if ($request->filled('municipal')) {
@@ -48,9 +54,9 @@ class MeterReadingController extends Controller
             });
         }
 
-        if ($request->filled('brgy')) {
+        if ($request->filled('barangay')) {
             $query->whereHas('customer', function ($q) use ($request) {
-                $q->where('brgy', 'like', '%' . $request->brgy . '%');
+                $q->where('barangay', 'like', '%' . $request->barangay . '%');
             });
         }
 
@@ -72,6 +78,8 @@ class MeterReadingController extends Controller
 
         $readings = $query->orderBy('created_at', 'desc')->paginate(10);
 
+        $readings->getCollection()->each->append('consumption');
+        
         return Inertia::render('meters/page', [
             'readings' => $readings,
             'filters'  => $request->only(['code', 'name', 'meter', 'municipal', 'brgy', 'month', 'year', 'startDate', 'endDate'])
@@ -81,24 +89,40 @@ class MeterReadingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'customer_code' => 'required|exists:customers,code',
-            'month' => 'required|string',
-            'year' => 'required|integer',
-            'meter_value' => 'required|numeric',
+            'customer_code'     => 'required|exists:customers,code',
+            'month'             => 'required|string',
+            'year'              => 'required|integer',
+            'curr_meter_value'  => 'required|numeric',
         ]);
 
         $customer = Customer::where('code', $request->customer_code)->firstOrFail();
 
+        $meter = Meter::where('customer_id', $customer->id)->first();
+        if (!$meter) {
+            return redirect()->back()->with('error', 'No meter found for this customer.');
+        }
+
+        $lastReading = MeterReading::where('customer_id', $customer->id)
+            ->where('meter_id', $meter->id)
+            ->orderBy('year', 'desc')
+            ->orderByRaw("FIELD(month, 
+                'January','February','March','April','May','June',
+                'July','August','September','October','November','December') desc")
+            ->first();
+
+        $prevValue = $lastReading ? $lastReading->curr_meter_value : 0;
+
         MeterReading::create([
-            'customer_id'  => $customer->id, 
-            'month'        => $request->month,
-            'year'         => $request->year,
-            'meter_value'  => $request->meter_value,
+            'meter_id'         => $meter->id,
+            'customer_id'      => $customer->id,
+            'month'            => $request->month,
+            'year'             => $request->year,
+            'curr_meter_value' => $request->curr_meter_value,
+            'prev_meter_value' => $prevValue,
         ]);
 
         return redirect()->route('meters.page')->with('success', 'Meter reading added.');
     }
-
     public function destroy($id)
     {
         $reading = MeterReading::findOrFail($id);

@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Bill;
 use App\Models\Customer;
+
 use App\Models\Meter;
+
 use App\Models\MeterReading;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -65,9 +67,11 @@ class MeterReadingSeeder extends Seeder
                     'total_amount_due' => $amountDue,
                 ]);
 
+
                 $previousReading = $currentReading;
                 $currentDate->addMonth();
             }
         }
     }
 }
+

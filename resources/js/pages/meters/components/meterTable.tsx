@@ -24,6 +24,12 @@ import {
 
 import { DeleteAlertDialog } from "./delete-dialog";
 import type { Meter } from "@/lib/interface/types";
+import { EllipsisVertical } from "lucide-react";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
 
 type Customer = {
     code: string;
@@ -61,11 +67,13 @@ export function MeterTable({ readings, onDelete }: MeterProps) {
 
     return (
         <div className="border-strong overflow-hidden rounded-xl border">
-            <div className="bg-sand-dugout text-weak border-strong hidden grid-cols-6 border-b px-5 pt-4 pb-3 text-sm font-medium md:grid">
+            <div className="bg-sand-dugout text-weak border-strong hidden grid-cols-8 border-b px-5 pt-4 pb-3 text-sm font-medium md:grid">
                 <div>Code</div>
                 <div>Month</div>
                 <div>Year</div>
-                <div>Meter Value</div>
+                <div>Current Meter Value</div>
+                <div>Previous Meter Value</div>
+                <div>Consumption</div>
                 <div>Timestamp</div>
                 <div className="flex justify-end mr-16">Action</div>
             </div>
@@ -77,7 +85,7 @@ export function MeterTable({ readings, onDelete }: MeterProps) {
                             key={reading.id}
                             className="px-6 py-4 hover:bg-gray-50"
                         >
-                            <div className="grid gap-3 md:grid-cols-6 md:items-center">
+                            <div className="grid gap-3 md:grid-cols-8 md:items-center">
                                 <div className="flex items-center gap-3">
                                     <span className="text-sm font-medium text-[#222222]">
                                         {reading.customer?.code}
@@ -95,7 +103,17 @@ export function MeterTable({ readings, onDelete }: MeterProps) {
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <span className="text-sm font-medium text-[#222222]">
-                                        {reading.meter_value}
+                                        {reading.curr_meter_value}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <span className="text-sm font-medium text-[#222222]">
+                                        {reading.prev_meter_value}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <span className="text-sm font-medium text-[#222222]">
+                                        {reading.consumption}
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-2 text-gray-700">
@@ -104,10 +122,22 @@ export function MeterTable({ readings, onDelete }: MeterProps) {
                                     </span>
                                 </div>
                                 <div className="flex items-center justify-end">
-                                    <DeleteAlertDialog
-                                        itemName={`meter reading for ${reading.customer?.code}`}
-                                        onConfirm={() => onDelete(reading)}
-                                    />
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <button className="p-1 rounded hover:bg-gray-100">
+                                                <EllipsisVertical className="w-5 h-5" />
+                                            </button>
+                                        </PopoverTrigger>
+
+                                        <PopoverContent className="w-36 p-2 mr-16">
+                                            <DeleteAlertDialog
+                                                itemName={`meter reading for ${reading.customer?.code}`}
+                                                onConfirm={() =>
+                                                    onDelete(reading)
+                                                }
+                                            />
+                                        </PopoverContent>
+                                    </Popover>
                                 </div>
                             </div>
                         </div>
