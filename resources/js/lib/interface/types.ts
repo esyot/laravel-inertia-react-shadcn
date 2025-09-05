@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type User = {
     id: number;
     name: string;
@@ -30,12 +32,14 @@ export type Customer = {
 };
 
 export type Meter = {
+    consumption: ReactNode;
     id: number;
     customer: Customer;
     customer_id: number;
     month: string;
     year: number;
-    meter_value: number;
+    curr_meter_value: number;
+    prev_meter_value: number;
     created_at: string;
     updated_at: string;
     timestamp: string;

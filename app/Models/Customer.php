@@ -44,4 +44,13 @@ class Customer extends Model
         $currentMonth = now()->format('F Y');
         return $this->bills()->where('billing_month', $currentMonth)->first();
     }
+
+     public function latestReading()
+    {
+        return $this->hasOne(MeterReading::class)
+            ->orderBy('year', 'desc')
+            ->orderByRaw("FIELD(month, 
+                'January','February','March','April','May','June',
+                'July','August','September','October','November','December') desc");
+    }
 }

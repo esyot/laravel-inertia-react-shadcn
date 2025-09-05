@@ -57,7 +57,7 @@ export function AddMeterReadingDialog() {
         customer_code: "",
         month: "",
         year: new Date().getFullYear().toString(),
-        meter_value: "",
+        curr_meter_value: "",
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -207,22 +207,25 @@ export function AddMeterReadingDialog() {
 
                     {/* Meter Value */}
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="meter_value" className="text-right">
+                        <Label
+                            htmlFor="curr_meter_value"
+                            className="text-right"
+                        >
                             Meter Value
                         </Label>
                         <div className="col-span-3">
                             <Input
-                                id="meter_value"
+                                id="curr_meter_value"
                                 type="number"
-                                value={data.meter_value}
+                                value={data.curr_meter_value}
                                 onChange={(e) =>
-                                    setData("meter_value", e.target.value)
+                                    setData("curr_meter_value", e.target.value)
                                 }
                                 placeholder="Enter meter value"
                             />
-                            {errors.meter_value && (
+                            {errors.curr_meter_value && (
                                 <p className="text-sm text-red-500 mt-1">
-                                    {errors.meter_value}
+                                    {errors.curr_meter_value}
                                 </p>
                             )}
                         </div>
