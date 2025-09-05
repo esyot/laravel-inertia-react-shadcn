@@ -7,7 +7,7 @@ export default function Index() {
         <main>
             <Layout>
                 <SectionHeader className="flex items-center justify-between">
-                    <h1 className="text-lg font-semibold">Point of Sale</h1>
+                    <h1 className="text-lg font-semibold">Point of Sales</h1>
                 </SectionHeader>
                 <SectionContent header={false}>
                     <div className="container p-1 mx-auto flex flex-row gap-6 space-y-0">
