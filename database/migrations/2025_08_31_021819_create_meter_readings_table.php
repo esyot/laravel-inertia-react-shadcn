@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,11 +13,11 @@ return new class extends Migration
         Schema::create('meter_readings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('meter_id')->constrained()->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->string('month');
             $table->year('year');
-            $table->decimal('meter_value', 10, 2); 
-            $table->decimal('consumption', 10, 2);
-            $table->foreignId('bill_id')->nullable()->constrained()->nullOnDelete();
+            $table->decimal('prev_meter_value', 10, 2);
+            $table->decimal('curr_meter_value', 10, 2);
             $table->timestamps();
         });
     }

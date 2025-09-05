@@ -9,7 +9,7 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('/assets/logo/logo.png') }}">
 
     @viteReactRefresh
-    <script src="{{ asset('js/ziggy.js') }}"></script>
+
     @vite(['resources/css/app.css', 'resources/js/app.tsx'])
     @inertiaHead
 </head>

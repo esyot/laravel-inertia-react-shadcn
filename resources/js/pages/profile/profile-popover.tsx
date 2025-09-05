@@ -12,6 +12,7 @@ import {
     HandCoins,
     CircleGauge,
     ChevronUp,
+    ChevronDown,
 } from "lucide-react";
 
 import {
@@ -24,6 +25,7 @@ import {
 
 import { Link, usePage } from "@inertiajs/react";
 import { cn } from "@/lib/utils";
+import Button from "@/components/composables/button";
 
 export default function ProfileButton() {
     const { url, props }: any = usePage();
@@ -33,42 +35,33 @@ export default function ProfileButton() {
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <div className="flex gap-3 justify-center items-center select-none">
-                    <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center cursor-pointer hover:opacity-80">
-                        <svg
-                            className="w-6 h-6 text-white"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5.121 17.804A11.958 11.958 0 0112 15c2.486 0 4.78.755 6.879 2.053M15 10a3 3 0 11-6 0 3 3 0 016 0z"
-                            />
-                        </svg>
-                    </div>
-                    <h1 className="font-bold  cursor-pointer">{user?.name}</h1>
-                </div>
+                <Button variant="ghost">
+                    <Avatar>
+                        <AvatarImage src={user?.img} />
+                        <AvatarFallback className="bg-gray-300 shadow-md">
+                            <svg
+                                className="w-10 h-10 text-black"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M5.121 17.804A11.958 11.958 0 0112 15c2.486 0 4.78.755 6.879 2.053M15 10a3 3 0 11-6 0 3 3 0 016 0z"
+                                />
+                            </svg>
+                        </AvatarFallback>
+                    </Avatar>
+                    <h1 className="font-semibold cursor-pointer">
+                        {user?.name}
+                    </h1>
+
+                    <ChevronDown size={16} className="block m-2" />
+                </Button>
             </PopoverTrigger>
-            {/* <div className="flex w-full justify-center gap-2 p-2 items-center border flex-1">
-                    {user?.img ? (
-                        <Avatar>
-                            <AvatarImage src={user?.img} />
-                            <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
-                    ) : (
-                        <Avatar>
-                            <AvatarImage src="https://github.com/shadcn.png" />
-                            <AvatarFallback>CN</AvatarFallback>
-                        </Avatar>
-                    )}
 
-                    <h1>{user?.name}</h1>
-
-                    <ChevronUp size={16} className="block m-2" />
-                </div> */}
             <PopoverContent className="w-56 p-2 rounded-xl shadow-lg">
                 <Link
                     href="/profile"

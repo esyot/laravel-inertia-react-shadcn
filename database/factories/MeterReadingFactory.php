@@ -17,13 +17,14 @@ class MeterReadingFactory extends Factory
         $date = Carbon::now()->subMonths(rand(0, 12));
 
         return [
-            'meter_id'    => Meter::factory(),
-            'month'       => $date->format('F'),
-            'year'        => $date->year,
-            'meter_value' => $this->faker->randomFloat(2, 100, 1000),
+            'meter_id' => Meter::factory(),
+            'month' => $date->format('F'),
+            'year' => $date->year,
+            'prev_meter_value' => $this->faker->randomFloat(2, 100, 1000),
+            'curr_meter_value' => $this->faker->randomFloat(2, 100, 1000),
         ];
     }
-// =======
+    // =======
 //     /**
 //      * Define the model's default state.
 //      *
@@ -33,8 +34,8 @@ class MeterReadingFactory extends Factory
 //     {
 //         $date = Carbon::now()->subMonths(rand(0, 12));
 //         $meterValue = $this->faker->randomFloat(2, 1000, 5000);
-        
-//         return [
+
+    //         return [
 //             'customer_id' => Customer::factory(),
 //             'month' => $date->format('F'),
 //             'year' => $date->year,
@@ -45,21 +46,21 @@ class MeterReadingFactory extends Factory
 //         ];
 //     }
 
-//     public function forCustomer($customerId)
+    //     public function forCustomer($customerId)
 //     {
 //         return $this->state(fn (array $attributes) => [
 //             'customer_id' => $customerId,
 //         ]);
 //     }
 
-//     public function withConsumptionCalculation($previousReading = null)
+    //     public function withConsumptionCalculation($previousReading = null)
 //     {
 //         return $this->state(function (array $attributes) use ($previousReading) {
 //             $consumption = $previousReading 
 //                 ? $attributes['meter_value'] - $previousReading->meter_value
 //                 : $this->faker->randomFloat(2, 20, 100);
-            
-//             return [
+
+    //             return [
 //                 'consumption' => max(0, $consumption), // Ensure non-negative
 //             ];
 //         });

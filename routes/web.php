@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserLogController;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\SocialiteController;
@@ -12,6 +13,9 @@ use App\Http\Controllers\MeterReadingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnalyticsController;
+
+
+
 
 Route::middleware(['web'])->group(function () {
     Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider'])->name('social.auth');
@@ -36,7 +40,12 @@ Route::get('/', function () {
 
 
 Route::middleware(['auth'])->group(function () {
-    
+
+    Route::get('/unauthorized', function () {
+        return inertia('fallbacks/unauthorized', [
+        ]);
+    })->name('fallbacks.unauthorized');
+
     Route::get('/dashboard', [AnalyticsController::class, 'index'])->name('dashboard');
 
     Route::get('/transactions', function () {
@@ -104,10 +113,6 @@ Route::get('/login', function () {
     ]);
 });
 
-// Route::get('/users', function () {
-//     return inertia('users/page', [
-//     ]);
-// });
 
 Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.page');
 

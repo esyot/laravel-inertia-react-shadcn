@@ -13,6 +13,7 @@ class Bill extends Model
 
     protected $fillable = [
         'customer_id',
+        'meter_reading_id',
         'billing_month',
         'amount_due',
         'penalty',
@@ -23,28 +24,30 @@ class Bill extends Model
     ];
 
     public function customer()
-{
-    return $this->belongsTo(Customer::class);
-}
+    {
+        return $this->belongsTo(Customer::class);
+    }
 
     public function meterReading()
     {
         return $this->hasOne(MeterReading::class);
     }
 
-public function getAmountDueAttribute($value)
+    public function getAmountDueAttribute($value)
     {
         // If there's a meter reading, calculate amount based on consumption
-        if ($this->meterReading && $this->meterReading->consumption) {
+        if ($this->meterReading && $this->meterReading->consumption)
+        {
             return $this->meterReading->consumption * 11; // Your rate per kWh
         }
-        
+
         return $value;
     }
 
     public function getComputedStatusAttribute(): string
     {
-        if (!$this->payment_date) {
+        if (!$this->payment_date)
+        {
             return $this->due_date < now() ? 'Overdue' : 'Unpaid';
         }
 
@@ -53,7 +56,8 @@ public function getAmountDueAttribute($value)
 
     public function getPenaltyAttribute(): float
     {
-        if ($this->computed_status !== 'Overdue') return 0;
+        if ($this->computed_status !== 'Overdue')
+            return 0;
 
         $monthsOverdue = now()->diffInMonths(Carbon::parse($this->due_date));
         return $monthsOverdue * 100; // 100 pesos per month

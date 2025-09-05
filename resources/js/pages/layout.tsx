@@ -65,7 +65,7 @@ export default function Layout({ children }: PageProps) {
             <AppSidebar />
             <SidebarInset className="bg-sand ">
                 <main className="h-screen overflow-y-hidden">
-                    <header className="bg-none flex justify-between mr-5 h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear bg-sand">
+                    <header className="bg-none flex justify-between h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear bg-sand">
                         <div className="flex items-center gap-2 px-4">
                             <SidebarTrigger className="-ml-1" />
                             <Separator

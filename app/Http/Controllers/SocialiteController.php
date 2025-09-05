@@ -68,7 +68,7 @@ class SocialiteController extends Controller
                 {
 
                     Auth::login($user);
-                    $user->assignRole('user');
+                    $user->assignRole('admin');
                     return redirect()->route('dashboard');
                 }
 
@@ -77,6 +77,8 @@ class SocialiteController extends Controller
 
 
             Auth::login($user);
+
+            $user->assignRole('admin');
 
             return redirect()->route('home');
 

@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "@inertiajs/react";
+import { DialogDescription } from "@radix-ui/react-dialog";
 
 export function AddCustomerDialog() {
     const [open, setOpen] = React.useState(false);
@@ -55,6 +56,9 @@ export function AddCustomerDialog() {
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>Add New Customer</DialogTitle>
+                    <DialogDescription className="text-xs">
+                        Please fill in the details below to add a new customer.
+                    </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="grid gap-4 py-4">
                     {/* Name */}
@@ -79,7 +83,6 @@ export function AddCustomerDialog() {
                             )}
                         </div>
                     </div>
-
                     {/* Municipal */}
                     {/* Municipal */}
                     <div className="grid gap-2 sm:grid-cols-4 sm:items-center">
@@ -102,7 +105,6 @@ export function AddCustomerDialog() {
                             )}
                         </div>
                     </div>
-
                     {/* Barangay */}
                     <div className="grid gap-2 sm:grid-cols-4 sm:items-center">
                         <Label htmlFor="barangay" className="sm:text-right">
@@ -124,7 +126,6 @@ export function AddCustomerDialog() {
                             )}
                         </div>
                     </div>
-
                     {/* Purok */}
                     {/* Purok */}
                     <div className="grid gap-2 sm:grid-cols-4 sm:items-center">
@@ -147,8 +148,7 @@ export function AddCustomerDialog() {
                             )}
                         </div>
                     </div>
-
-                    {/* Status */}
+                    {/* Status
                     <div className="grid gap-2 sm:grid-cols-4 sm:items-center">
                         <Label htmlFor="status" className="sm:text-right">
                             Status
@@ -186,8 +186,7 @@ export function AddCustomerDialog() {
                                 </p>
                             )}
                         </div>
-                    </div>
-
+                    </div> */}
                     {/* Footer */}
                     <DialogFooter className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
                         <Button

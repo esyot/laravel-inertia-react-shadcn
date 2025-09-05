@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,17 +12,18 @@ return new class extends Migration
     {
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained()->onDelete('cascade');
+            $table->foreignId('meter_reading_id')->constrained('meter_readings')->onDelete('cascade');
             $table->string('billing_month');
             $table->decimal('amount_due', 10, 2);
             $table->decimal('penalty', 10, 2)->default(0);
-            $table->enum('status', ['Unpaid', 'Paid','Overdue'])->default('Unpaid');
+            $table->enum('status', ['Unpaid', 'Paid', 'Overdue'])->default('Unpaid');
             $table->date('due_date')->nullable();
             $table->decimal('total_amount_due', 10, 2)->default(0);
             $table->date('payment_date')->nullable();
-
             $table->timestamps();
         });
+
     }
 
     /**

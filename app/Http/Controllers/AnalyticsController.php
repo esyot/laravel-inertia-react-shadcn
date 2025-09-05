@@ -13,8 +13,9 @@ class AnalyticsController extends Controller
 {
     public function index()
     {
-        if (!Auth::user()->hasRole('admin')) {
-            abort(403, 'Unauthorized');
+        if (!Auth::user()->hasRole('admin'))
+        {
+            return redirect()->route('fallbacks.unauthorized');
         }
 
         return Inertia::render('dashboard/admin-dashboard', [
