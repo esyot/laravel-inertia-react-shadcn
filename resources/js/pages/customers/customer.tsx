@@ -25,7 +25,8 @@ interface MeterReading {
     id: number;
     month: string;
     year: number;
-    meter_value: number;
+    prev_meter_value: number;
+    curr_meter_value: number;
     consumption?: number;
     created_at: string;
 }
@@ -49,7 +50,6 @@ interface Customer {
     purok?: string;
     code: string;
     status: string;
-    bills: Bill[];
     meter_readings: MeterReading[];
     current_bill?: Bill;
 }
@@ -58,6 +58,7 @@ interface CustomerProps {
     customer: Customer;
     isAdmin?: boolean;
     ratePerKwh?: number;
+    bills: Bill[];
 }
 
 type SortField = "month" | "meter_value" | "consumption" | "created_at";
@@ -84,6 +85,7 @@ export default function Customer({
     customer,
     isAdmin = false,
     ratePerKwh = 11,
+    bills,
 }: CustomerProps) {
     const printRef = useRef<HTMLDivElement>(null);
     const [selectedYear, setSelectedYear] = useState<number>(() => {
@@ -150,8 +152,8 @@ export default function Customer({
                     bValue = MONTH_ORDER.indexOf(b.month);
                     break;
                 case "meter_value":
-                    aValue = a.meter_value;
-                    bValue = b.meter_value;
+                    aValue = a.curr_meter_value;
+                    bValue = b.prev_meter_value;
                     break;
                 case "consumption":
                     aValue = a.consumption || 0;
@@ -307,10 +309,9 @@ export default function Customer({
     );
 
     const { currentBill, pastBills } = useMemo(() => {
-        if (!customer.bills?.length)
-            return { currentBill: null, pastBills: [] };
+        if (!bills?.length) return { currentBill: null, pastBills: [] };
 
-        const sortedBills = [...customer.bills].sort((a, b) => {
+        const sortedBills = [...bills].sort((a, b) => {
             return (
                 new Date(b.billing_month).getTime() -
                 new Date(a.billing_month).getTime()
@@ -331,10 +332,16 @@ export default function Customer({
         );
 
         return { currentBill, pastBills };
-    }, [customer.bills]);
+    }, [bills]);
 
     if (!customer) return <p className="text-center">Customer not found</p>;
 
+    const formatCurrency = (price: number) => {
+        return new Intl.NumberFormat("en-PH", {
+            style: "currency",
+            currency: "PHP",
+        }).format(price);
+    };
     const customerContent = (
         <div className="max-w-6xl mx-auto">
             <div className="w-full">
@@ -565,7 +572,18 @@ export default function Customer({
                                                 }
                                             >
                                                 <div className="flex items-center">
-                                                    Meter Reading (kWh)
+                                                    Previous Meter Reading (kWh)
+                                                    {getSortIcon("meter_value")}
+                                                </div>
+                                            </TableHead>
+                                            <TableHead
+                                                className="cursor-pointer hover:bg-gray-100"
+                                                onClick={() =>
+                                                    handleSort("meter_value")
+                                                }
+                                            >
+                                                <div className="flex items-center">
+                                                    Current Meter Reading (kWh)
                                                     {getSortIcon("meter_value")}
                                                 </div>
                                             </TableHead>
@@ -607,15 +625,19 @@ export default function Customer({
                                                     </TableCell>
                                                     <TableCell>
                                                         {formatNumber(
-                                                            reading.meter_value,
+                                                            reading.prev_meter_value,
                                                         )}
                                                     </TableCell>
                                                     <TableCell>
-                                                        {reading.consumption
-                                                            ? formatNumber(
-                                                                  reading.consumption,
-                                                              )
-                                                            : "N/A"}
+                                                        {formatNumber(
+                                                            reading.curr_meter_value,
+                                                        )}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {formatNumber(
+                                                            reading.curr_meter_value -
+                                                                reading.prev_meter_value,
+                                                        )}
                                                     </TableCell>
                                                     <TableCell>
                                                         {formatNumber(
@@ -623,13 +645,11 @@ export default function Customer({
                                                         )}
                                                     </TableCell>
                                                     <TableCell>
-                                                        {reading.consumption
-                                                            ? peso.format(
-                                                                  calculateBill(
-                                                                      reading.consumption,
-                                                                  ),
-                                                              )
-                                                            : "N/A"}
+                                                        {formatCurrency(
+                                                            (reading.curr_meter_value -
+                                                                reading.prev_meter_value) *
+                                                                ratePerKwh,
+                                                        )}
                                                     </TableCell>
                                                     <TableCell>
                                                         {new Date(
@@ -731,7 +751,7 @@ export default function Customer({
                     </div>
 
                     <div className="md:hidden space-y-6">
-                        {pastBills.map((bill: Bill) => {
+                        {bills.map((bill: Bill) => {
                             const { penalty, total, status } =
                                 calculatePenaltyAndTotal(bill);
                             return (

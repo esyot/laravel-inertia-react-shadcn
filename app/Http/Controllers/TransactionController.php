@@ -11,17 +11,20 @@ class TransactionController extends Controller
 {
     public function index(Request $request)
     {
-         $query = Customer::with('bills');
+        $query = Customer::query();
 
-        if ($request->filled('name')) {
+        if ($request->filled('name'))
+        {
             $query->where('name', 'like', '%' . $request->name . '%');
         }
 
-        if ($request->filled('startDate')) {
+        if ($request->filled('startDate'))
+        {
             $query->whereDate('created_at', '>=', $request->startDate);
         }
 
-        if ($request->filled('endDate')) {
+        if ($request->filled('endDate'))
+        {
             $query->whereDate('created_at', '<=', $request->endDate);
         }
 
@@ -29,7 +32,7 @@ class TransactionController extends Controller
 
         return Inertia::render('transactions/page', [
             'customers' => $customers,
-            'filters'  => $request->only(['name', 'startDate', 'endDate'])
+            'filters' => $request->only(['name', 'startDate', 'endDate'])
         ]);
     }
 }

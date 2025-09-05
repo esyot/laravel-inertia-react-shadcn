@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class MeterReading extends Model
 {
     use HasFactory;
-     protected $fillable = [
+    protected $fillable = [
         'meter_id',
+        'customer_id',
         'month',
         'year',
         'meter_value',
         'consumption',
-        'bill_id',
+
     ];
 
     public function customer()
@@ -22,9 +23,9 @@ class MeterReading extends Model
         return $this->belongsTo(Customer::class);
     }
 
-public function meter()
-{
-    return $this->belongsTo(Meter::class);
-}
+    public function meter()
+    {
+        return $this->belongsTo(Meter::class);
+    }
 
 }

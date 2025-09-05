@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bill;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,21 +12,25 @@ class CustomerController extends Controller
 
     public function index(Request $request)
     {
-        $query = Customer::with('bills');
+        $query = Customer::query();
 
-        if ($request->filled('code')) {
+        if ($request->filled('code'))
+        {
             $query->where('code', 'like', '%' . $request->code . '%');
         }
 
-        if ($request->filled('name')) {
+        if ($request->filled('name'))
+        {
             $query->where('name', 'like', '%' . $request->name . '%');
         }
 
-        if ($request->filled('municipal')) {
+        if ($request->filled('municipal'))
+        {
             $query->where('municipal', 'like', '%' . $request->municipal . '%');
         }
 
-        if ($request->filled('barangay')) {
+        if ($request->filled('barangay'))
+        {
             $query->where('barangay', 'like', '%' . $request->barangay . '%');
         }
 
@@ -37,7 +42,8 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'municipal' => 'required|string|max:255',
@@ -45,7 +51,7 @@ class CustomerController extends Controller
             'purok' => 'nullable|string|max:255',
             'status' => 'required|in:Active,Terminated',
         ]);
-        
+
         Customer::create($data);
 
         return to_route('customers.index')->with('success', 'Customer created successfully!');
@@ -63,71 +69,34 @@ class CustomerController extends Controller
     }
 
 
-//     public function show($code)
-// {
-//     $customer = Customer::where('code', '=', $code)
-//         ->with(['bills.meterReading', 'meterReadings' => function($query) {
-//             $query->orderBy('year', 'desc')
-//                   ->orderByRaw("FIELD(month, 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December') DESC");
-//         }])
-//         ->first();
-        
-//     if (!$customer) {
-//         return redirect()->route('customers.index')->with('error', 'Customer not found');
-//     }
-
-//     $isAdmin = auth()->check() && auth()->user()->isAdmin();
-
-//     return Inertia::render('customers/customer', [
-//         'customer' => $customer,
-//         'isAdmin' => $isAdmin,
-//         'ratePerKwh' => 11
-//     ]);
-// }
-    
-    
-//NEW
     public function show($code)
-{
-    $customer = Customer::where('code', '=', $code)
-        ->with(['bills', 'meterReadings' => function($query) {
-            $query->orderBy('year', 'desc')
-                  ->orderByRaw("FIELD(month, 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December') DESC");
-        }])
-        ->first();
-        
-    if (!$customer) {
-        return redirect()->route('customers.index')->with('error', 'Customer not found');
+    {
+        $customer = Customer::where('code', '=', $code)
+            ->with([
+                'meterReadings' => function ($query) {
+                    $query->orderBy('year', 'desc')
+                        ->orderByRaw("FIELD(month, 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December') DESC");
+                }
+            ])
+            ->first();
+
+        if (!$customer)
+        {
+            return redirect()->route('customers.index')->with('error', 'Customer not found');
+        }
+
+        $isAdmin = auth()->check() && auth()->user()->isAdmin();
+
+
+        $bills = Bill::where('customer_id', $customer->id)
+            ->get();
+
+        return Inertia::render('customers/customer', [
+            'customer' => $customer,
+            'isAdmin' => $isAdmin,
+            'ratePerKwh' => 11,
+            'bills' => $bills
+        ]);
     }
 
-    $isAdmin = auth()->check() && auth()->user()->isAdmin();
-
-    return Inertia::render('customers/customer', [
-        'customer' => $customer,
-        'isAdmin' => $isAdmin,
-        'ratePerKwh' => 11 // Changed to match your seeder rate
-    ]);
-}
-    
-//OLD
-//     public function show($code)
-// {
-//     $customer = Customer::where('code', '=', $code)
-//         ->with(['bills', 'meterReadings' => function($query) {
-//             $query->orderBy('created_at', 'desc')->take(12); // Get last 12 readings
-//         }])
-//         ->first();
-        
-//     if (!$customer) {
-//         return redirect()->route('customers.index')->with('error', 'Customer not found');
-//     }
-
-//     $isAdmin = auth()->check() && auth()->user()->isAdmin();
-
-//     return Inertia::render('customers/customer', [
-//         'customer' => $customer,
-//         'isAdmin' => $isAdmin,
-//         'ratePerKwh' => 25.5 
-//     ]);
-// }
 }

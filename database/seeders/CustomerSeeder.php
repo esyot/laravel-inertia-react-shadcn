@@ -22,5 +22,17 @@ class CustomerSeeder extends Seeder
             ->count(15)
             ->create();
 
+        $customers = Customer::all();
+
+
+        foreach ($customers as $customer)
+        {
+            Meter::factory()->create([
+                'customer_id' => $customer->id,
+                'meter_no' => 'MTR' . str_pad($customer->id, 5, '0', STR_PAD_LEFT),
+                'location' => $customer->purok . ', ' . $customer->barangay . ', ' . $customer->municipal,
+            ]);
+        }
+
     }
 }

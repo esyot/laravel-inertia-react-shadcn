@@ -23,21 +23,21 @@ class Customer extends Model
     }
 
     protected static function booted()
-{
-    static::creating(function ($customer) {
-        $municipal = $customer->municipal;
-        $barangay  = $customer->barangay;
-        $purok     = $customer->purok; // e.g. "Purok 1"
+    {
+        static::creating(function ($customer) {
+            $municipal = $customer->municipal;
+            $barangay = $customer->barangay;
+            $purok = $customer->purok; // e.g. "Purok 1"
 
-        $muniCode   = strtoupper(substr($municipal, 0, 4));
-        $brgyCode   = strtoupper(collect(explode(" ", $barangay))->map(fn($w) => substr($w, 0, 1))->implode(""));
-        preg_match('/\d+/', $purok, $matches);
-        $purokCode  = "P" . ($matches[0] ?? 0);
-        $randomCode = strtoupper(\Illuminate\Support\Str::random(10));
+            $muniCode = strtoupper(substr($municipal, 0, 4));
+            $brgyCode = strtoupper(collect(explode(" ", $barangay))->map(fn($w) => substr($w, 0, 1))->implode(""));
+            preg_match('/\d+/', $purok, $matches);
+            $purokCode = "P" . ($matches[0] ?? 0);
+            $randomCode = strtoupper(\Illuminate\Support\Str::random(10));
 
-        $customer->code = "{$muniCode}-{$brgyCode}-{$purokCode}-{$randomCode}";
-    });
-}
+            $customer->code = "{$muniCode}-{$brgyCode}-{$purokCode}-{$randomCode}";
+        });
+    }
 
     public function getCurrentBillAttribute()
     {

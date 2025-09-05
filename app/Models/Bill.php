@@ -28,10 +28,6 @@ class Bill extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function meterReading()
-    {
-        return $this->hasOne(MeterReading::class);
-    }
 
     public function getAmountDueAttribute($value)
     {
