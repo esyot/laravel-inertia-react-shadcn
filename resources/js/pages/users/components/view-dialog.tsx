@@ -15,7 +15,9 @@ export default function ViewDialog({ user }: ViewDialogProps) {
     return (
         <>
             <Dialog>
-                <DialogTrigger className="cursor-pointer">View</DialogTrigger>
+                <DialogTrigger className="cursor-pointer font-semibold">
+                    View
+                </DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>User Details</DialogTitle>
