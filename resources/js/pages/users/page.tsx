@@ -39,9 +39,18 @@ export default function Users({ users, logs }: UsersProps) {
                             <div className="fixed top-4 right-4 z-50 space-y-2 w-80">
                                 <AlertNotification />
                             </div>
-                            <TabsList>
-                                <TabsTrigger value="users"> Users</TabsTrigger>
-                                <TabsTrigger value="userLogs">
+                            <TabsList className="space-x-4">
+                                <TabsTrigger
+                                    className="cursor-pointer"
+                                    value="users"
+                                >
+                                    {" "}
+                                    Users
+                                </TabsTrigger>
+                                <TabsTrigger
+                                    className="cursor-pointer"
+                                    value="userLogs"
+                                >
                                     User Logs
                                 </TabsTrigger>
                             </TabsList>

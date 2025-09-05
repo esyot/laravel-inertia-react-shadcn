@@ -56,29 +56,6 @@ export default function UserChangePass({ user }: UserChangePassProps) {
                 <form onSubmit={handleSubmit} className="space-y-5 mt-2">
                     <div className="space-y-2">
                         <Label
-                            htmlFor="current_password"
-                            className="text-sm font-medium text-gray-700"
-                        >
-                            Current Password
-                        </Label>
-                        <Input
-                            type="password"
-                            id="current_password"
-                            placeholder="••••••••"
-                            value={data.current_password}
-                            onChange={(e) =>
-                                setData("current_password", e.target.value)
-                            }
-                        />
-                        {errors.current_password && (
-                            <p className="text-red-500 text-xs mt-1">
-                                {errors.current_password}
-                            </p>
-                        )}
-                    </div>
-
-                    <div className="space-y-2">
-                        <Label
                             htmlFor="new_password"
                             className="text-sm font-medium text-gray-700"
                         >

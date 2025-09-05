@@ -33,19 +33,21 @@ export function UserTable({ users, onDelete }: UserTableProps) {
 
     const goToPage = (page: number) => {
         if (page >= 1 && page <= users.last_page) {
-            router.get(`/transactions?page=${page}`);
+            router.get(`/users?page=${page}`);
         }
     };
 
     return (
-        <div className="space-y-4 px-4">
+        <div className="space-y-4 px-4 border-strong overflow-hidden rounded-xl border">
             <Table>
                 <TableCaption>A list of users with actions.</TableCaption>
                 <TableHeader>
-                    <TableRow className="bg-sand-dugout text-weak border-strong hidden grid-cols-3 border-b px-5 pt-4 pb-3 text-sm font-medium md:grid">
+                    <TableRow className="text-weak border-strong hidden grid-cols-3 border-b pt-4 pb-3 text-sm font-medium md:grid">
                         <TableHead>Name</TableHead>
                         <TableHead>Email</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
+                        <TableHead className="flex justify-end mr-16 ">
+                            Actions
+                        </TableHead>
                     </TableRow>
                 </TableHeader>
 
@@ -56,13 +58,13 @@ export function UserTable({ users, onDelete }: UserTableProps) {
                                 className="grid md:grid-cols-3 md:items-center"
                                 key={index}
                             >
-                                <TableCell className="text-sm font-medium text-[#222222]">
+                                <TableCell className="text-md text-gray-700 leading-relaxed">
                                     {user.name}
                                 </TableCell>
-                                <TableCell className="text-sm font-medium text-[#222222] capitalize">
+                                <TableCell className="text-md text-gray-700 leading-relaxed">
                                     {user.email}
                                 </TableCell>
-                                <TableCell className="flex justify-end gap-2">
+                                <TableCell className="flex items-center justify-end gap-2">
                                     <div className="hidden sm:flex gap-2 items-center gap-4">
                                         <ViewDialog user={user} />{" "}
                                         <UserChangePass user={user} />{" "}
@@ -132,7 +134,7 @@ export function UserTable({ users, onDelete }: UserTableProps) {
                             <div className="text-weak flex flex-col items-center justify-between gap-3 border-t px-6 py-3 text-sm font-medium md:flex-row">
                                 <div className="flex items-center gap-3">
                                     <button
-                                        className="h-8 rounded-full border px-3 py-1 font-bold text-[#222222] hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent"
+                                        className="h-8 rounded-full border px-3 py-1 font-bold text-[#222222] hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent cursor-pointer"
                                         disabled={users.current_page <= 1}
                                         onClick={() =>
                                             goToPage(users.current_page - 1)
@@ -141,7 +143,7 @@ export function UserTable({ users, onDelete }: UserTableProps) {
                                         Previous
                                     </button>
                                     <button
-                                        className="h-8 rounded-full border px-3 py-1 font-bold text-[#222222] hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent"
+                                        className="h-8 rounded-full border px-3 py-1 font-bold text-[#222222] hover:bg-gray-100 disabled:opacity-60 disabled:hover:bg-transparent cursor-pointer"
                                         disabled={
                                             users.current_page >=
                                             users.last_page
