@@ -62,24 +62,72 @@ class CustomerController extends Controller
         return response()->json($customers);
     }
 
+
+//     public function show($code)
+// {
+//     $customer = Customer::where('code', '=', $code)
+//         ->with(['bills.meterReading', 'meterReadings' => function($query) {
+//             $query->orderBy('year', 'desc')
+//                   ->orderByRaw("FIELD(month, 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December') DESC");
+//         }])
+//         ->first();
+        
+//     if (!$customer) {
+//         return redirect()->route('customers.index')->with('error', 'Customer not found');
+//     }
+
+//     $isAdmin = auth()->check() && auth()->user()->isAdmin();
+
+//     return Inertia::render('customers/customer', [
+//         'customer' => $customer,
+//         'isAdmin' => $isAdmin,
+//         'ratePerKwh' => 11
+//     ]);
+// }
+    
+    
+//NEW
     public function show($code)
 {
     $customer = Customer::where('code', '=', $code)
-        ->with('bills')
+        ->with(['bills', 'meterReadings' => function($query) {
+            $query->orderBy('year', 'desc')
+                  ->orderByRaw("FIELD(month, 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December') DESC");
+        }])
         ->first();
-
+        
     if (!$customer) {
         return redirect()->route('customers.index')->with('error', 'Customer not found');
     }
 
-    // Determine if the user is an admin
     $isAdmin = auth()->check() && auth()->user()->isAdmin();
 
     return Inertia::render('customers/customer', [
         'customer' => $customer,
-        'isAdmin' => $isAdmin
+        'isAdmin' => $isAdmin,
+        'ratePerKwh' => 11 // Changed to match your seeder rate
     ]);
 }
+    
+//OLD
+//     public function show($code)
+// {
+//     $customer = Customer::where('code', '=', $code)
+//         ->with(['bills', 'meterReadings' => function($query) {
+//             $query->orderBy('created_at', 'desc')->take(12); // Get last 12 readings
+//         }])
+//         ->first();
+        
+//     if (!$customer) {
+//         return redirect()->route('customers.index')->with('error', 'Customer not found');
+//     }
 
+//     $isAdmin = auth()->check() && auth()->user()->isAdmin();
 
+//     return Inertia::render('customers/customer', [
+//         'customer' => $customer,
+//         'isAdmin' => $isAdmin,
+//         'ratePerKwh' => 25.5 
+//     ]);
+// }
 }

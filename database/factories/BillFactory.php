@@ -86,25 +86,24 @@ class BillFactory extends Factory
         ]);
     }
 
-    public function past(int $monthsAgo = 1): static
+    public function past($monthsAgo)
     {
-        $date = Carbon::now()->subMonths($monthsAgo);
-        $dueDate = $date->copy()->day(14);
-
-        $paymentDate = Carbon::now()->subDays(rand($monthsAgo * 30, ($monthsAgo + 1) * 30));
-        
-        $penalty = 0;
-        if ($paymentDate->gt($dueDate)) {
-            $monthsOverdue = $paymentDate->diffInMonths($dueDate);
-            $penalty = max(1, $monthsOverdue) * 100;
-        }
-
-        return $this->state(fn () => [
-            'billing_month' => $date->format('F Y'),
-            'due_date'      => $dueDate->toDateString(),
-            'payment_date'  => $paymentDate->toDateString(),
-            'penalty'       => $penalty,
-            'status'        => 'Paid',
-        ]);
+        return $this->state(function (array $attributes) use ($monthsAgo) {
+            $billingDate = Carbon::now()->subMonths($monthsAgo);
+            
+            if ($billingDate->year < 2024 || ($billingDate->year === 2024 && $billingDate->month < 1)) {
+                $billingDate = Carbon::create(2024, 1, 1);
+            }
+            
+            $dueDate = $billingDate->copy()->endOfMonth();
+            
+            return [
+                'billing_month' => $billingDate->format('F Y'),
+                'due_date' => $dueDate->format('Y-m-d'),
+                'status' => 'Paid',
+                'payment_date' => $dueDate->copy()->addDays(rand(1, 15))->format('Y-m-d'),
+                'penalty' => $this->faker->randomFloat(2, 0, 100),
+            ];
+        });
     }
 }

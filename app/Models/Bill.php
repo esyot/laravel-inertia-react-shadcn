@@ -15,14 +15,32 @@ class Bill extends Model
         'customer_id',
         'billing_month',
         'amount_due',
+        'penalty',
         'status',
-        'due_date'
+        'due_date',
+        'payment_date',
+        'total_amount_due'
     ];
 
     public function customer()
 {
     return $this->belongsTo(Customer::class);
 }
+
+    public function meterReading()
+    {
+        return $this->hasOne(MeterReading::class);
+    }
+
+public function getAmountDueAttribute($value)
+    {
+        // If there's a meter reading, calculate amount based on consumption
+        if ($this->meterReading && $this->meterReading->consumption) {
+            return $this->meterReading->consumption * 11; // Your rate per kWh
+        }
+        
+        return $value;
+    }
 
     public function getComputedStatusAttribute(): string
     {

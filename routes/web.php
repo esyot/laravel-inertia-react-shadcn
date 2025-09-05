@@ -118,7 +118,7 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.attempt');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->patch('/password', [LoginController::class, 'update']);
-    
+
 // Others
 Route::get('/instructions', function () {
     return view("instructions.index");
@@ -130,4 +130,20 @@ Route::get('/instructions/setup', function () {
 
 Route::get('/instructions/requirements', function () {
     return view("instructions.requirements");
+});
+
+
+
+
+//API ROUTES
+Route::get('/api/customers/{customer}/meter-readings', [MeterReadingController::class, 'customerMeter'])
+    ->name('api.customers.meter-readings');
+
+
+
+
+//POS page
+Route::get('/pos', function () {
+    return inertia('pos/page', [
+    ]);
 });

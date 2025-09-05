@@ -12,14 +12,15 @@ class MeterReading extends Model
         'meter_id',
         'month',
         'year',
-        'meter_value'
+        'meter_value',
+        'consumption',
+        'bill_id',
     ];
 
     public function customer()
     {
         return $this->belongsTo(Customer::class);
     }
-
 
 public function meter()
 {
