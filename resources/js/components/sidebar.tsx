@@ -28,7 +28,12 @@ import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 
 const menuItems = [
-    { name: "Dashboard", link: "/dashboard", icon: LayoutDashboard },
+    {
+        name: "Dashboard",
+        link: "/dashboard",
+        icon: LayoutDashboard,
+        role: "admin",
+    },
     { name: "Users", link: "/users", icon: Users },
     { name: "Transactions", link: "/transactions", icon: HandCoins },
     { name: "Meters", link: "/meters", icon: CircleGauge },
@@ -65,39 +70,6 @@ export function AppSidebar() {
                     })}
                 </div>
             </SidebarContent>
-            {/* <SidebarFooter className="bg-sand border-t hover:bg-white/50 p-0">
-                <Popover>
-                    <PopoverTrigger>
-                        <div className="flex w-full justify-center gap-2 p-2 items-center border flex-1">
-                            {user?.img ? (
-                                <Avatar>
-                                    <AvatarImage src={user?.img} />
-                                    <AvatarFallback>CN</AvatarFallback>
-                                </Avatar>
-                            ) : (
-                                <Avatar>
-                                    <AvatarImage src="https://github.com/shadcn.png" />
-                                    <AvatarFallback>CN</AvatarFallback>
-                                </Avatar>
-                            )}
-
-                            <h1>{user?.name}</h1>
-
-                            <ChevronUp size={16} className="block m-2" />
-                        </div>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-48 p-0">
-                        <ul className="p-2">
-                            <li className="hover:opacity-50 p-2">Profile</li>
-                            <Link href="/log-out">
-                                <li className="hover:opacity-50 p-2">
-                                    Log-out
-                                </li>
-                            </Link>
-                        </ul>
-                    </PopoverContent>
-                </Popover>
-            </SidebarFooter> */}
             <SidebarRail />
         </Sidebar>
     );

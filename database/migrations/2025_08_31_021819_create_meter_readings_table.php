@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('meter_readings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained()->onDelete('cascade');
+            $table->foreignId('meter_id')->constrained()->onDelete('cascade');
             $table->string('month');
             $table->year('year');
             $table->decimal('meter_value', 10, 2); 

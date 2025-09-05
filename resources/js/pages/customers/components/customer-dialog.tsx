@@ -58,11 +58,12 @@ export function AddCustomerDialog() {
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="grid gap-4 py-4">
                     {/* Name */}
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="name" className="text-right">
+                    {/* Name */}
+                    <div className="grid gap-2 sm:grid-cols-4 sm:items-center">
+                        <Label htmlFor="name" className="sm:text-right">
                             Name
                         </Label>
-                        <div className="col-span-3">
+                        <div className="sm:col-span-3">
                             <Input
                                 id="name"
                                 placeholder="Enter name"
@@ -78,12 +79,14 @@ export function AddCustomerDialog() {
                             )}
                         </div>
                     </div>
+
                     {/* Municipal */}
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="municipal" className="text-right">
+                    {/* Municipal */}
+                    <div className="grid gap-2 sm:grid-cols-4 sm:items-center">
+                        <Label htmlFor="municipal" className="sm:text-right">
                             Municipal
                         </Label>
-                        <div className="col-span-3">
+                        <div className="sm:col-span-3">
                             <Input
                                 id="municipal"
                                 placeholder="Enter municipality"
@@ -100,12 +103,12 @@ export function AddCustomerDialog() {
                         </div>
                     </div>
 
-                    {/* barangay */}
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="barangay" className="text-right">
+                    {/* Barangay */}
+                    <div className="grid gap-2 sm:grid-cols-4 sm:items-center">
+                        <Label htmlFor="barangay" className="sm:text-right">
                             Barangay
                         </Label>
-                        <div className="col-span-3">
+                        <div className="sm:col-span-3">
                             <Input
                                 id="barangay"
                                 placeholder="Enter barangay"
@@ -121,12 +124,14 @@ export function AddCustomerDialog() {
                             )}
                         </div>
                     </div>
+
                     {/* Purok */}
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="purok" className="text-right">
+                    {/* Purok */}
+                    <div className="grid gap-2 sm:grid-cols-4 sm:items-center">
+                        <Label htmlFor="purok" className="sm:text-right">
                             Purok
                         </Label>
-                        <div className="col-span-3">
+                        <div className="sm:col-span-3">
                             <Input
                                 id="purok"
                                 placeholder="Enter purok"
@@ -142,6 +147,8 @@ export function AddCustomerDialog() {
                             )}
                         </div>
                     </div>
+
+                    {/* Status */}
                     <div className="grid gap-2 sm:grid-cols-4 sm:items-center">
                         <Label htmlFor="status" className="sm:text-right">
                             Status
@@ -155,11 +162,11 @@ export function AddCustomerDialog() {
                                 <SelectTrigger
                                     id="status"
                                     aria-invalid={!!errors.status}
-                                    className={
+                                    className={`w-full ${
                                         errors.status
                                             ? "border-red-500 focus:ring-red-500"
                                             : ""
-                                    }
+                                    }`}
                                 >
                                     <SelectValue placeholder="Select status" />
                                 </SelectTrigger>
@@ -180,16 +187,22 @@ export function AddCustomerDialog() {
                             )}
                         </div>
                     </div>
-                    <DialogFooter className="flex justify-end gap-2">
+
+                    {/* Footer */}
+                    <DialogFooter className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
                         <Button
                             variant="outline"
-                            className="cursor-pointer"
+                            className="cursor-pointer w-full sm:w-auto"
                             type="button"
                             onClick={() => setOpen(false)}
                         >
                             Cancel
                         </Button>
-                        <Button type="submit" disabled={processing}>
+                        <Button
+                            type="submit"
+                            disabled={processing}
+                            className="w-full sm:w-auto"
+                        >
                             <span className="inline-flex items-center gap-2 cursor-pointer">
                                 {processing && (
                                     <svg

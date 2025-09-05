@@ -11,6 +11,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MeterReadingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AnalyticsController;
 
 Route::middleware(['web'])->group(function () {
     Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider'])->name('social.auth');
@@ -35,12 +36,8 @@ Route::get('/', function () {
 
 
 Route::middleware(['auth'])->group(function () {
-
-
-    Route::get('/dashboard', function () {
-        return inertia('dashboard/page', [
-        ]);
-    })->name('dashboard');
+    
+    Route::get('/dashboard', [AnalyticsController::class, 'index'])->name('dashboard');
 
     Route::get('/transactions', function () {
         return inertia('transactions/page', [
@@ -76,6 +73,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/customers', [CustomerController::class, 'index']);
 
 
+});
+
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 

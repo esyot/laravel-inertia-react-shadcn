@@ -48,7 +48,7 @@ export default function BillChecking() {
                                     setSearch(e.currentTarget.value);
                                 }}
                                 placeholder="Enter your customer code (e.g. SAGB-SC-P1-NS8DSK31GP)"
-                                className="w-full border-2 border-gray-300 rounded-xl px-6 py-4 text-lg focus:outline-none focus:ring-4 focus:ring-blue-400 focus:border-transparent"
+                                className="w-full border-2 border-gray-300 rounded-xl px-6 py-4 text-lg focus:outline-none focus:ring-4 focus:ring-blue-400 focus:border-transparent bg-white"
                             />
                             {loading && (
                                 <div className="absolute bg-white w-full border-2 border-gray-200 rounded-xl shadow-lg mt-2 p-4 text-gray-600 text-lg">
