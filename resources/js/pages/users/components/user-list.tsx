@@ -20,11 +20,22 @@ import type { User, Paginated } from "@/lib/interface/types";
 import ViewDialog from "./view-dialog";
 import UserChangePass from "./user-change-password";
 import { router } from "@inertiajs/react";
-
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import DeleteDialog from "./delete-dialog";
 type UserTableProps = {
     users: Paginated<User>;
     onView?: (user: User) => void;
-    onDelete?: (user: User) => void;
+    onDelete: (user: User) => void;
     showHistory?: boolean;
 };
 
@@ -68,14 +79,10 @@ export function UserTable({ users, onDelete }: UserTableProps) {
                                     <div className="hidden sm:flex gap-2 items-center gap-4">
                                         <ViewDialog user={user} />{" "}
                                         <UserChangePass user={user} />{" "}
-                                        <Button
-                                            variant="destructive"
-                                            className="cursor-pointer"
-                                            size="sm"
-                                            onClick={() => onDelete?.(user)}
-                                        >
-                                            Delete
-                                        </Button>
+                                        <DeleteDialog
+                                            user={user}
+                                            onDelete={onDelete}
+                                        />
                                     </div>
                                     <div className="sm:hidden">
                                         <DropdownMenu>
@@ -90,19 +97,10 @@ export function UserTable({ users, onDelete }: UserTableProps) {
 
                                             <DropdownMenuContent
                                                 align="end"
-                                                className="shadow-2xl border border-gray-300 space-y-2 p-4"
+                                                className="shadow-2xl border border-gray-300 space-y-2 p-4 block flex flex-col items-start"
                                             >
                                                 <DropdownMenuItem asChild>
                                                     <ViewDialog user={user} />
-                                                </DropdownMenuItem>
-
-                                                <DropdownMenuItem
-                                                    className="text-red-500 p-0 font-semibold"
-                                                    onClick={() =>
-                                                        onDelete?.(user)
-                                                    }
-                                                >
-                                                    Delete
                                                 </DropdownMenuItem>
 
                                                 <DropdownMenuItem asChild>
@@ -110,6 +108,11 @@ export function UserTable({ users, onDelete }: UserTableProps) {
                                                         user={user}
                                                     />
                                                 </DropdownMenuItem>
+
+                                                <DeleteDialog
+                                                    user={user}
+                                                    onDelete={onDelete}
+                                                />
                                             </DropdownMenuContent>
                                         </DropdownMenu>
                                     </div>

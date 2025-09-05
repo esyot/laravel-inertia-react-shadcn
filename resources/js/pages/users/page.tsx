@@ -25,9 +25,7 @@ export default function Users({ users, logs }: UsersProps) {
     };
 
     const handleDelete = (user: User) => {
-        if (confirm(`Are you sure you want to delete ${user.name}?`)) {
-            router.delete(`/users/${user.id}`);
-        }
+        router.delete(`/users/${user.id}`);
     };
 
     return (
