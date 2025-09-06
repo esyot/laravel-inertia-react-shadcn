@@ -68,6 +68,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.page');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    Route::post('/users/{user}/roles', [UserController::class, 'addRole']);
+    Route::post('/users/{user}/roles/remove', [UserController::class, 'removeRole']);
+
+
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.page');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 

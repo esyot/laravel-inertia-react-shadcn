@@ -39,6 +39,7 @@ import {
 } from "@/components/ui/popover";
 
 import DeleteDialog from "./delete-dialog";
+import { UserRoleDialog } from "./user-roles";
 type UserTableProps = {
     users: Paginated<User>;
     onView?: (user: User) => void;
@@ -217,6 +218,9 @@ export function UserTable({ users, onDelete }: UserTableProps) {
                                             </div>
                                             <div className="w-full">
                                                 <UserChangePass user={user} />
+                                            </div>
+                                            <div className="w-full">
+                                                <UserRoleDialog user={user} />
                                             </div>
                                             <div className="w-full">
                                                 <DeleteDialog

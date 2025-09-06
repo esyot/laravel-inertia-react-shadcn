@@ -16,8 +16,8 @@ class UserLogsSeeder extends Seeder
     {
         $admin = User::where('email', 'admin@example.com')->first();
         $cashier = User::where('email', 'cashier@example.com')->first();
-        $editor = User::where('email', 'editor@example.com')->first();
-        $customer = User::where('email', 'customer@example.com')->first();
+        $auditor = User::where('email', 'editor@example.com')->first();
+        $user = User::where('email', 'customer@example.com')->first();
 
         // Insert logs for each user
         UserLog::create([
@@ -35,14 +35,14 @@ class UserLogsSeeder extends Seeder
         ]);
 
         UserLog::create([
-            'user_id' => $editor->id,
+            'user_id' => $auditor->id,
             'device' => 'Android - Firefox',
             'created_at' => now()->subDays(1),
             'updated_at' => now(),
         ]);
 
         UserLog::create([
-            'user_id' => $customer->id,
+            'user_id' => $user->id,
             'device' => 'iPhone - Safari',
             'created_at' => now()->subDays(2),
             'updated_at' => now(),

@@ -34,7 +34,7 @@ class UserController extends Controller
                     'name'       => $user->name,
                     'email'      => $user->email,
                     'social_id'  => $user->social_id ?: '',
-                    'role'       => $user->roles->first()->name ?? 'No role',
+                    'roles'      => $user->roles->pluck('name')->toArray(),
                     'created_at' => $user->created_at->format('M d, Y h:i A'),
                     'updated_at' => $user->updated_at->format('M d, Y h:i A'),
                 ];
@@ -69,12 +69,14 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
             'social_id' => 'nullable|string|max:255',
-            'role' => 'required|in:admin,cashier,editor,customer',
         ]);
 
         $data['password'] = bcrypt($data['password']);
 
-        User::create($data);
+        $user = User::create($data);
+
+        // Default role = user
+        $user->assignRole('user');
 
         return to_route('users.page')->with('success', 'User created successfully!');
     }
@@ -101,5 +103,44 @@ class UserController extends Controller
 
     return back()->with('success', 'Password updated successfully!');
 }
+
+    public function addRole(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'roles' => 'array',
+            'roles.*' => 'string|exists:roles,name',
+        ]);
+
+        $newRoles = collect($validated['roles']);
+        $currentRoles = $user->roles->pluck('name');
+
+        $added = $newRoles->diff($currentRoles);
+        $removed = $currentRoles->diff($newRoles);
+
+        $user->syncRoles($newRoles);
+
+        if ($removed->isNotEmpty()) {
+            return back()->with('delete', 'Removed role(s): ' . $removed->join(', '));
+        }
+
+        if ($added->isNotEmpty()) {
+            return back()->with('success', 'Added role(s): ' . $added->join(', '));
+        }
+
+        return back()->with('success', 'Roles updated successfully.');
+    }
+
+    public function removeRole(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'role' => 'required|string|exists:roles,name',
+        ]);
+
+        if ($user->hasRole($validated['role'])) {
+            $user->removeRole($validated['role']);
+        }
+
+        return back()->with('delete', 'Role removed successfully.');
+    }
 
 }

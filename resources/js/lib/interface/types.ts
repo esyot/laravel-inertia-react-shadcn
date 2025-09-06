@@ -5,7 +5,7 @@ export type User = {
     name: string;
     email: string;
     social_id: string;
-    role: string;
+    // role: string;
     created_at: string;
     updated_at: string;
     is_password_changed: boolean;
