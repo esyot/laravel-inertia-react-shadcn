@@ -12,6 +12,11 @@ class Customer extends Model
 
     protected $fillable = ['name', 'municipal', 'barangay', 'purok', 'status'];
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+    
     public function bills()
     {
         return $this->hasMany(Bill::class);

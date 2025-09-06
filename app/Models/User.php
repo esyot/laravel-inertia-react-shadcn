@@ -49,10 +49,19 @@ class User extends Authenticatable
         ];
     }
 
-
-
     public function isAdmin()
     {
         return $this->hasRole('admin');
+    }
+
+    
+    public function customers()
+    {
+        return $this->belongsToMany(Customer::class);
+    }
+
+    public function getPrimaryCodeAttribute()
+    {
+        return $this->customers->first()?->code;
     }
 }

@@ -1,8 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
 import { useForm, router } from "@inertiajs/react";
-
 import {
     Dialog,
     DialogContent,
@@ -16,23 +14,19 @@ import { User } from "@/lib/interface/types";
 
 type ChangePasswordProps = {
     user: User;
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
 };
 
-export default function ChangePasswordDialog({ user }: ChangePasswordProps) {
-    const mustForce = useMemo(
-        () => Boolean(user && !user.is_password_changed),
-        [user],
-    );
-    const [open, setOpen] = useState(false);
-
+export default function ChangePasswordDialog({
+    user,
+    open,
+    onOpenChange,
+}: ChangePasswordProps) {
     const { data, setData, patch, processing, errors, reset } = useForm({
         password: "",
         password_confirmation: "",
     });
-
-    useEffect(() => {
-        if (mustForce) setOpen(true);
-    }, [mustForce]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -40,7 +34,7 @@ export default function ChangePasswordDialog({ user }: ChangePasswordProps) {
             preserveScroll: true,
             onSuccess: () => {
                 reset();
-                setOpen(false);
+                onOpenChange(false);
             },
         });
     };
@@ -50,19 +44,10 @@ export default function ChangePasswordDialog({ user }: ChangePasswordProps) {
     };
 
     return (
-        <Dialog
-            open={open}
-            onOpenChange={(next) => {
-                if (!mustForce) setOpen(next);
-            }}
-        >
+        <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent
-                onInteractOutside={(e) => {
-                    if (mustForce) e.preventDefault();
-                }}
-                onEscapeKeyDown={(e) => {
-                    if (mustForce) e.preventDefault();
-                }}
+                onInteractOutside={(e) => e.preventDefault()}
+                onEscapeKeyDown={(e) => e.preventDefault()}
             >
                 <DialogHeader>
                     <DialogTitle>Password change required</DialogTitle>
