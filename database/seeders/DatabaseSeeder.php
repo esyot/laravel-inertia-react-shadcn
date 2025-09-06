@@ -27,19 +27,19 @@ class DatabaseSeeder extends Seeder
         ]);
         $cashier->assignRole('cashier');
 
-        $editor = User::factory()->create([
+        $auditor = User::factory()->create([
             'name' => 'Editor',
             'email' => 'editor@example.com',
             'password' => Hash::make('password'),
         ]);
-        $editor->assignRole('editor');
+        $auditor->assignRole('auditor');
 
-        $customer = User::factory()->create([
+        $user = User::factory()->create([
             'name' => 'Customer',
             'email' => 'customer@example.com',
             'password' => Hash::make('password'),
         ]);
-        $customer->assignRole('customer');
+        $user->assignRole('user');
 
 
         $this->call(CustomerSeeder::class);
