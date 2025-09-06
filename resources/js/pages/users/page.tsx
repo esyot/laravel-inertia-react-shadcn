@@ -34,9 +34,9 @@ export default function Users({ users, logs }: UsersProps) {
                 <Layout>
                     <Tabs defaultValue="users" className="w-full">
                         <SectionHeader className="flex items-center justify-between">
-                            <div className="fixed top-4 right-4 z-50 space-y-2 w-80">
+                            {/* <div className="fixed top-4 right-4 z-50 space-y-2 w-80">
                                 <AlertNotification />
-                            </div>
+                            </div> */}
                             <TabsList className="space-x-4">
                                 <TabsTrigger
                                     className="cursor-pointer"

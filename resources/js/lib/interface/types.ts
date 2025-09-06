@@ -60,3 +60,16 @@ export type UserInformation = {
     created_at: string;
     updated_at: string;
 };
+
+export type FlashMessages = {
+    success?: string;
+    error?: string;
+    delete?: string;
+};
+
+export type PageProps<T = Record<string, unknown>> = T & {
+    flash?: FlashMessages;
+    auth?: {
+        user: User | null;
+    };
+};

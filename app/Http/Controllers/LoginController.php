@@ -43,7 +43,7 @@ class LoginController extends Controller
             $user = \Auth::user();
             $request->session()->put('must_change_password', !$user->is_password_changed);
         
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/dashboard')->with('success', 'Login Successfully.');
 
             // if ($user->roles->contains('name', 'cashier')) {
             //     return redirect()->intended('/cashier/dashboard');
@@ -67,7 +67,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/login')->with('success','Logout Successfully.');
     }
 
     public function update(Request $request) {

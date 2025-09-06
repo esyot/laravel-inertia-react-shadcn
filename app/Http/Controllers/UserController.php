@@ -119,15 +119,21 @@ class UserController extends Controller
 
         $user->syncRoles($newRoles);
 
-        if ($removed->isNotEmpty()) {
-            return back()->with('delete', 'Removed role(s): ' . $removed->join(', '));
-        }
+       $messages = [];
 
         if ($added->isNotEmpty()) {
-            return back()->with('success', 'Added role(s): ' . $added->join(', '));
+            $messages['success'] = 'Added role(s): ' . $added->join(', ');
         }
 
-        return back()->with('success', 'Roles updated successfully.');
+        if ($removed->isNotEmpty()) {
+            $messages['delete'] = 'Removed role(s): ' . $removed->join(', ');
+        }
+
+        if (empty($messages)) {
+            $messages['success'] = 'Roles updated successfully.';
+        }
+
+        return back()->with($messages);
     }
 
     public function removeRole(Request $request, User $user)
