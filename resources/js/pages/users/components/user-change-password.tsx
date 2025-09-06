@@ -38,7 +38,7 @@ export default function UserChangePass({ user }: UserChangePassProps) {
     };
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger className="cursor-pointer font-semibold">
+            <DialogTrigger className="cursor-pointer text-sm font-semibold text-gray-700">
                 Change Password
             </DialogTrigger>
 
