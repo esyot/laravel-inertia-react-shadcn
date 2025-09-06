@@ -23,7 +23,7 @@ export default function DeleteDialog({ user, onDelete }: DeteleDialogProps) {
                 <AlertDialogTrigger asChild>
                     <Button
                         variant="destructive"
-                        className="cursor-pointer"
+                        className="cursor-pointer "
                         size="sm"
                     >
                         Delete
