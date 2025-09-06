@@ -47,7 +47,6 @@ export default function AdminDashboard({
 }: {
     analytics: AnalyticsProps;
 }) {
-    // Prepare data for charts
     const customerPieData = [
         { name: "Active", value: analytics.customers.active },
         { name: "Terminated", value: analytics.customers.terminated },
@@ -59,7 +58,7 @@ export default function AdminDashboard({
         { name: "Overdue", value: analytics.bills.overdue },
     ];
 
-    const COLORS = ["#22c55e", "#ef4444", "#f59e0b"]; // green, red, yellow
+    const COLORS = ["#22c55e", "#ef4444", "#f59e0b"];
 
     return (
         <main>
@@ -68,7 +67,6 @@ export default function AdminDashboard({
                     <div className="p-6 space-y-8">
                         <h1 className="text-2xl font-bold">Admin Dashboard</h1>
 
-                        {/* Stat cards */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             <Card className="rounded-2xl shadow-sm">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -133,9 +131,7 @@ export default function AdminDashboard({
                             </Card>
                         </div>
 
-                        {/* Charts section */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            {/* Customer Pie Chart */}
                             <Card className="rounded-2xl shadow-sm">
                                 <CardHeader>
                                     <CardTitle>Customers Status</CardTitle>
@@ -176,7 +172,6 @@ export default function AdminDashboard({
                                 </CardContent>
                             </Card>
 
-                            {/* Bills Bar Chart */}
                             <Card className="rounded-2xl shadow-sm">
                                 <CardHeader>
                                     <CardTitle>Bills Status</CardTitle>
@@ -201,7 +196,6 @@ export default function AdminDashboard({
                             </Card>
                         </div>
 
-                        {/* Recent Meter Readings */}
                         <Card className="rounded-2xl shadow-sm">
                             <CardHeader>
                                 <CardTitle>Recent Meter Readings</CardTitle>

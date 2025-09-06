@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\SignupController;
+// use App\Http\Controllers\SignupController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserLogController;
@@ -13,9 +15,7 @@ use App\Http\Controllers\MeterReadingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnalyticsController;
-
-
-
+use Inertia\Inertia;
 
 Route::middleware(['web'])->group(function () {
     Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider'])->name('social.auth');
@@ -46,7 +46,15 @@ Route::middleware(['auth'])->group(function () {
         ]);
     })->name('fallbacks.unauthorized');
 
+    //DASHBOARD
     Route::get('/dashboard', [AnalyticsController::class, 'index'])->name('dashboard');
+    Route::post('/customer-codes', [AnalyticsController::class, 'addCustomerCode'])
+        ->name('customer.codes.store');
+
+    Route::delete('/customer-codes/{customer}', [AnalyticsController::class, 'removeCustomerCode'])
+        ->name('customer.codes.destroy');
+    //END OF DASHBOARD
+
 
     Route::get('/transactions', function () {
         return inertia('transactions/page', [
@@ -121,6 +129,12 @@ Route::get('/transactions', [TransactionController::class, 'index'])->name('tran
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.attempt');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+//SIGN UP
+Route::get('/signup', fn () => Inertia::render('auth/sign-up/page'))->name('signup');
+Route::post('/signup/verify-code', [SignupController::class, 'verifyCode']);
+Route::post('/signup', [SignupController::class, 'store']);
+
 
 Route::middleware('auth')->patch('/password', [LoginController::class, 'update']);
 

@@ -188,12 +188,13 @@ export function LoginForm({
                         </div>
                         <div className="mt-2 text-center text-sm text-slate-600">
                             <span> Don't have an account? </span>
-                            <a
-                                href="#"
+                            <button
+                                type="button"
+                                onClick={() => router.visit("/signup")}
                                 className="text-center text-sm text-slate-600 underline-offset-4 hover:underline"
                             >
                                 Sign up
-                            </a>
+                            </button>
                         </div>
                     </form>
                 </CardContent>
