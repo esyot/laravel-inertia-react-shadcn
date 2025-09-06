@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { usePage } from "@inertiajs/react";
 import toast, { Toaster } from "react-hot-toast";
-import type { PageProps } from "@/lib/interface/types";
+import type { FlashMessages } from "@/lib/interface/types";
 
 export default function ToastAlert() {
-    const { flash }: any = usePage().props;
+    const { flash } = usePage<{ flash?: FlashMessages }>().props;
 
     useEffect(() => {
         const commonOptions = {

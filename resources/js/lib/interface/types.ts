@@ -62,14 +62,7 @@ export type UserInformation = {
 };
 
 export type FlashMessages = {
-    success?: string;
-    error?: string;
-    delete?: string;
-};
-
-export type PageProps<T = Record<string, unknown>> = T & {
-    flash?: FlashMessages;
-    auth?: {
-        user: User | null;
-    };
+    success: string;
+    error: object;
+    delete: string;
 };
