@@ -16,7 +16,7 @@ import AlertNotification from "./components/alert-notification";
 
 type UsersProps = {
     users: Paginated<User>;
-    logs: Log[];
+    logs: Paginated<Log>;
 };
 
 export default function Users({ users, logs }: UsersProps) {
