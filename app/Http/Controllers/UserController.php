@@ -46,12 +46,12 @@ class UserController extends Controller
                     $uq->where('name', 'like', '%'.$request->name.'%')))
             ->when($request->filled('device'), fn ($q) =>
                 $q->where('device', 'like', '%'.$request->device.'%'))
-            ->get()
-            ->map(function ($log) {
+            ->paginate(10)
+            ->through(function ($log) {
                 return [
                     'name'      => $log->user->name,
                     'device'    => $log->device,
-                    'timestamp' => $log->created_at->format('Y-m-d H:i:s'),
+                    'timestamp' => $log->created_at->format('M d, Y h:i A'),
                 ];
             });
 
