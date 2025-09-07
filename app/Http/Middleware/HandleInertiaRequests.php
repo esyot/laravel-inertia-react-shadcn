@@ -41,10 +41,10 @@ class HandleInertiaRequests extends Middleware
             'errors' => fn() => $request->session()->get('errors')
                 ? $request->session()->get('errors')->getBag('default')->getMessages()
                 : (object) [],
-            'flash' => [
-                'success' => fn () => $request->hasSession() ? $request->session()->get('success') : null,
-                'error'   => fn () => $request->hasSession() ? $request->session()->get('error') : null,
-                'delete'  => fn () => $request->hasSession() ? $request->session()->get('delete') : null,
+           'flash' => [
+                'success' => fn() => session('success'),
+                'error'   => fn() => session('error'),
+                'delete'  => fn() => session('delete'),
             ],
             'auth' => [
                 'user' => fn () => $request->user()
