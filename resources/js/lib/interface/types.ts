@@ -60,3 +60,9 @@ export type UserInformation = {
     created_at: string;
     updated_at: string;
 };
+
+export type FlashMessages = {
+    success: string;
+    error: object;
+    delete: string;
+};

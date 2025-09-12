@@ -19,6 +19,8 @@ import ProfilePage from "../pages/profile/profile-popover";
 import { User } from "@/lib/interface/types";
 import { useState, useEffect } from "react";
 import ChangePasswordDialog from "@/pages/login/components/change-password-dialog";
+import { Toaster } from "react-hot-toast";
+import ToastAlert from "@/components/composables/toast-alert";
 
 interface PageProps {
     children: ReactNode;
@@ -106,6 +108,8 @@ export default function Layout({ children }: PageProps) {
                             <ProfilePage />
                         </div>
                     </header>
+                    <ToastAlert />
+                    <Toaster position="top-right" reverseOrder={false} />
                     <section className="bg-white rounded-tl-3xl overflow-y-hidden h-[calc(100vh-8.5vh)] shadow-md">
                         {children}
 

@@ -128,7 +128,7 @@ class MeterReadingController extends Controller
         $reading = MeterReading::findOrFail($id);
         $reading->delete();
 
-        return to_route('meters.page')->with('delete', 'User created successfully!');
+        return to_route('meters.page')->with('delete', 'User deleted successfully!');
     }
 
     public function customerMeter(Request $request, $customerId)

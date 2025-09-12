@@ -28,7 +28,7 @@ Route::get('/log-out', function () {
 
     Auth::logout();
 
-    return redirect('/');
+    return redirect('/')->with('success','Logout Successfully.');
 });
 
 //Landing page
