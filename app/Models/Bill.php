@@ -27,6 +27,11 @@ class Bill extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+    public function transaction()
+    {
+        return $this->hasOne(Transaction::class);
+    }
+
 
 
     public function getAmountDueAttribute($value)
