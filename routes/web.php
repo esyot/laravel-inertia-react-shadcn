@@ -15,6 +15,7 @@ use App\Http\Controllers\MeterReadingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\POSController;
 use Inertia\Inertia;
 
 Route::middleware(['web'])->group(function () {
@@ -71,6 +72,9 @@ Route::middleware(['auth'])->group(function () {
         ]);
     });
 
+    Route::get('/pos', [POSController::class, 'index'])->name('pos.page');
+    Route::get('/pos/{code}', [POSController::class, 'show'])->name('pos.show');
+    Route::post('/pos/store/{billId}', [POSController::class, 'store'])->name('pos.store');
 
 
     Route::get('/users', [UserController::class, 'index'])->name('users.page');
@@ -164,10 +168,3 @@ Route::get('/api/customers/{customer}/meter-readings', [MeterReadingController::
     ->name('api.customers.meter-readings');
 
 
-
-
-//POS page
-Route::get('/pos', function () {
-    return inertia('pos/page', [
-    ]);
-});
