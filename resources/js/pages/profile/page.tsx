@@ -9,7 +9,7 @@ export default function ProfileAccount({ user }: any) {
     return (
         <main>
             <Layout>
-                <SectionContent header={false}>
+                <SectionContent header={false} className="space-y-4">
                     <ProfileHeader user={user} />
                     <ProfileContent user={user} />
                 </SectionContent>

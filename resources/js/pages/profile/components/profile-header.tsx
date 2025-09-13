@@ -38,36 +38,39 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                             variant="outline"
                             className="absolute -right-2 -bottom-2 h-8 w-8 rounded-full"
                         >
-                            <Camera />
+                            <Camera className="size-4" />
                         </Button>
                     </div>
                     <div className="flex-1 space-y-2">
                         <div className="flex flex-col gap-2 md:flex-row md:items-center">
-                            <h1 className="text-2xl font-bold">{user.name}</h1>
+                            <h1 className="text-2xl font-bold text-foreground">
+                                {user.name}
+                            </h1>
                             <Badge variant="secondary">
                                 {user.role || "Member"}
                             </Badge>
                         </div>
-                        <p className="text-black">
+
+                        <p className="text-muted-foreground">
                             {user.address || "No address provided"}
                         </p>
-                        <div className="text-black flex flex-wrap gap-4 text-sm">
+
+                        <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                             <div className="flex items-center gap-1">
-                                <Mail className="size-4" />
-                                {user.email}
+                                <Mail className="size-4" /> {user.email}
                             </div>
                             <div className="flex items-center gap-1">
-                                <MapPin className="size-4" />
+                                <MapPin className="size-4" />{" "}
                                 {user.address || "Unknown"}
                             </div>
                             <div className="flex items-center gap-1">
-                                <Calendar className="size-4" />
-                                Joined{" "}
+                                <Calendar className="size-4" /> Joined{" "}
                                 {new Date(user.created_at).toLocaleDateString()}
                             </div>
                         </div>
                     </div>
-                    <Button variant="default">Edit Profile</Button>
+
+                    <Button>Edit Profile</Button>
                 </div>
             </CardContent>
         </Card>

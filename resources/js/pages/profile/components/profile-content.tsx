@@ -35,10 +35,12 @@ export default function ProfileContent({ user }: ProfileContentProps) {
             </TabsList>
 
             <TabsContent value="personal" className="space-y-6">
-                <Card>
+                <Card className="bg-card border">
                     <CardHeader>
-                        <CardTitle>Personal Information</CardTitle>
-                        <CardDescription>
+                        <CardTitle className="text-foreground">
+                            Personal Information
+                        </CardTitle>
+                        <CardDescription className="text-muted-foreground">
                             Update your personal details and profile
                             information.
                         </CardDescription>
@@ -79,6 +81,7 @@ export default function ProfileContent({ user }: ProfileContentProps) {
                                 />
                             </div>
                         </div>
+
                         <div className="space-y-2">
                             <Label htmlFor="bio">Bio</Label>
                             <Textarea
@@ -88,6 +91,7 @@ export default function ProfileContent({ user }: ProfileContentProps) {
                                 rows={4}
                             />
                         </div>
+
                         <div className="space-y-2">
                             <Label htmlFor="location">Location</Label>
                             <Input
