@@ -40,7 +40,7 @@ export default function ProfileButton() {
                         <AvatarImage src={user?.img} />
                         <AvatarFallback className="bg-gray-300 shadow-md">
                             <svg
-                                className="w-10 h-10 text-black"
+                                className="w-8 h-8 text-black"
                                 fill="none"
                                 stroke="currentColor"
                                 strokeWidth="2"

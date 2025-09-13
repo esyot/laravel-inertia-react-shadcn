@@ -80,14 +80,17 @@ export default function PayPopover({ billId }: { billId: number }) {
                     value={form.amount}
                     onChange={(e) => handleChange("amount", e.target.value)}
                 />
-                <Input
-                    label="Reference Number"
-                    placeholder="Enter reference"
-                    value={form.reference_no}
-                    onChange={(e) =>
-                        handleChange("reference_no", e.target.value)
-                    }
-                />
+
+                {form.payment_method != "cash" && (
+                    <Input
+                        label="Reference Number"
+                        placeholder="Enter reference"
+                        value={form.reference_no}
+                        onChange={(e) =>
+                            handleChange("reference_no", e.target.value)
+                        }
+                    />
+                )}
 
                 <div className="mt-2 grid grid-cols-2 gap-2">
                     <Button

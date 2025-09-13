@@ -17,10 +17,7 @@ type ProfileHeaderProps = {
 
 export default function ProfileHeader({ user }: ProfileHeaderProps) {
     return (
-        <Card
-            className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 
-        "
-        >
+        <Card className="rounded-b-none">
             <CardContent className="p-6">
                 <div className="flex flex-col items-start gap-6 md:flex-row md:items-center">
                     <div className="relative">

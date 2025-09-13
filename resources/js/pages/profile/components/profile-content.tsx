@@ -1,5 +1,3 @@
-import { Shield, Key, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -9,11 +7,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
 
 type ProfileContentProps = {
     user: {
@@ -31,15 +26,14 @@ type ProfileContentProps = {
 
 export default function ProfileContent({ user }: ProfileContentProps) {
     return (
-        <Tabs defaultValue="personal" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4">
+        <Tabs defaultValue="personal">
+            <TabsList className="border bg-gray-100 border-strong border-t-0 shadow-md rounded-t-none grid w-full grid-cols-4">
                 <TabsTrigger value="personal">Personal</TabsTrigger>
                 <TabsTrigger value="account">Account</TabsTrigger>
                 <TabsTrigger value="security">Security</TabsTrigger>
                 <TabsTrigger value="notifications">Bill History</TabsTrigger>
             </TabsList>
 
-            {/* Personal Information */}
             <TabsContent value="personal" className="space-y-6">
                 <Card>
                     <CardHeader>
@@ -104,8 +98,6 @@ export default function ProfileContent({ user }: ProfileContentProps) {
                     </CardContent>
                 </Card>
             </TabsContent>
-
-            {/* The other tabs (account, security, notifications) can also use user props */}
         </Tabs>
     );
 }

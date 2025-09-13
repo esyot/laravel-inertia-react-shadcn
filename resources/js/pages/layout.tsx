@@ -114,7 +114,13 @@ export default function Layout({ children }: PageProps) {
                     <section className="bg-white rounded-tl-3xl overflow-y-hidden h-[calc(100vh-8.5vh)] shadow-md">
                         {children}
 
-                        {user && <ChangePasswordDialog user={user} />}
+                        {user && (
+                            <ChangePasswordDialog
+                                user={user}
+                                open={open}
+                                onOpenChange={setOpen}
+                            />
+                        )}
                     </section>
                 </main>
             </SidebarInset>

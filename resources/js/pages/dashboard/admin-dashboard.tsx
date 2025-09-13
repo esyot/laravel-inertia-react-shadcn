@@ -16,6 +16,7 @@ import {
     Cell,
     Legend,
 } from "recharts";
+import SectionHeader from "@/components/section-header";
 
 type AnalyticsProps = {
     customers: {
@@ -63,10 +64,11 @@ export default function AdminDashboard({
     return (
         <main>
             <Layout>
-                <SectionContent header={false}>
+                <SectionHeader>
+                    <h1 className="font-semibold">Dashboard</h1>
+                </SectionHeader>
+                <SectionContent>
                     <div className="p-6 space-y-8">
-                        <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             <Card className="rounded-2xl shadow-sm">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

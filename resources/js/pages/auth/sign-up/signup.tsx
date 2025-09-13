@@ -68,7 +68,7 @@ export function SignupForm({
                         variant="ghost"
                         size="sm"
                         className="w-fit -ml-2 -mt-2 cursor-pointer"
-                        onClick={() => router.visit("/signup")}
+                        onClick={() => router.visit("/login")}
                     >
                         <ArrowLeft className="h-4 w-4" /> Back
                     </Button>

@@ -20,6 +20,8 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import PayPopover from "./components/pay-popover";
+import SectionHeader from "@/components/section-header";
+import { Badge } from "@/components/ui/badge";
 
 interface MeterReading {
     id: number;
@@ -29,6 +31,7 @@ interface MeterReading {
     curr_meter_value: number;
     consumption?: number;
     created_at: string;
+    bill?: Bill;
 }
 
 interface Bill {
@@ -210,20 +213,22 @@ export default function Customer({
     return (
         <main>
             <Layout>
+                <SectionHeader>
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="w-fit -ml-2 cursor-pointer"
+                        onClick={() => window.history.back()}
+                    >
+                        <ArrowLeft className="mr-2 h-4 w-4" /> Back
+                    </Button>
+                </SectionHeader>
                 <SectionContent header={false}>
-                    <div className="max-w-6xl mx-auto">
+                    <div>
                         <div className="w-full">
-                            <Button
-                                type="button"
-                                variant="ghost"
-                                size="sm"
-                                className="w-fit -ml-2 -mt-2 cursor-pointer"
-                                onClick={() => window.history.back()}
-                            >
-                                <ArrowLeft className="mr-2 h-4 w-4" /> Back
-                            </Button>
                             <div>
-                                <h1 className="text-3xl font-semibold mb-6">
+                                <h1 className="text-3xl font-semibold ">
                                     {customer.name} — {customer.code}
                                 </h1>
                             </div>
@@ -239,7 +244,16 @@ export default function Customer({
                                             : "text-green-600"
                                     }`}
                                 >
-                                    Account Status: {customer.status}
+                                    Status:
+                                    <Badge
+                                        className={
+                                            customer.status === "Terminated"
+                                                ? "ml-2 bg-red-100 text-red-800"
+                                                : "ml-2 bg-green-100 text-green-800"
+                                        }
+                                    >
+                                        {customer.status}
+                                    </Badge>
                                 </p>
                             </div>
                         </div>

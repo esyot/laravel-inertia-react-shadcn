@@ -14,13 +14,13 @@ import { User } from "@/lib/interface/types";
 
 type ChangePasswordProps = {
     user: User;
-    open: boolean;
+    open?: boolean;
     onOpenChange: (open: boolean) => void;
 };
 
 export default function ChangePasswordDialog({
     user,
-    open,
+    open = false,
     onOpenChange,
 }: ChangePasswordProps) {
     const { data, setData, patch, processing, errors, reset } = useForm({

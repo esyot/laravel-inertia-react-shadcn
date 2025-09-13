@@ -24,7 +24,7 @@ export default function CustomersPage({ customers }: CustomerProps) {
                     <Filter />
                 </div>
             </SectionHeader>
-            <SectionContent header={true}>
+            <SectionContent>
                 <CustomerTable customers={customers} />
             </SectionContent>
         </Layout>

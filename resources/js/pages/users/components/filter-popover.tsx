@@ -61,8 +61,10 @@ export default function Filter({ filters }: any) {
         <>
             <div className="flex items-center gap-4">
                 <Popover>
-                    <PopoverTrigger className="hover:bg-gray-100 p-2 cursor-pointer rounded border">
-                        <ListFilter size={16} />
+                    <PopoverTrigger asChild>
+                        <Button variant="ghost">
+                            <ListFilter size={16} />
+                        </Button>
                     </PopoverTrigger>
                     <PopoverContent className="space-y-4 w-72">
                         <h1 className="font-semibold text-sm">

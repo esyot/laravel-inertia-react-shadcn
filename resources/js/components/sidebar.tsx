@@ -1,23 +1,17 @@
 "use client";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover";
 
 import {
     LayoutDashboard,
     Users,
     HandCoins,
     CircleGauge,
-    ChevronUp,
+    DollarSign,
+    PersonStanding,
 } from "lucide-react";
 
 import {
     Sidebar,
     SidebarContent,
-    SidebarFooter,
     SidebarHeader,
     SidebarRail,
 } from "@/components/ui/sidebar";
@@ -25,7 +19,6 @@ import {
 import { Link, usePage } from "@inertiajs/react";
 
 import { cn } from "@/lib/utils";
-import { Button } from "./ui/button";
 
 const menuItems = [
     {
@@ -35,10 +28,10 @@ const menuItems = [
         role: "admin",
     },
     { name: "Users", link: "/users", icon: Users },
-    { name: "Transactions", link: "/transactions", icon: HandCoins },
     { name: "Meters", link: "/meters", icon: CircleGauge },
-    { name: "Customers", link: "/customers", icon: Users },
-    { name: "POS", link: "/pos", icon: Users },
+    { name: "Customers", link: "/customers", icon: PersonStanding },
+    { name: "POS", link: "/pos", icon: DollarSign },
+    { name: "Transactions", link: "/transactions", icon: HandCoins },
 ];
 
 export function AppSidebar() {
