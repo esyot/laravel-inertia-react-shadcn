@@ -145,7 +145,7 @@ export default function Filter({ filters }: FilterProps) {
                                 }
                                 className="appearance-none cursor-pointer"
                                 style={{
-                                    background: `linear-gradient(to right, red ${(form.prev_meter_value / 10000) * 100}%, #f7f9fa ${(form.prev_meter_value / 10000) * 100}%)`,
+                                    background: `linear-gradient(to right, #f0efe9 ${(form.prev_meter_value / 10000) * 100}%, #f7f9fa ${(form.prev_meter_value / 10000) * 100}%)`,
                                 }}
                             />
                         </div>
@@ -165,9 +165,9 @@ export default function Filter({ filters }: FilterProps) {
                                         e.target.value,
                                     )
                                 }
-                                className="cursor-pointer appearance-none "
+                                className="cursor-pointer appearance-none"
                                 style={{
-                                    background: `linear-gradient(to right, red ${(form.curr_meter_value / 10000) * 100}%, #f7f9fa ${(form.curr_meter_value / 10000) * 100}%)`,
+                                    background: `linear-gradient(to right, #f0efe9 ${(form.curr_meter_value / 10000) * 100}%, #f7f9fa ${(form.curr_meter_value / 10000) * 100}%)`,
                                 }}
                             />
                         </div>

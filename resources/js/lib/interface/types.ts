@@ -61,7 +61,7 @@ export interface UserInformation {
 }
 
 export interface FlashMessages {
-    success: string;
-    error: Object;
-    delete: string;
+    success?: string;
+    error?: string;
+    delete?: string;
 }
