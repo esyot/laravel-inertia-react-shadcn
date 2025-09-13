@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { usePage } from "@inertiajs/react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import type { FlashMessages } from "@/lib/interface/types";
 
 export default function ToastAlert() {
@@ -10,43 +10,21 @@ export default function ToastAlert() {
         const commonOptions = {
             duration: 4000,
             style: {
-                borderRadius: "12px",
-                padding: "16px 20px",
-                fontSize: "16px",
-                color: "#fff",
-                boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
+                borderRadius: "8px",
+                padding: "14px 18px",
+                fontSize: "15px",
+                color: "#333",
+                background: "#fff",
+                border: "1px solid #e5e7eb",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
             },
         };
 
-        if (flash?.success)
-            toast.success(`🎉 ${flash.success}`, {
-                ...commonOptions,
-                icon: "✅",
-                style: {
-                    ...commonOptions.style,
-                    background: "linear-gradient(135deg, #43e97b, #38f9d7)",
-                },
-            });
+        if (flash?.success) toast.success(flash.success, commonOptions);
 
-        if (flash?.error)
-            toast.error(`⚠️ ${flash.error}`, {
-                ...commonOptions,
-                icon: "❌",
-                style: {
-                    ...commonOptions.style,
-                    background: "linear-gradient(135deg, #f85032, #e73827)",
-                },
-            });
+        if (flash?.error) toast.error(flash.error, commonOptions);
 
-        if (flash?.delete)
-            toast.error(` ${flash.delete}`, {
-                ...commonOptions,
-                icon: "🗑️",
-                style: {
-                    ...commonOptions.style,
-                    background: "linear-gradient(135deg, #ff416c, #ff4b2b)",
-                },
-            });
+        if (flash?.delete) toast.error(flash.delete, commonOptions);
     }, [flash]);
 
     return null;
