@@ -21,13 +21,14 @@ export default function DeleteDialog({ user, onDelete }: DeteleDialogProps) {
         <>
             <AlertDialog>
                 <AlertDialogTrigger asChild>
-                    <Button
-                        variant="destructive"
-                        className="cursor-pointer "
-                        size="sm"
+                    <button
+                        className="px-3 py-2 text-sm font-medium text-red-600 rounded-md 
+                    hover:bg-red-100 hover:text-red-700 
+                    focus:outline-none focus:ring-2 focus:ring-red-200 
+                    transition-colors duration-200"
                     >
                         Delete
-                    </Button>
+                    </button>
                 </AlertDialogTrigger>
 
                 <AlertDialogContent>

@@ -15,9 +15,15 @@ export default function ViewDialog({ user }: ViewDialogProps) {
     return (
         <>
             <Dialog>
-                <DialogTrigger className="cursor-pointer text-sm font-semibold text-gray-700">
+                <DialogTrigger
+                    className="px-3 py-2 text-sm font-medium text-blue-600 rounded-md 
+             hover:bg-blue-100 hover:text-blue-700 
+             focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 
+             transition-colors duration-200"
+                >
                     View
                 </DialogTrigger>
+
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>User Details</DialogTitle>
@@ -35,8 +41,10 @@ export default function ViewDialog({ user }: ViewDialogProps) {
                             {user.email}
                         </p>
                         <p>
-                            <span className="font-semibold">Role:</span>{" "}
-                            {user.role}
+                            <span className="font-semibold">Roles:</span>{" "}
+                            {user.roles.length > 0
+                                ? user.roles.join(", ")
+                                : "No roles assigned"}
                         </p>
                         <p>
                             <span className="font-semibold">Social ID:</span>{" "}
