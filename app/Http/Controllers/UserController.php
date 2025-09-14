@@ -44,12 +44,15 @@ class UserController extends Controller
             ->when($request->filled('name'), fn ($q) =>
                 $q->whereHas('user', fn ($uq) =>
                     $uq->where('name', 'like', '%'.$request->name.'%')))
+            ->when($request->filled('email'), fn ($q) =>
+                $q->where('email', 'like', '%'.$request->email.'%'))
             ->when($request->filled('device'), fn ($q) =>
                 $q->where('device', 'like', '%'.$request->device.'%'))
             ->paginate(10)
             ->through(function ($log) {
                 return [
                     'name'      => $log->user->name,
+                    'email'    => $log->user->email,
                     'device'    => $log->device,
                     'timestamp' => $log->created_at->format('M d, Y h:i A'),
                 ];

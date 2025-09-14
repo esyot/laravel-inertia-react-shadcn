@@ -26,8 +26,9 @@ export function UserLogsTable({ logs }: UserLogsTableProps) {
 
     return (
         <div className="border-strong overflow-hidden rounded-xl border">
-            <div className="bg-sand-dugout text-weak border-strong hidden grid-cols-3 border-b px-5 pt-4 pb-3 text-sm font-medium md:grid">
+            <div className="bg-sand-dugout text-weak border-strong hidden grid-cols-4 border-b px-5 pt-4 pb-3 text-sm font-medium md:grid">
                 <div>Name</div>
+                <div>Email</div>
                 <div>Device</div>
                 <div className="flex justify-end mr-10">Timestamp</div>
             </div>
@@ -39,11 +40,14 @@ export function UserLogsTable({ logs }: UserLogsTableProps) {
                             key={log.id}
                             className="px-6 py-4 hover:bg-gray-50"
                         >
-                            <div className="grid gap-3 md:grid-cols-3 md:items-center">
+                            <div className="grid gap-3 md:grid-cols-4 md:items-center">
                                 <div className="flex items-center justify-between">
                                     <span className="text-sm font-medium text-[#222222] truncate">
                                         {log.name}
                                     </span>
+                                </div>
+                                <div className="text-xs text-gray-600 font-mono">
+                                    {log.email}
                                 </div>
                                 <div className="text-xs text-gray-600 font-mono">
                                     {log.device}
