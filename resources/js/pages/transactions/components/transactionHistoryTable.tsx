@@ -58,8 +58,9 @@ export function TransactionTable({ customers }: UserTableProps) {
 
     return (
         <div className="border-strong overflow-hidden rounded-xl border">
-            <div className="bg-sand-dugout text-weak border-strong hidden grid-cols-3 border-b px-5 pt-4 pb-3 text-sm font-medium md:grid">
+            <div className="bg-sand-dugout text-weak border-strong hidden grid-cols-4  border-b px-5 pt-4 pb-3 text-sm font-medium md:grid">
                 <div>Name</div>
+                <div>Amount Paid</div>
                 <div>Date</div>
                 <div className="flex justify-end mr-16">Action</div>
             </div>
@@ -71,14 +72,21 @@ export function TransactionTable({ customers }: UserTableProps) {
                             key={user.id}
                             className="px-6 py-4 hover:bg-gray-50"
                         >
-                            <div className="grid gap-3 md:grid-cols-3 md:items-center">
+                            <div className="grid gap-3 md:grid-cols-4 md:items-center">
                                 <div className="flex items-center gap-3">
                                     <span className="text-sm font-medium text-[#222222]">
                                         {user.name}
                                     </span>
                                 </div>
+                                <div className="flex items-center gap-3">
+                                    <span className="text-sm font-semibold text-[#222222]">
+                                        {user.last_paid_bill
+                                            ? `₱${Number(user.last_paid_bill.amount_due).toFixed(2)}`
+                                            : "—"}
+                                    </span>
+                                </div>
                                 <div className="flex items-center gap-2 text-gray-700">
-                                    <span className="text-sm font-medium text-[#222222] capitalize">
+                                    <span className="text-sm text-[#222222] capitalize">
                                         {formatDate(user.created_at)}
                                     </span>
                                 </div>

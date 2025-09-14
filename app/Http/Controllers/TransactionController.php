@@ -11,7 +11,8 @@ class TransactionController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Customer::query();
+        $query = Customer::query()
+            ->with('lastPaidBill');
 
         if ($request->filled('name'))
         {
