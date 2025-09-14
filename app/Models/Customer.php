@@ -22,6 +22,14 @@ class Customer extends Model
         return $this->hasMany(Bill::class);
     }
 
+    public function lastPaidBill()
+    {
+        return $this->hasOne(Bill::class)
+            ->where('status', 'Paid')
+            ->latest('payment_date');
+    }
+
+    
     public function meterReadings()
     {
         return $this->hasMany(MeterReading::class);
