@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 
 export interface User {
+    roles: string[];
     id: number;
     name: string;
     email: string;

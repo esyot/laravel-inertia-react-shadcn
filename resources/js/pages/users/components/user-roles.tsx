@@ -68,9 +68,14 @@ export function UserRoleDialog({ user }: UserRoleDialogProps) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline" size="sm">
-                    Manage Role
-                </Button>
+                <button
+                    className="px-3 py-2 text-sm font-medium text-gray-600 rounded-md 
+                    hover:bg-gray-100 hover:text-gray-700 
+                    focus:outline-none focus:ring-2 focus:ring-gray-200 
+                    transition-colors duration-200"
+                >
+                    Manage Roles
+                </button>
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-[425px]">
