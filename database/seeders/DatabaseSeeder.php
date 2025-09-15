@@ -44,6 +44,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(CustomerSeeder::class);
         $this->call(MeterReadingSeeder::class);
-        $this->call(UserLogsSeeder::class);
+
     }
 }
