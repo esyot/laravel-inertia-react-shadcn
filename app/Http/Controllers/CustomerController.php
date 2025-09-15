@@ -96,7 +96,11 @@ class CustomerController extends Controller
     }
     public function updateStatus(Request $request, $id)
     {
-        $customer = Customer::findOrFail($id);
+        $customer = Customer::find($id);
+
+        if(!$customer){
+            return back()->withErrors(['customer'=> 'Customer not found!']);
+        }
 
         $data = $request->validate([
             'status' => 'required|in:Active,Terminated',
