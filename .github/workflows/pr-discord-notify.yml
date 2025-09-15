@@ -10,19 +10,15 @@
     PR_MERGER: ${{ github.event.pull_request.merged_by.login || '' }}
     GITHUB_EVENT_ACTION: ${{ github.event.action }}
   run: |
-    echo "DISCORD_WEBHOOK is: $DISCORD_WEBHOOK"  # DEBUG ONLY, remove this after verifying
-
+    # Construct the message based on whether the PR was merged or just updated
     if [ "${PR_MERGED}" = "true" ]; then
       MESSAGE="✅ Pull Request #${PR_NUMBER} successfully merged by ${PR_MERGER}:\n**${PR_TITLE}**\n${PR_URL}"
     else
       MESSAGE="📢 Pull Request #${PR_NUMBER} ${GITHUB_EVENT_ACTION} by ${PR_AUTHOR}:\n**${PR_TITLE}**\n${PR_URL}"
     fi
 
-    PAYLOAD=$( jq -n \
-      --arg content "$MESSAGE" \
-      '{content: $content}' )
+    # Prepare JSON payload using jq
+    PAYLOAD=$( jq -n --arg content "$MESSAGE" '{content: $content}' )
 
-    curl -H "Content-Type: application/json" \
-         -X POST \
-         -d "$PAYLOAD" \
-         "$DISCORD_WEBHOOK"
+    # Send POST request to Discord webhook
+    curl -s -H "Content-Type: application/json" -X POST -d "$PAYLOAD" "$DISCORD_WEBHOOK"
