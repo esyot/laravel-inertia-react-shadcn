@@ -20,7 +20,7 @@ jobs:
             • Title: ${{ github.event.pull_request.title }}
             • PR: ${{ github.event.pull_request.html_url }}
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_SECRET }}
 
   notify-updated-pr:
     if: github.event.action == 'synchronize'
@@ -35,7 +35,7 @@ jobs:
             • Title: ${{ github.event.pull_request.title }}
             • PR: ${{ github.event.pull_request.html_url }}
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_SECRET }}
 
   notify-merged-pr:
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'staging'
