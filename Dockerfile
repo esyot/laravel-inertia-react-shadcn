@@ -1,9 +1,10 @@
-# Use the official PHP 8.2 image with FPM
+# Use PHP 8.2 with FPM
 FROM php:8.2-fpm
 
 # Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
     nginx \
+    supervisor \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
@@ -14,6 +15,8 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     libzip-dev \
+    nodejs \
+    npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql zip
 
@@ -26,17 +29,23 @@ WORKDIR /var/www
 # Copy project files
 COPY . .
 
-# Install Laravel dependencies
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www && chmod -R 755 /var/www/storage
+# Install Node dependencies and build assets
+RUN npm install && npm run build
 
-# Copy Nginx configuration
+# Set permissions
+RUN chown -R www-data:www-data /var/www && chmod -R 755 /var/www/storage /var/www/bootstrap/cache
+
+# Copy custom Nginx config
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
-# Expose port
+# Copy Supervisor config
+COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Expose port 80
 EXPOSE 80
 
-# Start services
-CMD service nginx start && php-fpm
+# Start both Nginx and PHP-FPM
+CMD ["/usr/bin/supervisord"]
