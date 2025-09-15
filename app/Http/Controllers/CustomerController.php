@@ -14,23 +14,19 @@ class CustomerController extends Controller
     {
         $query = Customer::query();
 
-        if ($request->filled('code'))
-        {
+        if ($request->filled('code')) {
             $query->where('code', 'like', '%' . $request->code . '%');
         }
 
-        if ($request->filled('name'))
-        {
+        if ($request->filled('name')) {
             $query->where('name', 'like', '%' . $request->name . '%');
         }
 
-        if ($request->filled('municipal'))
-        {
+        if ($request->filled('municipal')) {
             $query->where('municipal', 'like', '%' . $request->municipal . '%');
         }
 
-        if ($request->filled('barangay'))
-        {
+        if ($request->filled('barangay')) {
             $query->where('barangay', 'like', '%' . $request->barangay . '%');
         }
 
@@ -80,8 +76,7 @@ class CustomerController extends Controller
             ])
             ->first();
 
-        if (!$customer)
-        {
+        if (!$customer) {
             return redirect()->route('customers.index')->with('error', 'Customer not found');
         }
 
@@ -91,6 +86,7 @@ class CustomerController extends Controller
         $bills = Bill::where('customer_id', $customer->id)
             ->get();
 
+
         return Inertia::render('customers/customer', [
             'customer' => $customer,
             'isAdmin' => $isAdmin,
@@ -98,5 +94,16 @@ class CustomerController extends Controller
             'bills' => $bills
         ]);
     }
+    public function updateStatus(Request $request, $id)
+    {
+        $customer = Customer::findOrFail($id);
 
+        $data = $request->validate([
+            'status' => 'required|in:Active,Terminated',
+        ]);
+
+        $customer->update($data);
+
+        return to_route('customers.show', $customer->code)->with('success', 'Customer status updated successfully!');
+    }
 }

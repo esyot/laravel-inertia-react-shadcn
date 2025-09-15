@@ -99,6 +99,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/customers', [CustomerController::class, 'index']);
 
 
+
 });
 
 
@@ -120,9 +121,11 @@ Route::get('/customers/search', function (Request $request) {
         ->get();
 });
 
-Route::get('/customers/{code}', [CustomerController::class, 'show']);
+
 Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
 Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+Route::get('/customers/{code}', [CustomerController::class, 'show'])->name('customers.show');
+Route::put('/customers/{id}/status', [CustomerController::class, 'updateStatus'])->name('customers.updateStatus');
 
 Route::get('/login', function () {
     return inertia('login/page', [

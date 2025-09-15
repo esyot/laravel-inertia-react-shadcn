@@ -1,4 +1,5 @@
 import AppLayout from "@/layouts/public-layout";
+import Confirmation from "@/components/composables/confirmation";
 import Layout from "@/layouts/private-layout";
 import SectionContent from "@/components/section-content";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -11,6 +12,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { useRef, useState, useEffect, useMemo, useCallback } from "react";
+import { router } from "@inertiajs/react";
 import Button from "@/components/composables/button";
 import { ArrowLeft, ArrowUpDown } from "lucide-react";
 import {
@@ -277,6 +279,17 @@ export default function Customer({
                 return "text-gray-600";
         }
     }, []);
+    const [open, setOpen] = useState(false);
+
+    // Working part
+    const handleStatusClick = (status: string, customerId: number) => {
+        const newStatus = status === "Active" ? "Terminated" : "Active";
+
+        router.put(`/customers/${customerId}/status`, {
+            status: newStatus,
+        });
+        setOpen(false);
+    };
 
     const calculatePenaltyAndTotal = useCallback((bill: Bill) => {
         const amount = parseFloat(bill.amount_due) || 0;
@@ -487,7 +500,10 @@ export default function Customer({
                         }`}
                     >
                         Status:
-                        <Badge
+                        {/* Working part */}
+                        <Button
+                            variant="destructive"
+                            onClick={() => setOpen(true)}
                             className={
                                 customer.status === "Terminated"
                                     ? "ml-2 bg-red-100 text-red-800"
@@ -495,7 +511,30 @@ export default function Customer({
                             }
                         >
                             {customer.status}
-                        </Badge>
+                        </Button>
+                        <Confirmation
+                            open={open}
+                            title={
+                                customer.status === "Active"
+                                    ? "Deactivate Customer"
+                                    : "Activate Customer"
+                            }
+                            message={
+                                customer.status === "Active"
+                                    ? "Are you sure you want to deactivate this customer?"
+                                    : "Are you sure you want to activate this customer?"
+                            }
+                            confirmText={
+                                customer.status === "Active"
+                                    ? "Deactivate"
+                                    : "Activate"
+                            }
+                            cancelText="Cancel"
+                            onConfirm={() =>
+                                handleStatusClick(customer.status, customer.id)
+                            }
+                            onCancel={() => setOpen(false)}
+                        />
                     </p>
                 </div>
             </div>
