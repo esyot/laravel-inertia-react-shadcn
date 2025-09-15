@@ -1,5 +1,5 @@
 import { router, usePage } from "@inertiajs/react";
-
+import { useState } from "react";
 import Layout from "@/layouts/private-layout";
 import { UserTable } from "./components/user-list";
 import { UserLogsTable } from "./components/user-logs";
@@ -20,6 +20,7 @@ type UsersProps = {
 };
 
 export default function Users({ users, logs }: UsersProps) {
+    const [tab, setTab] = useState("users");
     const handleView = (user: User) => {
         alert(`Viewing ${user.name}`);
     };
@@ -32,7 +33,7 @@ export default function Users({ users, logs }: UsersProps) {
         <div>
             <main>
                 <Layout>
-                    <Tabs defaultValue="users" className="w-full">
+                    <Tabs value={tab} onValueChange={setTab} className="w-full">
                         <SectionHeader className="flex items-center justify-between">
                             <TabsList className="rounded-3xl gap-2 shadow-inner">
                                 <TabsTrigger
@@ -49,7 +50,7 @@ export default function Users({ users, logs }: UsersProps) {
                                 </TabsTrigger>
                             </TabsList>
                             <div className="flex gap-6 items-center">
-                                <Filter />
+                                <Filter filters={{}} tab={tab} />
                                 <AddUserDialog />
                             </div>
                         </SectionHeader>

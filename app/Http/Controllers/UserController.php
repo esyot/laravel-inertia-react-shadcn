@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $filters = $request->only([
-            'name', 'email', 'social_id', 'device', 'code',
+            'name', 'email', 'device', 'code',
         ]);
 
         $users = User::with('roles')
@@ -22,8 +22,6 @@ class UserController extends Controller
                 $q->where('name', 'like', '%'.$request->name.'%'))
             ->when($request->filled('email'), fn ($q) =>
                 $q->where('email', 'like', '%'.$request->email.'%'))
-            ->when($request->filled('social_id'), fn ($q) =>
-                $q->where('social_id', 'like', '%'.$request->social_id.'%'))
             ->when($request->filled('code') && Schema::hasColumn('users', 'code'), fn ($q) =>
                 $q->where('code', 'like', '%'.$request->code.'%'))
             ->orderBy('name', 'asc')
@@ -33,7 +31,6 @@ class UserController extends Controller
                     'id'         => $user->id,
                     'name'       => $user->name,
                     'email'      => $user->email,
-                    'social_id'  => $user->social_id ?: '',
                     'roles'      => $user->roles->pluck('name')->toArray(),
                     'created_at' => $user->created_at->format('M d, Y h:i A'),
                     'updated_at' => $user->updated_at->format('M d, Y h:i A'),

@@ -16,17 +16,16 @@ type FilterProps = {
         name?: string;
         email?: string;
         device?: string;
-        social_id?: string;
     };
+    tab: string;
 };
 
-export default function Filter({ filters }: any) {
+export default function Filter({ filters, tab }: any) {
     const [form, setForm] = useState({
         code: filters?.code || "",
         name: filters?.name || "",
         email: filters?.email || "",
         device: filters?.device || "",
-        social_id: filters?.social_id || "",
     });
 
     const handleChange = (key: string, value: any) => {
@@ -47,7 +46,6 @@ export default function Filter({ filters }: any) {
             name: "",
             email: "",
             device: "",
-            social_id: "",
         });
 
         router.get(
@@ -86,22 +84,16 @@ export default function Filter({ filters }: any) {
                                 handleChange("email", e.target.value)
                             }
                         />
-                        <Input
-                            label="Social ID"
-                            placeholder="Social ID"
-                            value={form.social_id}
-                            onChange={(e) =>
-                                handleChange("social_id", e.target.value)
-                            }
-                        />
-                        <Input
-                            label="Device"
-                            placeholder="Device"
-                            value={form.device}
-                            onChange={(e) =>
-                                handleChange("device", e.target.value)
-                            }
-                        />
+                        {tab !== "users" && (
+                            <Input
+                                label="Device"
+                                placeholder="Device"
+                                value={form.device}
+                                onChange={(e) =>
+                                    handleChange("device", e.target.value)
+                                }
+                            />
+                        )}
                         <div className="mt-2 grid grid-cols-2 gap-2">
                             <Button
                                 variant="outline"
