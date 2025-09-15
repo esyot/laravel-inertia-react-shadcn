@@ -56,7 +56,7 @@ class SocialiteController extends Controller
                 $user = User::create([
                     'img' => $filename,
                     'email' => $socialUser->getEmail() ?? Str::random(24),
-                    'username' => Str::random(24),
+                    'username' => $socialUser->getNickname() ?? Str::random(24),
                     'name' => $socialUser->getName(),
                     'password' => Hash::make(Str::random(24)),
                     'signup_method' => $provider,
