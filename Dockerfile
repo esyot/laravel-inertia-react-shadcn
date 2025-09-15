@@ -1,28 +1,42 @@
-# Use the official PHP image with FPM and Nginx support
+# Use the official PHP image with FPM
 FROM php:8.1-fpm
 
 # Install system dependencies and PHP extensions
-RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libfreetype6-dev zip git
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install gd pdo pdo_mysql
+RUN apt-get update && apt-get install -y \
+    nginx \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    zip \
+    git \
+    unzip \
+    curl \
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo pdo_mysql zip
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Set the working directory
+# Set working directory
 WORKDIR /var/www
 
-# Copy the project files into the container
+# Copy project files
 COPY . .
 
 # Install Laravel dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Copy the Nginx configuration
-COPY ./nginx/default.conf /etc/nginx/sites-available/default
+# Set permissions
+RUN chown -R www-data:www-data /var/www && chmod -R 755 /var/www/storage
 
-# Expose ports
+# Copy Nginx configuration
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+
+# Expose port 80
 EXPOSE 80
 
-# Start PHP-FPM and Nginx
+# Start services
 CMD service nginx start && php-fpm
