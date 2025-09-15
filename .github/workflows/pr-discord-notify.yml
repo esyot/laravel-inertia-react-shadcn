@@ -1,24 +1,41 @@
-- name: Send Discord notification
-  env:
-    DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
-    PR_TITLE: ${{ github.event.pull_request.title }}
-    PR_BODY: ${{ github.event.pull_request.body }}
-    PR_AUTHOR: ${{ github.event.pull_request.user.login }}
-    PR_URL: ${{ github.event.pull_request.html_url }}
-    PR_NUMBER: ${{ github.event.pull_request.number }}
-    PR_MERGED: ${{ github.event.pull_request.merged }}
-    PR_MERGER: ${{ github.event.pull_request.merged_by.login || '' }}
-    GITHUB_EVENT_ACTION: ${{ github.event.action }}
-  run: |
-    # Construct the message based on whether the PR was merged or just updated
-    if [ "${PR_MERGED}" = "true" ]; then
-      MESSAGE="✅ Pull Request #${PR_NUMBER} successfully merged by ${PR_MERGER}:\n**${PR_TITLE}**\n${PR_URL}"
-    else
-      MESSAGE="📢 Pull Request #${PR_NUMBER} ${GITHUB_EVENT_ACTION} by ${PR_AUTHOR}:\n**${PR_TITLE}**\n${PR_URL}"
-    fi
+name: Notify Discord on PR Events
 
-    # Prepare JSON payload using jq
-    PAYLOAD=$( jq -n --arg content "$MESSAGE" '{content: $content}' )
+on:
+  pull_request:
+    types: [opened, edited, synchronize, closed]
 
-    # Send POST request to Discord webhook
-    curl -s -H "Content-Type: application/json" -X POST -d "$PAYLOAD" "$DISCORD_WEBHOOK"
+jobs:
+  discord_notification:
+    runs-on: ubuntu-latest
+
+    # Run if PR merged OR PR event is NOT closed (to exclude closed & NOT merged)
+    if: github.event.pull_request.merged == true || github.event.action != 'closed'
+
+    steps:
+      - name: Send Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_MERGED: ${{ github.event.pull_request.merged }}
+          PR_MERGER: ${{ github.event.pull_request.merged_by.login || 'unknown' }}
+          GITHUB_EVENT_ACTION: ${{ github.event.action }}
+        run: |
+          if [ "${PR_MERGED}" = "true" ]; then
+            MESSAGE="✅ Pull Request #${PR_NUMBER} successfully merged by ${PR_MERGER}:\n**${PR_TITLE}**\n${PR_URL}"
+          else
+            MESSAGE="📢 Pull Request #${PR_NUMBER} ${GITHUB_EVENT_ACTION} by ${PR_AUTHOR}:\n**${PR_TITLE}**\n${PR_URL}"
+          fi
+
+          echo "Message to send:"
+          echo "$MESSAGE"
+
+          PAYLOAD=$( jq -n --arg content "$MESSAGE" '{content: $content}' )
+
+          echo "Payload JSON:"
+          echo "$PAYLOAD"
+
+          curl -v -H "Content-Type: application/json" -X POST -d "$PAYLOAD" "$DISCORD_WEBHOOK"
