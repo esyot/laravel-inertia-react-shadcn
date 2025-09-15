@@ -1,5 +1,5 @@
-# Use the official PHP image with FPM
-FROM php:8.1-fpm
+# Use the official PHP 8.2 image with FPM
+FROM php:8.2-fpm
 
 # Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
@@ -35,7 +35,7 @@ RUN chown -R www-data:www-data /var/www && chmod -R 755 /var/www/storage
 # Copy Nginx configuration
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 80
+# Expose port
 EXPOSE 80
 
 # Start services
