@@ -2,7 +2,7 @@ name: Notify Discord on PR to Staging
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize, ready_for_review]
+    types: [opened, reopened, synchronize, ready_for_review, closed]
     branches:
       - staging
 
@@ -15,7 +15,7 @@ jobs:
         uses: Ilshidur/action-discord@master
         with:
           args: |
-            New PR to Staging
+            📢 New PR to Staging
             • Author: ${{ github.actor }}
             • Title: ${{ github.event.pull_request.title }}
             • PR: ${{ github.event.pull_request.html_url }}
@@ -30,8 +30,23 @@ jobs:
         uses: Ilshidur/action-discord@master
         with:
           args: |
-            PR Updated in Staging
+            🔄 PR Updated in Staging
             • Author: ${{ github.actor }}
+            • Title: ${{ github.event.pull_request.title }}
+            • PR: ${{ github.event.pull_request.html_url }}
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_SECRET }}
+
+  notify-merged-pr:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'staging'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord Notification for Merged PR
+        uses: Ilshidur/action-discord@master
+        with:
+          args: |
+            ✅ PR Merged to Staging
+            • Merged by: ${{ github.actor }}
             • Title: ${{ github.event.pull_request.title }}
             • PR: ${{ github.event.pull_request.html_url }}
         env:
