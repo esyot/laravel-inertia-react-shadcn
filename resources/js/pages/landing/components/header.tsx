@@ -11,9 +11,11 @@ export default function Header() {
             <header className="flex items-center justify-between px-4 sm:px-8 py-4 border-b">
                 <div className="flex items-center gap-4">
                     <div className="leading-tight">
-                        <h1 className="text-base sm:text-lg font-semibold ml-5">
-                            BEC - Bohol Electric Company
-                        </h1>
+                        <Link href="/">
+                            <h1 className="text-base sm:text-lg font-semibold ml-5">
+                                BEC - Bohol Electric Company
+                            </h1>
+                        </Link>
                     </div>
                 </div>
 

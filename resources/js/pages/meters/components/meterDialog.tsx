@@ -76,7 +76,7 @@ export function AddMeterReadingDialog() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button onClick={() => setOpen(true)}>Add Meter</Button>
+                <Button onClick={() => setOpen(true)}>Add New</Button>
             </DialogTrigger>
             <DialogContent className="sm:min-w-[425px]">
                 <DialogHeader>
