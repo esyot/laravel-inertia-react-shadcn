@@ -41,9 +41,11 @@ export function AppSidebar() {
 
     return (
         <Sidebar className="border-none bg-sand">
-            <SidebarHeader className="bg-sand p-4">
-                <span className="font-semibold">BEC</span>
-            </SidebarHeader>
+            <Link href="/">
+                <SidebarHeader className="bg-sand p-4">
+                    <span className="font-semibold">BEC</span>
+                </SidebarHeader>
+            </Link>
             <SidebarContent className="bg-sand">
                 <div className="grid grid-cols-1 gap-4 p-4">
                     {menuItems.map((item) => {
