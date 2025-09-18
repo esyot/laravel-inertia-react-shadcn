@@ -17,6 +17,7 @@ import {
     Legend,
 } from "recharts";
 import SectionHeader from "@/components/section-header";
+import { Link } from "@inertiajs/react";
 
 type AnalyticsProps = {
     customers: {
@@ -70,20 +71,21 @@ export default function AdminDashboard({
                 <SectionContent>
                     <div className="p-6 space-y-8">
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                            <Card className="rounded-2xl shadow-sm">
-                                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                    <CardTitle className="text-sm font-medium">
-                                        Total Customers
-                                    </CardTitle>
-                                    <Users className="h-4 w-4 text-gray-500" />
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="text-2xl font-bold">
-                                        {analytics.customers.total}
-                                    </div>
-                                </CardContent>
-                            </Card>
-
+                            <Link href="/customers">
+                                <Card className="rounded-2xl shadow-sm">
+                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                        <CardTitle className="text-sm font-medium">
+                                            Total Customers
+                                        </CardTitle>
+                                        <Users className="h-4 w-4 text-gray-500" />
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="text-2xl font-bold">
+                                            {analytics.customers.total}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </Link>
                             <Card className="rounded-2xl shadow-sm">
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                     <CardTitle className="text-sm font-medium">
@@ -98,39 +100,43 @@ export default function AdminDashboard({
                                 </CardContent>
                             </Card>
 
-                            <Card className="rounded-2xl shadow-sm">
-                                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                    <CardTitle className="text-sm font-medium">
-                                        Total Amount Due
-                                    </CardTitle>
-                                    <DollarSign className="h-4 w-4 text-gray-500" />
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="text-2xl font-bold">
-                                        ₱
-                                        {new Intl.NumberFormat("en-PH", {
-                                            minimumFractionDigits: 2,
-                                            maximumFractionDigits: 2,
-                                        }).format(
-                                            analytics.bills.total_amount_due,
-                                        )}
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card className="rounded-2xl shadow-sm">
-                                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                    <CardTitle className="text-sm font-medium">
-                                        Total Meter Readings
-                                    </CardTitle>
-                                    <Gauge className="h-4 w-4 text-gray-500" />
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="text-2xl font-bold">
-                                        {analytics.meter_readings.total}
-                                    </div>
-                                </CardContent>
-                            </Card>
+                            <Link href="/transactions">
+                                <Card className="rounded-2xl shadow-sm">
+                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                        <CardTitle className="text-sm font-medium">
+                                            Total Amount Due
+                                        </CardTitle>
+                                        <DollarSign className="h-4 w-4 text-gray-500" />
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="text-2xl font-bold">
+                                            ₱
+                                            {new Intl.NumberFormat("en-PH", {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2,
+                                            }).format(
+                                                analytics.bills
+                                                    .total_amount_due,
+                                            )}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </Link>
+                            <Link href="/meters">
+                                <Card className="rounded-2xl shadow-sm">
+                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                        <CardTitle className="text-sm font-medium">
+                                            Total Meter Readings
+                                        </CardTitle>
+                                        <Gauge className="h-4 w-4 text-gray-500" />
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="text-2xl font-bold">
+                                            {analytics.meter_readings.total}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </Link>
                         </div>
 
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
