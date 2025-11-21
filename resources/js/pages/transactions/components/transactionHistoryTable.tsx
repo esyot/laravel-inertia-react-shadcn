@@ -1,16 +1,5 @@
 import { Button } from "@/components/ui/button";
 import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableFooter,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
-
-import {
     Pagination,
     PaginationContent,
     PaginationEllipsis,
@@ -30,10 +19,6 @@ type User = {
 import type { Customer, Paginated } from "@/lib/interface/types";
 import { router } from "@inertiajs/react";
 
-// type CustomersProps = {
-//     customers: Customer[];
-// };
-
 type UserTableProps = {
     customers: Paginated<Customer>;
     showHistory?: boolean;
@@ -48,6 +33,13 @@ export function TransactionTable({ customers }: UserTableProps) {
         }
     };
 
+    const handlePaginate = (url: string) => {
+        router.visit(url, {
+            preserveState: true,
+            preserveScroll: true,
+        });
+    };
+
     const getPages = () => {
         const pages = [];
         for (let i = 1; i <= customers.last_page; i++) {
@@ -58,9 +50,11 @@ export function TransactionTable({ customers }: UserTableProps) {
 
     return (
         <div className="border-strong overflow-hidden rounded-xl border">
-            <div className="bg-sand-dugout text-weak border-strong hidden grid-cols-4  border-b px-5 pt-4 pb-3 text-sm font-medium md:grid">
+            <div className="bg-sand-dugout text-weak border-strong hidden grid-cols-6  border-b px-5 pt-4 pb-3 text-sm font-medium md:grid">
                 <div>Name</div>
+                <div>Code</div>
                 <div>Amount Paid</div>
+                <div>Payment Method</div>
                 <div>Date</div>
                 <div className="flex justify-end mr-16">Action</div>
             </div>
@@ -72,16 +66,31 @@ export function TransactionTable({ customers }: UserTableProps) {
                             key={user.id}
                             className="px-6 py-4 hover:bg-gray-50"
                         >
-                            <div className="grid gap-3 md:grid-cols-4 md:items-center">
+                            <div className="grid gap-3 md:grid-cols-6 md:items-center">
                                 <div className="flex items-center gap-3">
                                     <span className="text-sm font-medium text-[#222222]">
                                         {user.name}
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-3">
+                                    <span className="text-xs text-gray-600 font-mono">
+                                        {user.code || "—"}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-3">
                                     <span className="text-sm font-semibold text-[#222222]">
                                         {user.last_paid_bill
                                             ? `₱${Number(user.last_paid_bill.amount_due).toFixed(2)}`
+                                            : "—"}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <span className="text-sm font-medium text-[#222222]">
+                                        {user.last_paid_bill?.transaction
+                                            ?.payment_method
+                                            ? user.last_paid_bill.transaction.payment_method
+                                                  .replace(/_/g, " ")
+                                                  .toUpperCase()
                                             : "—"}
                                     </span>
                                 </div>

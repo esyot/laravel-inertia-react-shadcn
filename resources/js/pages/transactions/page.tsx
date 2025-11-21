@@ -9,16 +9,24 @@ import type { Customer, Paginated } from "@/lib/interface/types";
 
 type CustomersProps = {
     customers: Paginated<Customer>;
+    filters?: any;
 };
 
-export default function Transaction({ customers }: CustomersProps) {
+export default function Transaction({ customers, filters }: CustomersProps) {
+    console.log("Customers data received:", customers);
+    console.log(
+        "First customer last_paid_bill:",
+        customers.data[0]?.last_paid_bill,
+    );
+    console.log("Filters received in page:", filters); // Debug log
+
     return (
         <Layout>
             <SectionHeader className="flex items-center justify-between">
                 <h1 className="text-lg font-semibold">Transactions</h1>
 
                 <div className="flex gap-6 items-center">
-                    <Filter />
+                    <Filter filters={filters} />
                 </div>
             </SectionHeader>
             <SectionContent header={true}>

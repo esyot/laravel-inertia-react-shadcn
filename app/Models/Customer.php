@@ -26,7 +26,8 @@ class Customer extends Model
     {
         return $this->hasOne(Bill::class)
             ->where('status', 'Paid')
-            ->latest('payment_date');
+            ->latest('payment_date')
+            ->with('transaction');
     }
 
     
